@@ -36,14 +36,14 @@ func (a Auth) Login(c *fiber.Ctx) error {
 		Password: userInput.Password,
 	}
 
-	login, err := a.authService.Login(user)
+	token, err := a.authService.Login(user)
 	if err != nil {
-		c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"message": err,
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": err.Error(),
 		})
 	}
 
 	return c.JSON(&fiber.Map{
-		"token": login,
+		"token": token,
 	})
 }

@@ -20,9 +20,12 @@ func NewAuth() *Auth {
 
 // Login func
 func (a Auth) Login(userInput *model.User) (string, error) {
-	user := a.userService.FindByEmail(userInput.Email)
+	user, err := a.userService.FindByEmail(userInput.Email)
+	if err != nil {
+		return "", err
+	}
 
-	err := user.IsPasswordValid(userInput.Password)
+	err = user.IsPasswordValid(userInput.Password)
 	if err != nil {
 		return "", err
 	}

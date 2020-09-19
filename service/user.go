@@ -28,6 +28,6 @@ func (u User) Create(user *model.User) *model.User {
 }
 
 // FindByEmail func
-func (u User) FindByEmail(email string) *model.User {
+func (u User) FindByEmail(email string) (*model.User, error) {
 	return u.userRepository.FindByEmail(email)
 }

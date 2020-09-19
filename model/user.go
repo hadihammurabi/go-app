@@ -1,6 +1,8 @@
 package model
 
 import (
+	"errors"
+
 	uuid "github.com/satori/go.uuid"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
@@ -23,6 +25,10 @@ func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
 
 // IsPasswordValid func
 func (u User) IsPasswordValid(password string) error {
-	result := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
-	return result
+	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
+	if err != nil {
+		return errors.New("Invalid credentials")
+	}
+
+	return nil
 }

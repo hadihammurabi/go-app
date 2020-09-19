@@ -3,6 +3,7 @@ package repository
 import (
 	"belajar-go-rest-api/config"
 	"belajar-go-rest-api/model"
+	"errors"
 
 	"gorm.io/gorm"
 )
@@ -34,10 +35,15 @@ func (u User) Create(user *model.User) *model.User {
 }
 
 // FindByEmail func
-func (u User) FindByEmail(email string) *model.User {
+func (u User) FindByEmail(email string) (*model.User, error) {
 	user := &model.User{}
-	u.db.Where(&model.User{
+	err := u.db.Where(&model.User{
 		Email: email,
 	}).First(&user)
-	return user
+
+	if err != nil {
+		return nil, errors.New("Invalid credentials")
+	}
+
+	return user, nil
 }
