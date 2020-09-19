@@ -26,3 +26,8 @@ func (u User) All() []model.User {
 func (u User) Create(user *model.User) *model.User {
 	return u.userRepository.Create(user)
 }
+
+// FindByEmail func
+func (u User) FindByEmail(email string) *model.User {
+	return u.userRepository.FindByEmail(email)
+}

@@ -32,3 +32,12 @@ func (u User) Create(user *model.User) *model.User {
 	u.db.Create(&user)
 	return user
 }
+
+// FindByEmail func
+func (u User) FindByEmail(email string) *model.User {
+	user := &model.User{}
+	u.db.Where(&model.User{
+		Email: email,
+	}).First(&user)
+	return user
+}
