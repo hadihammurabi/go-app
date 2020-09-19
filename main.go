@@ -1,26 +1,23 @@
 package main
 
 import (
-	"belajar-go-rest-api/model"
+	"belajar-go-rest-api/config"
 
 	"github.com/joho/godotenv"
 
 	"github.com/gofiber/fiber/v2"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 )
 
 func main() {
 	_ = godotenv.Load()
 
+	db, err := config.ConfigureDatabase()
 
 	if err != nil {
 		panic(err)
 	}
 
-	db.AutoMigrate(
-		&model.User{},
-	)
+	config.MigrateDatabase(db)
 
 	app := fiber.New()
 
