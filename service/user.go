@@ -21,3 +21,8 @@ func NewUser() *User {
 func (u User) All() []model.User {
 	return u.userRepository.All()
 }
+
+// Create func
+func (u User) Create(user *model.User) *model.User {
+	return u.userRepository.Create(user)
+}

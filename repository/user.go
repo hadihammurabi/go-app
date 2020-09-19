@@ -26,3 +26,9 @@ func (u User) All() []model.User {
 	u.db.Find(&users)
 	return users
 }
+
+// Create func
+func (u User) Create(user *model.User) *model.User {
+	u.db.Create(&user)
+	return user
+}
