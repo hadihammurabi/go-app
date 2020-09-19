@@ -3,16 +3,16 @@ package main
 import (
 	"belajar-go-rest-api/model"
 
+	"github.com/joho/godotenv"
+
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 func main() {
-	db, err := gorm.Open(postgres.New(postgres.Config{
-		DSN:                  "user=* password=* dbname=test port=5432 sslmode=disable",
-		PreferSimpleProtocol: true,
-	}), &gorm.Config{})
+	_ = godotenv.Load()
+
 
 	if err != nil {
 		panic(err)
