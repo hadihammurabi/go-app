@@ -21,11 +21,7 @@ func main() {
 
 	app := fiber.New()
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		users := []model.User{}
-		db.Find(&users)
-		return c.JSON(users)
-	})
+	configureRoute(app)
 
 	app.Listen(":8080")
 }
