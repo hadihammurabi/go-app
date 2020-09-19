@@ -13,6 +13,10 @@ func configureRoute(app *fiber.App) {
 		})
 	})
 
+	authController := controller.NewAuth()
+	auth := app.Group("/auth")
+	auth.Post("/login", authController.Login)
+
 	userController := controller.NewUser()
 	users := app.Group("/users")
 	users.Get("/", userController.Index)
