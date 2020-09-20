@@ -38,3 +38,8 @@ func (u User) FindByEmail(email string) (*model.User, error) {
 func (u User) FindByID(id uuid.UUID) (*model.User, error) {
 	return u.userRepository.FindByID(id)
 }
+
+// ChangePassword func
+func (u User) ChangePassword(id uuid.UUID, password string) (*model.User, error) {
+	return u.userRepository.ChangePassword(id, password)
+}

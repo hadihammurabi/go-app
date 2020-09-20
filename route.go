@@ -22,4 +22,5 @@ func configureRoute(app *fiber.App) {
 	users.Get("/", userController.Index)
 	users.Get("/:id", userController.Show)
 	users.Post("/", userController.Create)
+	users.Put("/:id/change-password", userController.ChangePassword)
 }

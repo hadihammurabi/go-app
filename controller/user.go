@@ -56,3 +56,27 @@ func (u User) Show(c *fiber.Ctx) error {
 		"data": user,
 	})
 }
+
+// ChangePassword func
+func (u User) ChangePassword(c *fiber.Ctx) error {
+	id, err := uuid.FromString(c.Params("id"))
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(err)
+	}
+
+	userInput := &struct {
+		Password string `json:"password"`
+	}{}
+	if err := c.BodyParser(userInput); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(err)
+	}
+
+	user, err := u.userService.ChangePassword(id, userInput.Password)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).SendString(err.Error())
+	}
+
+	return c.JSON(&fiber.Map{
+		"data": user,
+	})
+}

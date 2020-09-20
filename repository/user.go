@@ -55,3 +55,16 @@ func (u User) FindByID(id uuid.UUID) (*model.User, error) {
 	u.db.Where("id = ?", id).First(&user)
 	return user, nil
 }
+
+// ChangePassword func
+func (u User) ChangePassword(id uuid.UUID, password string) (*model.User, error) {
+	user, err := u.FindByID(id)
+	if err != nil {
+		return nil, err
+	}
+
+	user.Password = password
+	u.db.Save(user)
+
+	return user, nil
+}

@@ -23,6 +23,13 @@ func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
 	return
 }
 
+// BeforeSave func
+func (u *User) BeforeSave(tx *gorm.DB) (err error) {
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(u.Password), 10)
+	u.Password = string(hashedPassword)
+	return
+}
+
 // IsPasswordValid func
 func (u User) IsPasswordValid(password string) error {
 	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
