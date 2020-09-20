@@ -5,6 +5,7 @@ import (
 	"belajar-go-rest-api/model"
 	"errors"
 
+	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
 )
 
@@ -45,5 +46,12 @@ func (u User) FindByEmail(email string) (*model.User, error) {
 		return nil, errors.New("Invalid credentials")
 	}
 
+	return user, nil
+}
+
+// FindByID func
+func (u User) FindByID(id uuid.UUID) (*model.User, error) {
+	user := &model.User{}
+	u.db.Where("id = ?", id).First(&user)
 	return user, nil
 }

@@ -3,6 +3,8 @@ package service
 import (
 	"belajar-go-rest-api/model"
 	"belajar-go-rest-api/repository"
+
+	uuid "github.com/satori/go.uuid"
 )
 
 // User service
@@ -30,4 +32,9 @@ func (u User) Create(user *model.User) *model.User {
 // FindByEmail func
 func (u User) FindByEmail(email string) (*model.User, error) {
 	return u.userRepository.FindByEmail(email)
+}
+
+// FindByID func
+func (u User) FindByID(id uuid.UUID) (*model.User, error) {
+	return u.userRepository.FindByID(id)
 }
