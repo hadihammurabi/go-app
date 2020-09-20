@@ -47,3 +47,8 @@ func (a Auth) Login(c *fiber.Ctx) error {
 		"token": token,
 	})
 }
+
+// Info func
+func (a Auth) Info(c *fiber.Ctx) error {
+	return c.SendString("not implemented yet")
+}

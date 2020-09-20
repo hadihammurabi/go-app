@@ -2,6 +2,7 @@ package main
 
 import (
 	"belajar-go-rest-api/controller"
+	"belajar-go-rest-api/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -16,6 +17,7 @@ func configureRoute(app *fiber.App) {
 	authController := controller.NewAuth()
 	auth := app.Group("/auth")
 	auth.Post("/login", authController.Login)
+	auth.Get("/info", middleware.Auth, authController.Info)
 
 	userController := controller.NewUser()
 	users := app.Group("/users")
