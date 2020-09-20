@@ -12,7 +12,7 @@ import (
 type User struct {
 	Base
 	Email    string `json:"email"`
-	Password string `json:"password"`
+	Password string `json:"-"`
 }
 
 // BeforeCreate func
