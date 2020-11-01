@@ -6,17 +6,17 @@ import (
 
 // Service struct
 type Service struct {
-	Auth *Auth
-	User *User
-	JWT  *JWT
+	Auth *AuthService
+	User *UserService
+	JWT  *JWTService
 }
 
 // NewService func
 func NewService(repo *repository.Repository) (service *Service) {
 	service = &Service{
-		Auth: NewAuth(repo),
-		User: NewUser(repo),
-		JWT:  NewJWT(repo),
+		Auth: NewAuthService(repo),
+		User: NewUserService(repo),
+		JWT:  NewJWTService(repo),
 	}
 	return
 }

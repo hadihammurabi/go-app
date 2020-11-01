@@ -5,22 +5,22 @@ import (
 	"belajar-go-rest-api/repository"
 )
 
-// Auth service
-type Auth struct {
-	userService *User
-	jwtService  *JWT
+// AuthService struct
+type AuthService struct {
+	userService *UserService
+	jwtService  *JWTService
 }
 
-// NewAuth func
-func NewAuth(repo *repository.Repository) *Auth {
-	return &Auth{
-		userService: NewUser(repo),
-		jwtService:  NewJWT(repo),
+// NewAuthService func
+func NewAuthService(repo *repository.Repository) *AuthService {
+	return &AuthService{
+		userService: NewUserService(repo),
+		jwtService:  NewJWTService(repo),
 	}
 }
 
 // Login func
-func (a Auth) Login(userInput *entities.User) (string, error) {
+func (a AuthService) Login(userInput *entities.User) (string, error) {
 	user, err := a.userService.FindByEmail(userInput.Email)
 	if err != nil {
 		return "", err

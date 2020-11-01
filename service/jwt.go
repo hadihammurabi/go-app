@@ -9,17 +9,17 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
-// JWT service
-type JWT struct {
+// JWTService struct
+type JWTService struct {
 }
 
-// NewJWT func
-func NewJWT(repo *repository.Repository) *JWT {
-	return &JWT{}
+// NewJWTService func
+func NewJWTService(repo *repository.Repository) *JWTService {
+	return &JWTService{}
 }
 
 // Create func
-func (j JWT) Create(data interface{}) (string, error) {
+func (j JWTService) Create(data interface{}) (string, error) {
 	secret := os.Getenv("APP_KEY")
 	if secret == "" {
 		secret = "2Yu4i1lTSrmigPyb9RYxYJ35WcnxDOQsCBCOTfoo2Yu4i1lTSrmigPyb9RYx"
