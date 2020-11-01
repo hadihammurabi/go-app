@@ -5,6 +5,7 @@ import (
 	"belajar-go-rest-api/service"
 
 	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm"
 )
 
 // Auth controller
@@ -18,9 +19,9 @@ type user struct {
 }
 
 // NewAuth func
-func NewAuth() *Auth {
+func NewAuth(database *gorm.DB) *Auth {
 	return &Auth{
-		authService: service.NewAuth(),
+		authService: service.NewAuth(database),
 	}
 }
 

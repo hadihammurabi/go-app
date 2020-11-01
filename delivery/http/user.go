@@ -5,6 +5,7 @@ import (
 	"belajar-go-rest-api/service"
 
 	uuid "github.com/satori/go.uuid"
+	"gorm.io/gorm"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -15,9 +16,9 @@ type User struct {
 }
 
 // NewUser func
-func NewUser() *User {
+func NewUser(database *gorm.DB) *User {
 	return &User{
-		userService: service.NewUser(),
+		userService: service.NewUser(database),
 	}
 }
 

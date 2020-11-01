@@ -6,6 +6,7 @@ import (
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
+	"gorm.io/gorm"
 )
 
 // JWT service
@@ -13,7 +14,7 @@ type JWT struct {
 }
 
 // NewJWT func
-func NewJWT() *JWT {
+func NewJWT(database *gorm.DB) *JWT {
 	return &JWT{}
 }
 

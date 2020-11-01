@@ -34,12 +34,12 @@ func (delivery *Delivery) ConfigureRoute() {
 		})
 	})
 
-	authController := NewAuth()
+	authController := NewAuth(delivery.DB)
 	auth := delivery.HTTP.Group("/auth")
 	auth.Post("/login", authController.Login)
 	auth.Get("/info", middleware.Auth, authController.Info)
 
-	userController := NewUser()
+	userController := NewUser(delivery.DB)
 	users := delivery.HTTP.Group("/users")
 	users.Get("/", userController.Index)
 	users.Get("/:id", userController.Show)
