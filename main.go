@@ -2,10 +2,9 @@ package main
 
 import (
 	"belajar-go-rest-api/config/database"
+	deliveryHttp "belajar-go-rest-api/delivery/http"
 
 	"github.com/joho/godotenv"
-
-	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
@@ -18,10 +17,11 @@ func main() {
 	}
 
 	database.MigrateDatabase(db)
+	httpApp := deliveryHttp.Init(db)
 
-	app := fiber.New()
-
-	configureRoute(app)
-
-	app.Listen(":8080")
+	forever := make(chan bool)
+	go func() {
+		httpApp.HTTP.Listen(":8080")
+	}()
+	<-forever
 }
