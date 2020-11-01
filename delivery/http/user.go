@@ -11,20 +11,27 @@ import (
 
 // User controller
 type User struct {
-	service *service.Service
+	Service *service.Service
 }
 
 // NewUser func
-func NewUser(service *service.Service) *User {
-	return &User{
-		service: service,
+func NewUser(router fiber.Router, service *service.Service) (user *User) {
+	user = &User{
+		Service: service,
 	}
+
+	router.Get("/", user.Index)
+	router.Get("/:id", user.Show)
+	router.Post("/", user.Create)
+	router.Put("/:id/change-password", user.ChangePassword)
+
+	return
 }
 
 // Index func
 func (u User) Index(c *fiber.Ctx) error {
 	return c.JSON(&fiber.Map{
-		"data": u.service.User.All(),
+		"data": u.Service.User.All(),
 	})
 }
 
@@ -36,7 +43,7 @@ func (u User) Create(c *fiber.Ctx) error {
 	}
 
 	return c.JSON(&fiber.Map{
-		"data": u.service.User.Create(user),
+		"data": u.Service.User.Create(user),
 	})
 }
 
@@ -47,7 +54,7 @@ func (u User) Show(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
 
-	user, err := u.service.User.FindByID(id)
+	user, err := u.Service.User.FindByID(id)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 	}
@@ -71,7 +78,7 @@ func (u User) ChangePassword(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
 
-	user, err := u.service.User.ChangePassword(id, userInput.Password)
+	user, err := u.Service.User.ChangePassword(id, userInput.Password)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 	}

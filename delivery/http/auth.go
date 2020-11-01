@@ -1,6 +1,7 @@
 package http
 
 import (
+	"belajar-go-rest-api/delivery/http/middleware"
 	"belajar-go-rest-api/entities"
 	"belajar-go-rest-api/service"
 
@@ -9,7 +10,7 @@ import (
 
 // Auth controller
 type Auth struct {
-	service *service.Service
+	Service *service.Service
 }
 
 type user struct {
@@ -18,10 +19,15 @@ type user struct {
 }
 
 // NewAuth func
-func NewAuth(service *service.Service) *Auth {
-	return &Auth{
-		service: service,
+func NewAuth(router fiber.Router, service *service.Service) (auth *Auth) {
+	auth = &Auth{
+		Service: service,
 	}
+
+	router.Post("/login", auth.Login)
+	router.Get("/info", middleware.Auth, auth.Info)
+
+	return
 }
 
 // Login func
@@ -36,7 +42,7 @@ func (a Auth) Login(c *fiber.Ctx) error {
 		Password: userInput.Password,
 	}
 
-	token, err := a.service.Auth.Login(user)
+	token, err := a.Service.Auth.Login(user)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": err.Error(),
