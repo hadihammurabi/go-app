@@ -7,34 +7,34 @@ import (
 	"gorm.io/gorm"
 )
 
-// User repository
-type User struct {
+// UserRepository struct
+type UserRepository struct {
 	db *gorm.DB
 }
 
-// NewUser func
-func NewUser(database *gorm.DB) (repo *User) {
-	repo = &User{
+// NewUserRepository func
+func NewUserRepository(database *gorm.DB) (repo *UserRepository) {
+	repo = &UserRepository{
 		db: database,
 	}
 	return
 }
 
 // All func
-func (u User) All() []entities.User {
+func (u UserRepository) All() []entities.User {
 	users := []entities.User{}
 	u.db.Find(&users)
 	return users
 }
 
 // Create func
-func (u User) Create(user *entities.User) *entities.User {
+func (u UserRepository) Create(user *entities.User) *entities.User {
 	u.db.Create(&user)
 	return user
 }
 
 // FindByEmail func
-func (u User) FindByEmail(email string) (*entities.User, error) {
+func (u UserRepository) FindByEmail(email string) (*entities.User, error) {
 	user := &entities.User{}
 	u.db.Where(&entities.User{
 		Email: email,
@@ -43,14 +43,14 @@ func (u User) FindByEmail(email string) (*entities.User, error) {
 }
 
 // FindByID func
-func (u User) FindByID(id uuid.UUID) (*entities.User, error) {
+func (u UserRepository) FindByID(id uuid.UUID) (*entities.User, error) {
 	user := &entities.User{}
 	u.db.Where("id = ?", id).First(&user)
 	return user, nil
 }
 
 // ChangePassword func
-func (u User) ChangePassword(id uuid.UUID, password string) (*entities.User, error) {
+func (u UserRepository) ChangePassword(id uuid.UUID, password string) (*entities.User, error) {
 	user, err := u.FindByID(id)
 	if err != nil {
 		return nil, err
