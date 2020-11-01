@@ -1,7 +1,7 @@
-package controller
+package http
 
 import (
-	"belajar-go-rest-api/model"
+	"belajar-go-rest-api/entities"
 	"belajar-go-rest-api/service"
 
 	uuid "github.com/satori/go.uuid"
@@ -30,7 +30,7 @@ func (u User) Index(c *fiber.Ctx) error {
 
 // Create func
 func (u User) Create(c *fiber.Ctx) error {
-	user := &model.User{}
+	user := &entities.User{}
 	if err := c.BodyParser(user); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}

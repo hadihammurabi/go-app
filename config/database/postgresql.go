@@ -1,7 +1,7 @@
-package config
+package database
 
 import (
-	"belajar-go-rest-api/model"
+	"belajar-go-rest-api/entities"
 	"fmt"
 	"os"
 
@@ -39,6 +39,6 @@ func ConfigureDatabase() (*gorm.DB, error) {
 // MigrateDatabase func
 func MigrateDatabase(db *gorm.DB) {
 	db.AutoMigrate(
-		&model.User{},
+		&entities.User{},
 	)
 }

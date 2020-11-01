@@ -1,7 +1,7 @@
-package controller
+package http
 
 import (
-	"belajar-go-rest-api/model"
+	"belajar-go-rest-api/entities"
 	"belajar-go-rest-api/service"
 
 	"github.com/gofiber/fiber/v2"
@@ -31,7 +31,7 @@ func (a Auth) Login(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
 
-	user := &model.User{
+	user := &entities.User{
 		Email:    userInput.Email,
 		Password: userInput.Password,
 	}

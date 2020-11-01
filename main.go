@@ -1,7 +1,7 @@
 package main
 
 import (
-	"belajar-go-rest-api/config"
+	"belajar-go-rest-api/config/database"
 
 	"github.com/joho/godotenv"
 
@@ -11,13 +11,13 @@ import (
 func main() {
 	_ = godotenv.Load()
 
-	db, err := config.ConfigureDatabase()
+	db, err := database.ConfigureDatabase()
 
 	if err != nil {
 		panic(err)
 	}
 
-	config.MigrateDatabase(db)
+	database.MigrateDatabase(db)
 
 	app := fiber.New()
 

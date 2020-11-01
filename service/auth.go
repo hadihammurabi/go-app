@@ -1,7 +1,7 @@
 package service
 
 import (
-	"belajar-go-rest-api/model"
+	"belajar-go-rest-api/entities"
 )
 
 // Auth service
@@ -19,7 +19,7 @@ func NewAuth() *Auth {
 }
 
 // Login func
-func (a Auth) Login(userInput *model.User) (string, error) {
+func (a Auth) Login(userInput *entities.User) (string, error) {
 	user, err := a.userService.FindByEmail(userInput.Email)
 	if err != nil {
 		return "", err

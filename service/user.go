@@ -1,7 +1,7 @@
 package service
 
 import (
-	"belajar-go-rest-api/model"
+	"belajar-go-rest-api/entities"
 	"belajar-go-rest-api/repository"
 
 	uuid "github.com/satori/go.uuid"
@@ -20,26 +20,26 @@ func NewUser() *User {
 }
 
 // All func
-func (u User) All() []model.User {
+func (u User) All() []entities.User {
 	return u.userRepository.All()
 }
 
 // Create func
-func (u User) Create(user *model.User) *model.User {
+func (u User) Create(user *entities.User) *entities.User {
 	return u.userRepository.Create(user)
 }
 
 // FindByEmail func
-func (u User) FindByEmail(email string) (*model.User, error) {
+func (u User) FindByEmail(email string) (*entities.User, error) {
 	return u.userRepository.FindByEmail(email)
 }
 
 // FindByID func
-func (u User) FindByID(id uuid.UUID) (*model.User, error) {
+func (u User) FindByID(id uuid.UUID) (*entities.User, error) {
 	return u.userRepository.FindByID(id)
 }
 
 // ChangePassword func
-func (u User) ChangePassword(id uuid.UUID, password string) (*model.User, error) {
+func (u User) ChangePassword(id uuid.UUID, password string) (*entities.User, error) {
 	return u.userRepository.ChangePassword(id, password)
 }
