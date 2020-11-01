@@ -8,8 +8,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// Auth controller
-type Auth struct {
+// AuthHandler controller
+type AuthHandler struct {
 	Service *service.Service
 }
 
@@ -18,20 +18,20 @@ type user struct {
 	Password string `json:"password"`
 }
 
-// NewAuth func
-func NewAuth(router fiber.Router, service *service.Service) (auth *Auth) {
-	auth = &Auth{
+// NewAuthHandler func
+func NewAuthHandler(router fiber.Router, service *service.Service) (authHandler *AuthHandler) {
+	authHandler = &AuthHandler{
 		Service: service,
 	}
 
-	router.Post("/login", auth.Login)
-	router.Get("/info", middleware.Auth, auth.Info)
+	router.Post("/login", authHandler.Login)
+	router.Get("/info", middleware.Auth, authHandler.Info)
 
 	return
 }
 
 // Login func
-func (a Auth) Login(c *fiber.Ctx) error {
+func (a AuthHandler) Login(c *fiber.Ctx) error {
 	userInput := &user{}
 	if err := c.BodyParser(userInput); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
@@ -55,6 +55,6 @@ func (a Auth) Login(c *fiber.Ctx) error {
 }
 
 // Info func
-func (a Auth) Info(c *fiber.Ctx) error {
+func (a AuthHandler) Info(c *fiber.Ctx) error {
 	return c.SendString("not implemented yet")
 }

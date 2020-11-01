@@ -13,8 +13,8 @@ func (delivery *Delivery) ConfigureRoute() {
 	})
 
 	authRouter := delivery.HTTP.Group("/auth")
-	_ = NewAuth(authRouter, delivery.Service)
+	_ = NewAuthHandler(authRouter, delivery.Service)
 
 	usersRouter := delivery.HTTP.Group("/users")
-	_ = NewUser(usersRouter, delivery.Service)
+	_ = NewUserHandler(usersRouter, delivery.Service)
 }
