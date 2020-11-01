@@ -5,27 +5,26 @@ import (
 	"belajar-go-rest-api/service"
 
 	uuid "github.com/satori/go.uuid"
-	"gorm.io/gorm"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 // User controller
 type User struct {
-	userService *service.User
+	service *service.Service
 }
 
 // NewUser func
-func NewUser(database *gorm.DB) *User {
+func NewUser(service *service.Service) *User {
 	return &User{
-		userService: service.NewUser(database),
+		service: service,
 	}
 }
 
 // Index func
 func (u User) Index(c *fiber.Ctx) error {
 	return c.JSON(&fiber.Map{
-		"data": u.userService.All(),
+		"data": u.service.User.All(),
 	})
 }
 
@@ -37,7 +36,7 @@ func (u User) Create(c *fiber.Ctx) error {
 	}
 
 	return c.JSON(&fiber.Map{
-		"data": u.userService.Create(user),
+		"data": u.service.User.Create(user),
 	})
 }
 
@@ -48,7 +47,7 @@ func (u User) Show(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
 
-	user, err := u.userService.FindByID(id)
+	user, err := u.service.User.FindByID(id)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 	}
@@ -72,7 +71,7 @@ func (u User) ChangePassword(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
 
-	user, err := u.userService.ChangePassword(id, userInput.Password)
+	user, err := u.service.User.ChangePassword(id, userInput.Password)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 	}

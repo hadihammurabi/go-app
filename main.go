@@ -3,6 +3,8 @@ package main
 import (
 	"belajar-go-rest-api/config/database"
 	deliveryHttp "belajar-go-rest-api/delivery/http"
+	"belajar-go-rest-api/repository"
+	"belajar-go-rest-api/service"
 
 	"github.com/joho/godotenv"
 )
@@ -17,7 +19,11 @@ func main() {
 	}
 
 	database.MigrateDatabase(db)
-	httpApp := deliveryHttp.Init(db)
+
+	repo := repository.NewRepository(db)
+	service := service.NewService(repo)
+
+	httpApp := deliveryHttp.Init(service)
 
 	forever := make(chan bool)
 	go func() {

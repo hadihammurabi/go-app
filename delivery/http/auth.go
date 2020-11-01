@@ -5,12 +5,11 @@ import (
 	"belajar-go-rest-api/service"
 
 	"github.com/gofiber/fiber/v2"
-	"gorm.io/gorm"
 )
 
 // Auth controller
 type Auth struct {
-	authService *service.Auth
+	service *service.Service
 }
 
 type user struct {
@@ -19,9 +18,9 @@ type user struct {
 }
 
 // NewAuth func
-func NewAuth(database *gorm.DB) *Auth {
+func NewAuth(service *service.Service) *Auth {
 	return &Auth{
-		authService: service.NewAuth(database),
+		service: service,
 	}
 }
 
@@ -37,7 +36,7 @@ func (a Auth) Login(c *fiber.Ctx) error {
 		Password: userInput.Password,
 	}
 
-	token, err := a.authService.Login(user)
+	token, err := a.service.Auth.Login(user)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": err.Error(),

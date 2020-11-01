@@ -5,42 +5,41 @@ import (
 	"belajar-go-rest-api/repository"
 
 	uuid "github.com/satori/go.uuid"
-	"gorm.io/gorm"
 )
 
 // User service
 type User struct {
-	userRepository *repository.User
+	repo *repository.Repository
 }
 
 // NewUser func
-func NewUser(database *gorm.DB) *User {
+func NewUser(repo *repository.Repository) *User {
 	return &User{
-		userRepository: repository.NewUser(),
+		repo: repo,
 	}
 }
 
 // All func
 func (u User) All() []entities.User {
-	return u.userRepository.All()
+	return u.repo.User.All()
 }
 
 // Create func
 func (u User) Create(user *entities.User) *entities.User {
-	return u.userRepository.Create(user)
+	return u.repo.User.Create(user)
 }
 
 // FindByEmail func
 func (u User) FindByEmail(email string) (*entities.User, error) {
-	return u.userRepository.FindByEmail(email)
+	return u.repo.User.FindByEmail(email)
 }
 
 // FindByID func
 func (u User) FindByID(id uuid.UUID) (*entities.User, error) {
-	return u.userRepository.FindByID(id)
+	return u.repo.User.FindByID(id)
 }
 
 // ChangePassword func
 func (u User) ChangePassword(id uuid.UUID, password string) (*entities.User, error) {
-	return u.userRepository.ChangePassword(id, password)
+	return u.repo.User.ChangePassword(id, password)
 }

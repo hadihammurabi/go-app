@@ -2,25 +2,24 @@ package http
 
 import (
 	"belajar-go-rest-api/delivery/http/middleware"
-
-	"gorm.io/gorm"
+	"belajar-go-rest-api/service"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 // Delivery struct
 type Delivery struct {
-	HTTP *fiber.App
-	DB   *gorm.DB
+	HTTP    *fiber.App
+	Service *service.Service
 }
 
 // Init func
-func Init(database *gorm.DB) *Delivery {
+func Init(service *service.Service) *Delivery {
 	app := fiber.New()
 
 	delivery := &Delivery{
-		HTTP: app,
-		DB:   database,
+		HTTP:    app,
+		Service: service,
 	}
 	delivery.ConfigureRoute()
 	return delivery
@@ -34,12 +33,12 @@ func (delivery *Delivery) ConfigureRoute() {
 		})
 	})
 
-	authController := NewAuth(delivery.DB)
+	authController := NewAuth(delivery.Service)
 	auth := delivery.HTTP.Group("/auth")
 	auth.Post("/login", authController.Login)
 	auth.Get("/info", middleware.Auth, authController.Info)
 
-	userController := NewUser(delivery.DB)
+	userController := NewUser(delivery.Service)
 	users := delivery.HTTP.Group("/users")
 	users.Get("/", userController.Index)
 	users.Get("/:id", userController.Show)

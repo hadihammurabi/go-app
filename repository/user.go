@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"belajar-go-rest-api/config/database"
 	"belajar-go-rest-api/entities"
 
 	uuid "github.com/satori/go.uuid"
@@ -14,11 +13,11 @@ type User struct {
 }
 
 // NewUser func
-func NewUser() *User {
-	db, _ := database.ConfigureDatabase()
-	return &User{
-		db: db,
+func NewUser(database *gorm.DB) (repo *User) {
+	repo = &User{
+		db: database,
 	}
+	return
 }
 
 // All func

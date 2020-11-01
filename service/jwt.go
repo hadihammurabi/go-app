@@ -1,12 +1,12 @@
 package service
 
 import (
+	"belajar-go-rest-api/repository"
 	"errors"
 	"os"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
-	"gorm.io/gorm"
 )
 
 // JWT service
@@ -14,7 +14,7 @@ type JWT struct {
 }
 
 // NewJWT func
-func NewJWT(database *gorm.DB) *JWT {
+func NewJWT(repo *repository.Repository) *JWT {
 	return &JWT{}
 }
 

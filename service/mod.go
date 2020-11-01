@@ -1,6 +1,8 @@
 package service
 
-import "gorm.io/gorm"
+import (
+	"belajar-go-rest-api/repository"
+)
 
 // Service struct
 type Service struct {
@@ -10,11 +12,11 @@ type Service struct {
 }
 
 // NewService func
-func NewService(database *gorm.DB) (service *Service) {
+func NewService(repo *repository.Repository) (service *Service) {
 	service = &Service{
-		Auth: NewAuth(database),
-		User: NewUser(database),
-		JWT:  NewJWT(database),
+		Auth: NewAuth(repo),
+		User: NewUser(repo),
+		JWT:  NewJWT(repo),
 	}
 	return
 }
