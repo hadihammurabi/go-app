@@ -5,6 +5,7 @@ import (
 	deliveryHttp "belajar-go-rest-api/delivery/http"
 	"belajar-go-rest-api/repository"
 	"belajar-go-rest-api/service"
+	"log"
 
 	"github.com/joho/godotenv"
 )
@@ -15,7 +16,7 @@ func main() {
 	db, err := database.ConfigureDatabase()
 
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	database.MigrateDatabase(db)
