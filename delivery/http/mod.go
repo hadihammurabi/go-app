@@ -3,6 +3,8 @@ package http
 import (
 	"belajar-go-rest-api/service"
 
+	"github.com/gofiber/fiber/v2/middleware/cors"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -15,6 +17,7 @@ type Delivery struct {
 // Init func
 func Init(service *service.Service) *Delivery {
 	app := fiber.New()
+	app.Use(cors.New())
 
 	delivery := &Delivery{
 		HTTP:    app,
