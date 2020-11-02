@@ -21,10 +21,10 @@ func NewUserRepository(database *gorm.DB) (repo *UserRepository) {
 }
 
 // All func
-func (u UserRepository) All() []entities.User {
-	users := []entities.User{}
-	u.db.Find(&users)
-	return users
+func (u UserRepository) All() (users []*entities.User, err error) {
+	users = make([]*entities.User, 0)
+	err = u.db.Find(&users).Error
+	return users, err
 }
 
 // Create func

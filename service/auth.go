@@ -7,7 +7,7 @@ import (
 
 // AuthService struct
 type AuthService struct {
-	userService *UserService
+	userService entities.UserService
 	jwtService  *JWTService
 }
 

@@ -30,8 +30,9 @@ func NewUserHandler(router fiber.Router, service *service.Service) (userHandler 
 
 // Index func
 func (u UserHandler) Index(c *fiber.Ctx) error {
+	users, _ := u.Service.User.All()
 	return c.JSON(&fiber.Map{
-		"data": u.Service.User.All(),
+		"data": users,
 	})
 }
 
@@ -42,8 +43,9 @@ func (u UserHandler) Create(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
 
+	userCreated, _ := u.Service.User.Create(user)
 	return c.JSON(&fiber.Map{
-		"data": u.Service.User.Create(user),
+		"data": userCreated,
 	})
 }
 

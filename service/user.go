@@ -13,20 +13,20 @@ type UserService struct {
 }
 
 // NewUserService func
-func NewUserService(repo *repository.Repository) *UserService {
+func NewUserService(repo *repository.Repository) entities.UserService {
 	return &UserService{
 		repo: repo,
 	}
 }
 
 // All func
-func (u UserService) All() []entities.User {
+func (u UserService) All() ([]*entities.User, error) {
 	return u.repo.User.All()
 }
 
 // Create func
-func (u UserService) Create(user *entities.User) *entities.User {
-	return u.repo.User.Create(user)
+func (u UserService) Create(user *entities.User) (*entities.User, error) {
+	return u.repo.User.Create(user), nil
 }
 
 // FindByEmail func

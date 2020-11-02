@@ -1,13 +1,14 @@
 package service
 
 import (
+	"belajar-go-rest-api/entities"
 	"belajar-go-rest-api/repository"
 )
 
 // Service struct
 type Service struct {
 	Auth *AuthService
-	User *UserService
+	User entities.UserService
 	JWT  *JWTService
 }
 
