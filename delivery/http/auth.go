@@ -13,11 +13,6 @@ type AuthHandler struct {
 	Service *service.Service
 }
 
-type user struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
-}
-
 // NewAuthHandler func
 func NewAuthHandler(router fiber.Router, service *service.Service) (authHandler *AuthHandler) {
 	authHandler = &AuthHandler{
@@ -32,7 +27,7 @@ func NewAuthHandler(router fiber.Router, service *service.Service) (authHandler 
 
 // Login func
 func (a AuthHandler) Login(c *fiber.Ctx) error {
-	userInput := &user{}
+	userInput := &entities.UserLoginDTO{}
 	if err := c.BodyParser(userInput); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}

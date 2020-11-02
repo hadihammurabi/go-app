@@ -71,9 +71,7 @@ func (u UserHandler) ChangePassword(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
 
-	userInput := &struct {
-		Password string `json:"password"`
-	}{}
+	userInput := &entities.UserChangePasswordDTO{}
 	if err := c.BodyParser(userInput); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}

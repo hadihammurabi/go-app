@@ -39,3 +39,14 @@ func (u User) IsPasswordValid(password string) error {
 
 	return nil
 }
+
+// UserLoginDTO struct
+type UserLoginDTO struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+// UserChangePasswordDTO struct
+type UserChangePasswordDTO struct {
+	Password string `json:"password"`
+}
