@@ -15,7 +15,7 @@ type AuthService struct {
 func NewAuthService(repo *repository.Repository) *AuthService {
 	return &AuthService{
 		userService: NewUserService(repo),
-		jwtService:  NewJWTService(repo),
+		jwtService:  NewJWTService(),
 	}
 }
 

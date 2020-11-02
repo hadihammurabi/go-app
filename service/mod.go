@@ -16,7 +16,7 @@ func NewService(repo *repository.Repository) (service *Service) {
 	service = &Service{
 		Auth: NewAuthService(repo),
 		User: NewUserService(repo),
-		JWT:  NewJWTService(repo),
+		JWT:  NewJWTService(),
 	}
 	return
 }
