@@ -3,6 +3,7 @@ package http
 import (
 	"belajar-go-rest-api/delivery/http/middleware"
 	"belajar-go-rest-api/entities"
+	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -42,5 +43,7 @@ func (delivery Delivery) Login(c *fiber.Ctx) error {
 
 // Info func
 func (delivery Delivery) Info(c *fiber.Ctx) error {
-	return c.SendString("not implemented yet")
+	claims := delivery.Service.JWT.GetClaims(c)
+	email := claims.User.Email
+	return c.SendString(fmt.Sprintf("welcome, %s", email))
 }

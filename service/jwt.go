@@ -7,6 +7,7 @@ import (
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/gofiber/fiber/v2"
 )
 
 // JWTService struct
@@ -22,16 +23,23 @@ func NewJWTService(jwtConfig *config.JWTConfig) entities.JWTService {
 }
 
 // Create func
-func (j JWTService) Create(userData *entities.User) (string, error) {
+func (jwtService JWTService) Create(userData *entities.User) (string, error) {
 	claims := &entities.JWTClaims{}
 	claims.User = userData
 	claims.ExpiresAt = int64(time.Hour) * 3
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	t, err := token.SignedString([]byte(j.Config.Secret))
+	t, err := token.SignedString([]byte(jwtService.Config.Secret))
 	if err != nil {
 		return "", errors.New("Token generation fail")
 	}
 
 	return t, nil
+}
+
+// GetClaims func
+func (jwtService JWTService) GetClaims(c *fiber.Ctx) (claims *entities.JWTClaims) {
+	token := c.Locals("user").(*jwt.Token)
+	claims = token.Claims.(*entities.JWTClaims)
+	return
 }
