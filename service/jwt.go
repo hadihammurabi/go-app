@@ -2,6 +2,7 @@ package service
 
 import (
 	"belajar-go-rest-api/config"
+	"belajar-go-rest-api/entities"
 	"errors"
 	"time"
 
@@ -23,11 +24,12 @@ func NewJWTService() *JWTService {
 }
 
 // Create func
-func (j JWTService) Create(data interface{}) (string, error) {
-	token := jwt.New(jwt.SigningMethodHS256)
-	claims := token.Claims.(jwt.MapClaims)
-	claims["data"] = data
-	claims["exp"] = time.Now().Add(time.Hour * 3)
+func (j JWTService) Create(userData *entities.User) (string, error) {
+	claims := &entities.JWTClaims{}
+	claims.User = userData
+	claims.ExpiresAt = int64(time.Hour) * 3
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	t, err := token.SignedString([]byte(j.Config.Secret))
 	if err != nil {
 		return "", errors.New("Token generation fail")
