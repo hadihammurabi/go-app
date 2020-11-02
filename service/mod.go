@@ -9,7 +9,7 @@ import (
 type Service struct {
 	Auth *AuthService
 	User entities.UserService
-	JWT  *JWTService
+	JWT  entities.JWTService
 }
 
 // NewService func

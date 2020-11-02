@@ -8,7 +8,7 @@ import (
 // AuthService struct
 type AuthService struct {
 	userService entities.UserService
-	jwtService  *JWTService
+	jwtService  entities.JWTService
 }
 
 // NewAuthService func
