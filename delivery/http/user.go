@@ -2,61 +2,52 @@ package http
 
 import (
 	"belajar-go-rest-api/entities"
-	"belajar-go-rest-api/service"
 
 	uuid "github.com/satori/go.uuid"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-// UserHandler controller
-type UserHandler struct {
-	Service *service.Service
-}
-
 // NewUserHandler func
-func NewUserHandler(router fiber.Router, service *service.Service) (userHandler *UserHandler) {
-	userHandler = &UserHandler{
-		Service: service,
-	}
-
-	router.Get("/", userHandler.Index)
-	router.Get("/:id", userHandler.Show)
-	router.Post("/", userHandler.Create)
-	router.Put("/:id/change-password", userHandler.ChangePassword)
+func NewUserHandler(delivery *Delivery) {
+	router := delivery.HTTP.Group("/users")
+	router.Get("/", delivery.UserIndex)
+	router.Get("/:id", delivery.UserShow)
+	router.Post("/", delivery.UserCreate)
+	router.Put("/:id/change-password", delivery.UserChangePassword)
 
 	return
 }
 
-// Index func
-func (u UserHandler) Index(c *fiber.Ctx) error {
-	users, _ := u.Service.User.All()
+// UserIndex func
+func (delivery *Delivery) UserIndex(c *fiber.Ctx) error {
+	users, _ := delivery.Service.User.All()
 	return c.JSON(&fiber.Map{
 		"data": users,
 	})
 }
 
-// Create func
-func (u UserHandler) Create(c *fiber.Ctx) error {
+// UserCreate func
+func (delivery *Delivery) UserCreate(c *fiber.Ctx) error {
 	user := &entities.User{}
 	if err := c.BodyParser(user); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
 
-	userCreated, _ := u.Service.User.Create(user)
+	userCreated, _ := delivery.Service.User.Create(user)
 	return c.JSON(&fiber.Map{
 		"data": userCreated,
 	})
 }
 
-// Show func
-func (u UserHandler) Show(c *fiber.Ctx) error {
+// UserShow func
+func (delivery *Delivery) UserShow(c *fiber.Ctx) error {
 	id, err := uuid.FromString(c.Params("id"))
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
 
-	user, err := u.Service.User.FindByID(id)
+	user, err := delivery.Service.User.FindByID(id)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 	}
@@ -66,8 +57,8 @@ func (u UserHandler) Show(c *fiber.Ctx) error {
 	})
 }
 
-// ChangePassword func
-func (u UserHandler) ChangePassword(c *fiber.Ctx) error {
+// UserChangePassword func
+func (delivery *Delivery) UserChangePassword(c *fiber.Ctx) error {
 	id, err := uuid.FromString(c.Params("id"))
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
@@ -78,7 +69,7 @@ func (u UserHandler) ChangePassword(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
 
-	user, err := u.Service.User.ChangePassword(id, userInput.Password)
+	user, err := delivery.Service.User.ChangePassword(id, userInput.Password)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 	}

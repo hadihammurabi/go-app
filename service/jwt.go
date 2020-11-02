@@ -15,9 +15,7 @@ type JWTService struct {
 }
 
 // NewJWTService func
-func NewJWTService() entities.JWTService {
-	jwtConfig := config.ConfigureJWT()
-
+func NewJWTService(jwtConfig *config.JWTConfig) entities.JWTService {
 	return &JWTService{
 		Config: jwtConfig,
 	}

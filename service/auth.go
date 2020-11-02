@@ -1,6 +1,7 @@
 package service
 
 import (
+	"belajar-go-rest-api/config"
 	"belajar-go-rest-api/entities"
 	"belajar-go-rest-api/repository"
 )
@@ -15,7 +16,7 @@ type AuthService struct {
 func NewAuthService(repo *repository.Repository) entities.AuthService {
 	return &AuthService{
 		userService: NewUserService(repo),
-		jwtService:  NewJWTService(),
+		jwtService:  NewJWTService(config.ConfigureJWT()),
 	}
 }
 

@@ -1,6 +1,7 @@
 package service
 
 import (
+	"belajar-go-rest-api/config"
 	"belajar-go-rest-api/entities"
 	"belajar-go-rest-api/repository"
 )
@@ -17,7 +18,7 @@ func NewService(repo *repository.Repository) (service *Service) {
 	service = &Service{
 		Auth: NewAuthService(repo),
 		User: NewUserService(repo),
-		JWT:  NewJWTService(),
+		JWT:  NewJWTService(config.ConfigureJWT()),
 	}
 	return
 }

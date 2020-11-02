@@ -3,30 +3,21 @@ package http
 import (
 	"belajar-go-rest-api/delivery/http/middleware"
 	"belajar-go-rest-api/entities"
-	"belajar-go-rest-api/service"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-// AuthHandler controller
-type AuthHandler struct {
-	Service *service.Service
-}
-
 // NewAuthHandler func
-func NewAuthHandler(router fiber.Router, service *service.Service) (authHandler *AuthHandler) {
-	authHandler = &AuthHandler{
-		Service: service,
-	}
-
-	router.Post("/login", authHandler.Login)
-	router.Get("/info", middleware.Auth, authHandler.Info)
+func NewAuthHandler(delivery *Delivery) {
+	router := delivery.HTTP.Group("/auth")
+	router.Post("/login", delivery.Login)
+	router.Get("/info", delivery.Middlewares(middleware.AUTH), delivery.Info)
 
 	return
 }
 
 // Login func
-func (a AuthHandler) Login(c *fiber.Ctx) error {
+func (delivery Delivery) Login(c *fiber.Ctx) error {
 	userInput := &entities.UserLoginDTO{}
 	if err := c.BodyParser(userInput); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
@@ -37,7 +28,7 @@ func (a AuthHandler) Login(c *fiber.Ctx) error {
 		Password: userInput.Password,
 	}
 
-	token, err := a.Service.Auth.Login(user)
+	token, err := delivery.Service.Auth.Login(user)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": err.Error(),
@@ -50,6 +41,6 @@ func (a AuthHandler) Login(c *fiber.Ctx) error {
 }
 
 // Info func
-func (a AuthHandler) Info(c *fiber.Ctx) error {
+func (delivery Delivery) Info(c *fiber.Ctx) error {
 	return c.SendString("not implemented yet")
 }

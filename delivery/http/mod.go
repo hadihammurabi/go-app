@@ -1,6 +1,8 @@
 package http
 
 import (
+	"belajar-go-rest-api/config"
+	"belajar-go-rest-api/delivery/http/middleware"
 	"belajar-go-rest-api/service"
 
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -11,8 +13,9 @@ import (
 
 // Delivery struct
 type Delivery struct {
-	HTTP    *fiber.App
-	Service *service.Service
+	HTTP        *fiber.App
+	Middlewares func(int) fiber.Handler
+	Service     *service.Service
 }
 
 // Init func
@@ -23,9 +26,13 @@ func Init(service *service.Service) *Delivery {
 	}))
 	app.Use(cors.New())
 
+	middleware.Middlewares = map[int]fiber.Handler{}
+	middleware.Middlewares[middleware.AUTH] = middleware.NewAuthMiddleware(config.ConfigureJWT())
+
 	delivery := &Delivery{
-		HTTP:    app,
-		Service: service,
+		HTTP:        app,
+		Middlewares: middleware.Use,
+		Service:     service,
 	}
 	delivery.ConfigureRoute()
 	return delivery

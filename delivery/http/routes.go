@@ -12,9 +12,6 @@ func (delivery *Delivery) ConfigureRoute() {
 		})
 	})
 
-	authRouter := delivery.HTTP.Group("/auth")
-	_ = NewAuthHandler(authRouter, delivery.Service)
-
-	usersRouter := delivery.HTTP.Group("/users")
-	_ = NewUserHandler(usersRouter, delivery.Service)
+	NewAuthHandler(delivery)
+	NewUserHandler(delivery)
 }
