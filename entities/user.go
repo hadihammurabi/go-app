@@ -59,3 +59,12 @@ type UserService interface {
 	FindByEmail(email string) (*User, error)
 	ChangePassword(id uuid.UUID, password string) (*User, error)
 }
+
+// UserRepository interface
+type UserRepository interface {
+	All() ([]*User, error)
+	Create(user *User) (*User, error)
+	FindByID(id uuid.UUID) (*User, error)
+	FindByEmail(email string) (*User, error)
+	ChangePassword(id uuid.UUID, password string) (*User, error)
+}

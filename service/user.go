@@ -26,7 +26,7 @@ func (u UserService) All() ([]*entities.User, error) {
 
 // Create func
 func (u UserService) Create(user *entities.User) (*entities.User, error) {
-	return u.repo.User.Create(user), nil
+	return u.repo.User.Create(user)
 }
 
 // FindByEmail func

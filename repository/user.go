@@ -13,11 +13,11 @@ type UserRepository struct {
 }
 
 // NewUserRepository func
-func NewUserRepository(database *gorm.DB) (repo *UserRepository) {
-	repo = &UserRepository{
+func NewUserRepository(database *gorm.DB) entities.UserRepository {
+	repo := &UserRepository{
 		db: database,
 	}
-	return
+	return repo
 }
 
 // All func
@@ -28,9 +28,9 @@ func (u UserRepository) All() (users []*entities.User, err error) {
 }
 
 // Create func
-func (u UserRepository) Create(user *entities.User) *entities.User {
+func (u UserRepository) Create(user *entities.User) (*entities.User, error) {
 	u.db.Create(&user)
-	return user
+	return user, nil
 }
 
 // FindByEmail func
