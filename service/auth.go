@@ -12,7 +12,7 @@ type AuthService struct {
 }
 
 // NewAuthService func
-func NewAuthService(repo *repository.Repository) *AuthService {
+func NewAuthService(repo *repository.Repository) entities.AuthService {
 	return &AuthService{
 		userService: NewUserService(repo),
 		jwtService:  NewJWTService(),
