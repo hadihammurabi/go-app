@@ -16,6 +16,7 @@ type Delivery struct {
 	HTTP        *fiber.App
 	Middlewares func(int) fiber.Handler
 	Service     *service.Service
+	Validator   *config.Validator
 }
 
 // Init func
@@ -33,6 +34,7 @@ func Init(service *service.Service) *Delivery {
 		HTTP:        app,
 		Middlewares: middleware.Use,
 		Service:     service,
+		Validator:   config.NewValidator(),
 	}
 	delivery.ConfigureRoute()
 	return delivery
