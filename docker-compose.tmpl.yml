@@ -1,0 +1,35 @@
+version: "3.0"
+
+services:
+  app:
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    image: ${IMAGE_TAG}
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db
+    links:
+      - db
+    environment:
+      APP_HOST: 0.0.0.0:8081
+      APP_KEY: 5468c45197ea108da15f3d6453a3d0879b919d6096fe87bddfe42dfcf6e5731d
+      APP_TIMEZONE: Asia/Jakarta
+      DB_DRIVER: postgresql
+      DB_HOST: db
+      DB_USER: postgres
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: 5432
+    volumes:
+      - ~/visiting-toba-vol/images/:/go/src/visiting-toba/images/
+  db:
+    container_name: ${CONTAINER_NAME}_db
+    image: postgres:alpine
+    ports:
+      - "5432"
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - ~/visiting-toba-vol/db/:/var/lib/postgresql/data/
