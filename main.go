@@ -19,8 +19,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	database.MigrateDatabase(db)
-
 	repo := repository.NewRepository(db)
 	service := service.NewService(repo)
 

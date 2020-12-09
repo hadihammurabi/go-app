@@ -55,7 +55,6 @@ func ConfigureDatabase() (*gorm.DB, error) {
 
 	if driver == driverPostgresql {
 		db, err := ConfigurePostgresql(config)
-		MigrateDatabase(db)
 		return db, err
 	}
 
