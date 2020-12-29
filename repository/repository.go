@@ -1,14 +1,14 @@
 package repository
 
 import (
-	"belajar-go-rest-api/entities"
+	"belajar-go-rest-api/entity"
 
 	"gorm.io/gorm"
 )
 
 // Repository struct
 type Repository struct {
-	User entities.UserRepository
+	User entity.UserRepository
 }
 
 // NewRepository func
