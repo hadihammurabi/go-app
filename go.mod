@@ -14,5 +14,6 @@ require (
 	github.com/satori/go.uuid v1.2.0
 	golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a
 	gorm.io/driver/postgres v1.0.0
-	gorm.io/gorm v1.20.1
+	gorm.io/driver/sqlite v1.1.4
+	gorm.io/gorm v1.20.7
 )

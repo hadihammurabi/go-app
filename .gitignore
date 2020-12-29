@@ -1,3 +1,4 @@
 /.env
 /docs/
 /docker-compose.yml
+db.sqlite3
