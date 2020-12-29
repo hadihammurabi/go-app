@@ -1,4 +1,4 @@
-package entities
+package entity
 
 // AuthService interface
 type AuthService interface {
