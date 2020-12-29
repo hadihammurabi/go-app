@@ -67,6 +67,7 @@ func ConfigureDatabase() (*gorm.DB, error) {
 		return db, err
 	} else if driver == driverSqlite {
 		db, err := ConfigureSqlite(config)
+		migrateSqlite(db)
 		return db, err
 	}
 
