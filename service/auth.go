@@ -2,18 +2,18 @@ package service
 
 import (
 	"belajar-go-rest-api/config"
-	"belajar-go-rest-api/entities"
+	"belajar-go-rest-api/entity"
 	"belajar-go-rest-api/repository"
 )
 
 // AuthService struct
 type AuthService struct {
-	userService entities.UserService
-	jwtService  entities.JWTService
+	userService entity.UserService
+	jwtService  entity.JWTService
 }
 
 // NewAuthService func
-func NewAuthService(repo *repository.Repository) entities.AuthService {
+func NewAuthService(repo *repository.Repository) entity.AuthService {
 	return &AuthService{
 		userService: NewUserService(repo),
 		jwtService:  NewJWTService(config.ConfigureJWT()),
@@ -21,7 +21,7 @@ func NewAuthService(repo *repository.Repository) entities.AuthService {
 }
 
 // Login func
-func (a AuthService) Login(userInput *entities.User) (string, error) {
+func (a AuthService) Login(userInput *entity.User) (string, error) {
 	user, err := a.userService.FindByEmail(userInput.Email)
 	if err != nil {
 		return "", err

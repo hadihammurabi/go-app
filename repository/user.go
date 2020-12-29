@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"belajar-go-rest-api/entities"
+	"belajar-go-rest-api/entity"
 
 	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
@@ -13,7 +13,7 @@ type UserRepository struct {
 }
 
 // NewUserRepository func
-func NewUserRepository(database *gorm.DB) entities.UserRepository {
+func NewUserRepository(database *gorm.DB) entity.UserRepository {
 	repo := &UserRepository{
 		db: database,
 	}
@@ -21,36 +21,36 @@ func NewUserRepository(database *gorm.DB) entities.UserRepository {
 }
 
 // All func
-func (u UserRepository) All() (users []*entities.User, err error) {
-	users = make([]*entities.User, 0)
+func (u UserRepository) All() (users []*entity.User, err error) {
+	users = make([]*entity.User, 0)
 	err = u.db.Find(&users).Error
 	return users, err
 }
 
 // Create func
-func (u UserRepository) Create(user *entities.User) (*entities.User, error) {
+func (u UserRepository) Create(user *entity.User) (*entity.User, error) {
 	u.db.Create(&user)
 	return user, nil
 }
 
 // FindByEmail func
-func (u UserRepository) FindByEmail(email string) (*entities.User, error) {
-	user := &entities.User{}
-	u.db.Where(&entities.User{
+func (u UserRepository) FindByEmail(email string) (*entity.User, error) {
+	user := &entity.User{}
+	u.db.Where(&entity.User{
 		Email: email,
 	}).First(&user)
 	return user, nil
 }
 
 // FindByID func
-func (u UserRepository) FindByID(id uuid.UUID) (*entities.User, error) {
-	user := &entities.User{}
+func (u UserRepository) FindByID(id uuid.UUID) (*entity.User, error) {
+	user := &entity.User{}
 	u.db.Where("id = ?", id).First(&user)
 	return user, nil
 }
 
 // ChangePassword func
-func (u UserRepository) ChangePassword(id uuid.UUID, password string) (*entities.User, error) {
+func (u UserRepository) ChangePassword(id uuid.UUID, password string) (*entity.User, error) {
 	user, err := u.FindByID(id)
 	if err != nil {
 		return nil, err

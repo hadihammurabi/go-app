@@ -2,7 +2,7 @@ package service
 
 import (
 	"belajar-go-rest-api/config"
-	"belajar-go-rest-api/entities"
+	"belajar-go-rest-api/entity"
 	"errors"
 	"time"
 
@@ -16,15 +16,15 @@ type JWTService struct {
 }
 
 // NewJWTService func
-func NewJWTService(jwtConfig *config.JWTConfig) entities.JWTService {
+func NewJWTService(jwtConfig *config.JWTConfig) entity.JWTService {
 	return &JWTService{
 		Config: jwtConfig,
 	}
 }
 
 // Create func
-func (jwtService JWTService) Create(userData *entities.User) (string, error) {
-	claims := &entities.JWTClaims{}
+func (jwtService JWTService) Create(userData *entity.User) (string, error) {
+	claims := &entity.JWTClaims{}
 	claims.User = userData
 	claims.ExpiresAt = int64(time.Hour) * 3
 
@@ -38,8 +38,8 @@ func (jwtService JWTService) Create(userData *entities.User) (string, error) {
 }
 
 // GetClaims func
-func (jwtService JWTService) GetClaims(c *fiber.Ctx) (claims *entities.JWTClaims) {
+func (jwtService JWTService) GetClaims(c *fiber.Ctx) (claims *entity.JWTClaims) {
 	token := c.Locals("user").(*jwt.Token)
-	claims = token.Claims.(*entities.JWTClaims)
+	claims = token.Claims.(*entity.JWTClaims)
 	return
 }

@@ -2,7 +2,7 @@ package http
 
 import (
 	"belajar-go-rest-api/delivery/http/middleware"
-	"belajar-go-rest-api/entities"
+	"belajar-go-rest-api/entity"
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
@@ -19,12 +19,12 @@ func NewAuthHandler(delivery *Delivery) {
 
 // Login func
 func (delivery Delivery) Login(c *fiber.Ctx) error {
-	userInput := &entities.UserLoginDTO{}
+	userInput := &entity.UserLoginDTO{}
 	if err := c.BodyParser(userInput); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
 
-	user := &entities.User{
+	user := &entity.User{
 		Email:    userInput.Email,
 		Password: userInput.Password,
 	}

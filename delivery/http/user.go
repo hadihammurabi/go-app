@@ -1,7 +1,7 @@
 package http
 
 import (
-	"belajar-go-rest-api/entities"
+	"belajar-go-rest-api/entity"
 
 	uuid "github.com/satori/go.uuid"
 
@@ -29,7 +29,7 @@ func (delivery *Delivery) UserIndex(c *fiber.Ctx) error {
 
 // UserCreate func
 func (delivery *Delivery) UserCreate(c *fiber.Ctx) error {
-	user := &entities.User{}
+	user := &entity.User{}
 	if err := c.BodyParser(user); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
@@ -64,7 +64,7 @@ func (delivery *Delivery) UserChangePassword(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
 
-	userInput := &entities.UserChangePasswordDTO{}
+	userInput := &entity.UserChangePasswordDTO{}
 	if err := c.BodyParser(userInput); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
