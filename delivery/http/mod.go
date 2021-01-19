@@ -4,6 +4,7 @@ import (
 	"belajar-go-rest-api/config"
 	"belajar-go-rest-api/delivery/http/middleware"
 	"belajar-go-rest-api/service"
+	"belajar-go-rest-api/utils"
 
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -16,7 +17,7 @@ type Delivery struct {
 	HTTP        *fiber.App
 	Middlewares func(int) fiber.Handler
 	Service     *service.Service
-	Validator   *config.Validator
+	Validator   *utils.Validator
 }
 
 // Init func
@@ -34,7 +35,7 @@ func Init(service *service.Service) *Delivery {
 		HTTP:        app,
 		Middlewares: middleware.Use,
 		Service:     service,
-		Validator:   config.NewValidator(),
+		Validator:   utils.NewValidator(),
 	}
 	delivery.ConfigureRoute()
 	return delivery
