@@ -8,15 +8,17 @@ import (
 
 // AuthService struct
 type AuthService struct {
-	userService entity.UserService
-	jwtService  entity.JWTService
+	userService  entity.UserService
+	tokenService entity.TokenService
+	jwtService   entity.JWTService
 }
 
 // NewAuthService func
 func NewAuthService(repo *repository.Repository) entity.AuthService {
 	return &AuthService{
-		userService: NewUserService(repo),
-		jwtService:  NewJWTService(config.ConfigureJWT()),
+		userService:  NewUserService(repo),
+		tokenService: NewTokenService(repo),
+		jwtService:   NewJWTService(config.ConfigureJWT()),
 	}
 }
 
@@ -36,6 +38,11 @@ func (a AuthService) Login(userInput *entity.User) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
+	a.tokenService.Create(&entity.Token{
+		UserID: user.ID,
+		Token:  token,
+	})
 
 	return token, nil
 }
