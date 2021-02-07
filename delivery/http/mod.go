@@ -4,7 +4,7 @@ import (
 	"belajar-go-rest-api/config"
 	"belajar-go-rest-api/delivery/http/middleware"
 	"belajar-go-rest-api/service"
-	"belajar-go-rest-api/utils"
+	utils "belajar-go-rest-api/util"
 
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
