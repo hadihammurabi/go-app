@@ -8,13 +8,15 @@ import (
 
 // Repository struct
 type Repository struct {
-	User entity.UserRepository
+	User  entity.UserRepository
+	Token entity.TokenRepository
 }
 
 // NewRepository func
 func NewRepository(database *gorm.DB) (repo *Repository) {
 	repo = &Repository{
-		User: NewUserRepository(database),
+		User:  NewUserRepository(database),
+		Token: NewTokenRepository(database),
 	}
 	return
 }

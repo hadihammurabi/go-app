@@ -26,3 +26,16 @@ type TokenRepository interface {
 	Create(*Token) (*Token, error)
 	FindByUserID(uuid.UUID) (*Token, error)
 }
+
+// TokenService interface
+type TokenService interface {
+	Create(*Token) (*Token, error)
+	FindByUserID(uuid.UUID) (*Token, error)
+}
+
+// CreateTokenDTO model
+type CreateTokenDTO struct {
+	UserID    uuid.UUID `json:"user_id,omitempty"`
+	Token     string    `json:"token,omitempty"`
+	ExpiredAt int       `json:"expired_at,omitempty"`
+}

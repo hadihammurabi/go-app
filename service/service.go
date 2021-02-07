@@ -8,17 +8,19 @@ import (
 
 // Service struct
 type Service struct {
-	Auth entity.AuthService
-	User entity.UserService
-	JWT  entity.JWTService
+	Auth  entity.AuthService
+	User  entity.UserService
+	Token entity.TokenService
+	JWT   entity.JWTService
 }
 
 // NewService func
 func NewService(repo *repository.Repository) (service *Service) {
 	service = &Service{
-		Auth: NewAuthService(repo),
-		User: NewUserService(repo),
-		JWT:  NewJWTService(config.ConfigureJWT()),
+		Auth:  NewAuthService(repo),
+		User:  NewUserService(repo),
+		Token: NewTokenService(repo),
+		JWT:   NewJWTService(config.ConfigureJWT()),
 	}
 	return
 }
