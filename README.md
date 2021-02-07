@@ -24,4 +24,24 @@ Nama | Peran
 [Swag](https://github.com/swaggo/swag) | Otomatis generate dokumentasi REST API (swagger)
 [GNU/Make](https://www.gnu.org/software/make/) | Build tool
 
+# Menjalankan Projek
+## Mode Development
+1. Clone projek ke komputer lokal, dengan perintah:
+  ```bash
+  git clone https://github.com/hadihammurabi/belajar-go-rest-api
+  ```
+2. Menjalankan projek dengan mode development (pengembangan) dengan perintah:
+  ```bash
+  make dev
+  ```
 
+## Mode Production
+1. Clone projek ke komputer lokal, dengan perintah:
+  ```bash
+  git clone https://github.com/hadihammurabi/belajar-go-rest-api
+  ```
+2. Menjalankan projek siap guna dengan perintah:
+  ```bash
+  make && ./main
+  ```
+  
