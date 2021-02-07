@@ -22,3 +22,6 @@ Nama | Peran
 [Validator](https://github.com/go-playground/validator) | Validasi data
 [Migrate](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate) | Migrasi database
 [Swag](https://github.com/swaggo/swag) | Otomatis generate dokumentasi REST API (swagger)
+[GNU/Make](https://www.gnu.org/software/make/) | Build tool
+
+
