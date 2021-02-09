@@ -26,7 +26,7 @@ func (u TokenRepository) Create(token *entity.Token) (*entity.Token, error) {
 	return token, err
 }
 
-// FindByID func
+// FindByUserID func
 func (u TokenRepository) FindByUserID(id uuid.UUID) (*entity.Token, error) {
 	token := &entity.Token{}
 	err := u.db.Where("id = ?", id).First(&token).Error
