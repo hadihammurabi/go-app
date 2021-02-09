@@ -29,24 +29,24 @@ func (u UserRepository) All() (users []*entity.User, err error) {
 
 // Create func
 func (u UserRepository) Create(user *entity.User) (*entity.User, error) {
-	u.db.Create(&user)
-	return user, nil
+	err := u.db.Create(&user).Error
+	return user, err
 }
 
 // FindByEmail func
 func (u UserRepository) FindByEmail(email string) (*entity.User, error) {
 	user := &entity.User{}
-	u.db.Where(&entity.User{
+	err := u.db.Where(&entity.User{
 		Email: email,
-	}).First(&user)
-	return user, nil
+	}).First(&user).Error
+	return user, err
 }
 
 // FindByID func
 func (u UserRepository) FindByID(id uuid.UUID) (*entity.User, error) {
 	user := &entity.User{}
-	u.db.Where("id = ?", id).First(&user)
-	return user, nil
+	err := u.db.Where("id = ?", id).First(&user).Error
+	return user, err
 }
 
 // ChangePassword func
@@ -57,7 +57,7 @@ func (u UserRepository) ChangePassword(id uuid.UUID, password string) (*entity.U
 	}
 
 	user.Password = password
-	u.db.Save(user)
+	err = u.db.Save(user).Error
 
-	return user, nil
+	return user, err
 }
