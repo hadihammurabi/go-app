@@ -1,3 +1,20 @@
+#  (2021-02-10)
+
+
+### Bug Fixes
+
+* change validator package from config to utils ([fd33c7b](https://github.com/hadihammurabi/belajar-go-rest-api/commit/fd33c7b372a0df9b1b3e55d4770f191f159b544c))
+
+
+### Features
+
+* **auth:** get user data from  JWT ([b8de370](https://github.com/hadihammurabi/belajar-go-rest-api/commit/b8de3705e254beeff73d56662cbb9a6fce68b59e))
+* **jwt:** add custom JWT claims ([50b3c1f](https://github.com/hadihammurabi/belajar-go-rest-api/commit/50b3c1fd79c332b9c083ebc3858c2115daef166e))
+* **token:** add token to db after jwt generated ([debccb2](https://github.com/hadihammurabi/belajar-go-rest-api/commit/debccb2b34aa332d3eb393b79819f9dde6c3f651))
+* **utils:** add file utilities ([36b0bed](https://github.com/hadihammurabi/belajar-go-rest-api/commit/36b0bed53bf41e0d96e41cfa7beeb288444ddd19))
+* **utils:** add random utilities ([ba026ca](https://github.com/hadihammurabi/belajar-go-rest-api/commit/ba026ca48f41c244835a2281d5b2357b9e22de8f))
+
+
 #  (2020-11-01)
 
 
