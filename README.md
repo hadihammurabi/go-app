@@ -25,6 +25,24 @@ Nama | Peran
 [GNU/Make](https://www.gnu.org/software/make/) | Build tool
 
 # Menjalankan Projek
+## Persiapan
+Agar projek dapat dijalankan, diperlukan beberapa hal untuk dipersiapkan, antara lain:
+1. Instalasi Fiber CLI.
+```bash
+go get -u github.com/gofiber/cli/fiber
+```
+2. Instalasi Swaggo.
+```bash
+go get -u github.com/swaggo/swag/cmd/swag
+```
+3. Instalasi Migrate.
+Ikuti panduan [di sini](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate).
+
+4. Menjalankan migration dengan menyesuaikan akses database.
+```bash
+migrate -path db/migrations -database "postgres://localhost/test_db?sslmode=disable" up
+```
+
 ## Mode Development
 1. Clone projek ke komputer lokal, dengan perintah:
   ```bash
