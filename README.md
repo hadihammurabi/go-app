@@ -1,6 +1,24 @@
 # Belajar Go REST API
 Belajar REST API dengan bahasa pemrograman Go.
 
+# Daftar Isi
+* [Fitur](#fitur)
+* [Konsep Arsitektural](#konsep-arsitektural)
+* [Stack Teknologi](#stack-teknologi)
+* [Utilitas Pihak Ketiga](#utilitas-pihak-ketiga)
+* [Menjalankan Projek](#menjalankan-projek)
+  * [Persiapan](#persiapan)
+  * [Mode Development](#mode-development)
+  * [Mode Production](#mode-production)
+
+# Fitur
+Projek ini sudah siap dijalankan dan dapat dimodifikasi sesuai kebutuhan masing-masing. Adapun kemampuan projek ini:
+1. Dapat menjadi backend dari REST API.
+2. Dapat menjadi service dalam rangkaian microservices.
+3. Dapat menyediakan dokumentasi API melalui Swagger.
+4. Support berbagai koneksi database, seperti MySQL, PostgreSQL, SQLite, dan SQL Server.
+5. Support migrasi database dalam bentuk file SQL.
+
 # Konsep Arsitektural
 Struktur proyek ini mengikuti konsep-konsep arsitektural seperti:
 - DRY (Don't Repeat Yourself)
