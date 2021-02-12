@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"belajar-go-rest-api/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 
 	"gorm.io/gorm"
 )

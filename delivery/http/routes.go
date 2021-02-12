@@ -1,7 +1,7 @@
 package http
 
 import (
-	"belajar-go-rest-api/docs"
+	"github.com/hadihammurabi/belajar-go-rest-api/docs"
 
 	swagger "github.com/arsmn/fiber-swagger/v2"
 	"github.com/gofiber/fiber/v2"

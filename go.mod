@@ -1,4 +1,4 @@
-module belajar-go-rest-api
+module github.com/hadihammurabi/belajar-go-rest-api
 
 go 1.15
 

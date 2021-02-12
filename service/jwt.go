@@ -1,11 +1,12 @@
 package service
 
 import (
-	"belajar-go-rest-api/config"
-	"belajar-go-rest-api/entity"
-	"belajar-go-rest-api/repository"
 	"errors"
 	"time"
+
+	"github.com/hadihammurabi/belajar-go-rest-api/config"
+	"github.com/hadihammurabi/belajar-go-rest-api/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/repository"
 
 	jwt "github.com/dgrijalva/jwt-go"
 )

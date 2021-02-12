@@ -1,13 +1,14 @@
 package main
 
 import (
-	"belajar-go-rest-api/config/database"
-	deliveryHttp "belajar-go-rest-api/delivery/http"
-	"belajar-go-rest-api/repository"
-	"belajar-go-rest-api/service"
 	"log"
 
-	_ "belajar-go-rest-api/docs"
+	"github.com/hadihammurabi/belajar-go-rest-api/config/database"
+	deliveryHttp "github.com/hadihammurabi/belajar-go-rest-api/delivery/http"
+	"github.com/hadihammurabi/belajar-go-rest-api/repository"
+	"github.com/hadihammurabi/belajar-go-rest-api/service"
+
+	_ "github.com/hadihammurabi/belajar-go-rest-api/docs"
 
 	"github.com/joho/godotenv"
 )

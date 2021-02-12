@@ -1,9 +1,10 @@
 package database
 
 import (
-	"belajar-go-rest-api/entity"
 	"errors"
 	"os"
+
+	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 
 	"gorm.io/gorm"
 )

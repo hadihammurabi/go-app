@@ -1,9 +1,10 @@
 package http
 
 import (
-	"belajar-go-rest-api/delivery/http/middleware"
-	"belajar-go-rest-api/entity"
 	"fmt"
+
+	"github.com/hadihammurabi/belajar-go-rest-api/delivery/http/middleware"
+	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"

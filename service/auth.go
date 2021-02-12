@@ -1,9 +1,9 @@
 package service
 
 import (
-	"belajar-go-rest-api/config"
-	"belajar-go-rest-api/entity"
-	"belajar-go-rest-api/repository"
+	"github.com/hadihammurabi/belajar-go-rest-api/config"
+	"github.com/hadihammurabi/belajar-go-rest-api/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/repository"
 )
 
 // AuthService struct

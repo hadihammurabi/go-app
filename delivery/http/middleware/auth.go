@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"belajar-go-rest-api/config"
+	"github.com/hadihammurabi/belajar-go-rest-api/config"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"

@@ -1,10 +1,10 @@
 package http
 
 import (
-	"belajar-go-rest-api/config"
-	"belajar-go-rest-api/delivery/http/middleware"
-	"belajar-go-rest-api/service"
-	utils "belajar-go-rest-api/util"
+	"github.com/hadihammurabi/belajar-go-rest-api/config"
+	"github.com/hadihammurabi/belajar-go-rest-api/delivery/http/middleware"
+	"github.com/hadihammurabi/belajar-go-rest-api/service"
+	utils "github.com/hadihammurabi/belajar-go-rest-api/util"
 
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
