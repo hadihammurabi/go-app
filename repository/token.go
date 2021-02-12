@@ -14,10 +14,9 @@ type TokenRepository struct {
 
 // NewTokenRepository func
 func NewTokenRepository(database *gorm.DB) entity.TokenRepository {
-	repo := &TokenRepository{
+	return &TokenRepository{
 		db: database,
 	}
-	return repo
 }
 
 // Create func
@@ -31,4 +30,11 @@ func (u TokenRepository) FindByUserID(id uuid.UUID) (*entity.Token, error) {
 	token := &entity.Token{}
 	err := u.db.Where("id = ?", id).First(&token).Error
 	return token, err
+}
+
+// FindByToken func
+func (u TokenRepository) FindByToken(token string) (*entity.Token, error) {
+	tokenDB := &entity.Token{}
+	err := u.db.Where("token = ?", token).First(&tokenDB).Error
+	return tokenDB, err
 }

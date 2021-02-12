@@ -20,7 +20,7 @@ func NewService(repo *repository.Repository) (service *Service) {
 		Auth:  NewAuthService(repo),
 		User:  NewUserService(repo),
 		Token: NewTokenService(repo),
-		JWT:   NewJWTService(config.ConfigureJWT()),
+		JWT:   NewJWTService(config.ConfigureJWT(), repo),
 	}
 	return
 }

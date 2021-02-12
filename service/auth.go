@@ -18,7 +18,7 @@ func NewAuthService(repo *repository.Repository) entity.AuthService {
 	return &AuthService{
 		userService:  NewUserService(repo),
 		tokenService: NewTokenService(repo),
-		jwtService:   NewJWTService(config.ConfigureJWT()),
+		jwtService:   NewJWTService(config.ConfigureJWT(), repo),
 	}
 }
 
@@ -39,10 +39,5 @@ func (a AuthService) Login(userInput *entity.User) (string, error) {
 		return "", err
 	}
 
-	a.tokenService.Create(&entity.Token{
-		UserID: user.ID,
-		Token:  token,
-	})
-
-	return token, nil
+	return token.Token, nil
 }

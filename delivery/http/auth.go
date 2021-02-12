@@ -5,6 +5,7 @@ import (
 	"belajar-go-rest-api/entity"
 	"fmt"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -43,7 +44,14 @@ func (delivery Delivery) Login(c *fiber.Ctx) error {
 
 // Info func
 func (delivery Delivery) Info(c *fiber.Ctx) error {
-	claims := delivery.Service.JWT.GetClaims(c)
-	email := claims.User.Email
+	fromLocals := c.Locals("user").(*jwt.Token)
+	user, err := delivery.Service.JWT.GetUser(fromLocals.Raw)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": err.Error(),
+		})
+	}
+
+	email := user.Email
 	return c.SendString(fmt.Sprintf("welcome, %s", email))
 }

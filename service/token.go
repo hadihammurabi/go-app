@@ -28,3 +28,8 @@ func (u TokenService) Create(token *entity.Token) (*entity.Token, error) {
 func (u TokenService) FindByUserID(id uuid.UUID) (*entity.Token, error) {
 	return u.repo.Token.FindByUserID(id)
 }
+
+// FindByToken func
+func (u TokenService) FindByToken(token string) (*entity.Token, error) {
+	return u.repo.Token.FindByToken(token)
+}

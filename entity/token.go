@@ -25,12 +25,14 @@ func (u *Token) BeforeCreate(tx *gorm.DB) (err error) {
 type TokenRepository interface {
 	Create(*Token) (*Token, error)
 	FindByUserID(uuid.UUID) (*Token, error)
+	FindByToken(string) (*Token, error)
 }
 
 // TokenService interface
 type TokenService interface {
 	Create(*Token) (*Token, error)
 	FindByUserID(uuid.UUID) (*Token, error)
+	FindByToken(string) (*Token, error)
 }
 
 // CreateTokenDTO model
