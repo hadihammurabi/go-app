@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/config/database"
 	deliveryHttp "github.com/hadihammurabi/belajar-go-rest-api/delivery/http"
 	"github.com/hadihammurabi/belajar-go-rest-api/repository"
@@ -29,7 +30,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	repo := repository.NewRepository(db)
+	ioc := config.NewIOC(db)
+
+	repo := ioc.Get("repository").(*repository.Repository)
 	service := service.NewService(repo)
 
 	httpApp := deliveryHttp.Init(service)

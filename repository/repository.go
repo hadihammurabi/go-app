@@ -2,8 +2,9 @@ package repository
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
-
 	"gorm.io/gorm"
+
+	"github.com/sarulabs/di"
 )
 
 // Repository struct
@@ -13,7 +14,9 @@ type Repository struct {
 }
 
 // NewRepository func
-func NewRepository(database *gorm.DB) (repo *Repository) {
+func NewRepository(ioc di.Container) (repo *Repository) {
+	database := ioc.Get("database").(*gorm.DB)
+
 	repo = &Repository{
 		User:  NewUserRepository(database),
 		Token: NewTokenRepository(database),
