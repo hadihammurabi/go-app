@@ -18,6 +18,7 @@ Projek ini sudah siap dijalankan dan dapat dimodifikasi sesuai kebutuhan masing-
 3. Dapat menyediakan dokumentasi API melalui Swagger.
 4. Support berbagai koneksi database, seperti MySQL, PostgreSQL, SQLite, dan SQL Server.
 5. Support migrasi database dalam bentuk file SQL.
+6. Support [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection).
 
 # Konsep Arsitektural
 Struktur proyek ini mengikuti konsep-konsep arsitektural seperti:
