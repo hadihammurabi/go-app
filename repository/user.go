@@ -15,7 +15,7 @@ type UserRepository struct {
 
 // NewUserRepository func
 func NewUserRepository(ioc di.Container) entity.UserRepository {
-	database := ioc.Get("database").(*gorm.DB)
+	database := getDatabase(ioc)
 	repo := &UserRepository{
 		db: database,
 	}

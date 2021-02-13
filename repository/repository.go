@@ -2,6 +2,7 @@ package repository
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
+	"gorm.io/gorm"
 
 	"github.com/sarulabs/di"
 )
@@ -19,4 +20,8 @@ func NewRepository(ioc di.Container) (repo *Repository) {
 		Token: NewTokenRepository(ioc),
 	}
 	return
+}
+
+func getDatabase(ioc di.Container) *gorm.DB {
+	return ioc.Get("database").(*gorm.DB)
 }

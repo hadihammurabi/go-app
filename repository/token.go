@@ -15,7 +15,7 @@ type TokenRepository struct {
 
 // NewTokenRepository func
 func NewTokenRepository(ioc di.Container) entity.TokenRepository {
-	database := ioc.Get("database").(*gorm.DB)
+	database := getDatabase(ioc)
 
 	return &TokenRepository{
 		db: database,
