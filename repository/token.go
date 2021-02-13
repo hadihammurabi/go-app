@@ -2,6 +2,7 @@ package repository
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
+	"github.com/sarulabs/di"
 
 	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
@@ -13,7 +14,9 @@ type TokenRepository struct {
 }
 
 // NewTokenRepository func
-func NewTokenRepository(database *gorm.DB) entity.TokenRepository {
+func NewTokenRepository(ioc di.Container) entity.TokenRepository {
+	database := ioc.Get("database").(*gorm.DB)
+
 	return &TokenRepository{
 		db: database,
 	}
