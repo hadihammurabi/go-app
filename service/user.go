@@ -15,7 +15,7 @@ type UserService struct {
 
 // NewUserService func
 func NewUserService(ioc di.Container) entity.UserService {
-	repo := ioc.Get("repository").(*repository.Repository)
+	repo := getRepository(ioc)
 	return &UserService{
 		repo,
 	}

@@ -15,7 +15,7 @@ type TokenService struct {
 
 // NewTokenService func
 func NewTokenService(ioc di.Container) entity.TokenService {
-	repo := ioc.Get("repository").(*repository.Repository)
+	repo := getRepository(ioc)
 	return &TokenService{
 		repo,
 	}

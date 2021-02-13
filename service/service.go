@@ -2,6 +2,7 @@ package service
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/repository"
 	"github.com/sarulabs/di"
 )
 
@@ -22,4 +23,8 @@ func NewService(ioc di.Container) (service *Service) {
 		JWT:   NewJWTService(ioc),
 	}
 	return
+}
+
+func getRepository(ioc di.Container) *repository.Repository {
+	return ioc.Get("repository").(*repository.Repository)
 }
