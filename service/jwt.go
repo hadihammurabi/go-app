@@ -6,7 +6,7 @@ import (
 
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
-	"github.com/hadihammurabi/belajar-go-rest-api/repository"
+	"github.com/sarulabs/di"
 
 	jwt "github.com/dgrijalva/jwt-go"
 )
@@ -19,11 +19,13 @@ type JWTService struct {
 }
 
 // NewJWTService func
-func NewJWTService(jwtConfig *config.JWTConfig, repo *repository.Repository) entity.JWTService {
+func NewJWTService(ioc di.Container) entity.JWTService {
+	jwtConfig := ioc.Get("jwt").(*(config.JWTConfig))
+
 	return &JWTService{
 		Config:       jwtConfig,
-		UserService:  NewUserService(repo),
-		TokenService: NewTokenService(repo),
+		UserService:  NewUserService(ioc),
+		TokenService: NewTokenService(ioc),
 	}
 }
 

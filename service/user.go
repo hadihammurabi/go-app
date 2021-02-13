@@ -3,6 +3,7 @@ package service
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 	"github.com/hadihammurabi/belajar-go-rest-api/repository"
+	"github.com/sarulabs/di"
 
 	uuid "github.com/satori/go.uuid"
 )
@@ -13,9 +14,10 @@ type UserService struct {
 }
 
 // NewUserService func
-func NewUserService(repo *repository.Repository) entity.UserService {
+func NewUserService(ioc di.Container) entity.UserService {
+	repo := ioc.Get("repository").(*repository.Repository)
 	return &UserService{
-		repo: repo,
+		repo,
 	}
 }
 

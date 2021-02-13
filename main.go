@@ -1,13 +1,7 @@
 package main
 
 import (
-	"log"
-
-	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/config/database"
 	deliveryHttp "github.com/hadihammurabi/belajar-go-rest-api/delivery/http"
-	"github.com/hadihammurabi/belajar-go-rest-api/repository"
-	"github.com/hadihammurabi/belajar-go-rest-api/service"
 
 	_ "github.com/hadihammurabi/belajar-go-rest-api/docs"
 
@@ -24,18 +18,8 @@ import (
 func main() {
 	_ = godotenv.Load()
 
-	db, err := database.ConfigureDatabase()
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	ioc := config.NewIOC(db)
-
-	repo := ioc.Get("repository").(*repository.Repository)
-	service := service.NewService(repo)
-
-	httpApp := deliveryHttp.Init(service)
+	ioc := NewIOC()
+	httpApp := deliveryHttp.Init(ioc)
 
 	forever := make(chan bool)
 	go func() {

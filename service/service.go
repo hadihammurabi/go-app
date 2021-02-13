@@ -1,9 +1,8 @@
 package service
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
-	"github.com/hadihammurabi/belajar-go-rest-api/repository"
+	"github.com/sarulabs/di"
 )
 
 // Service struct
@@ -15,12 +14,12 @@ type Service struct {
 }
 
 // NewService func
-func NewService(repo *repository.Repository) (service *Service) {
+func NewService(ioc di.Container) (service *Service) {
 	service = &Service{
-		Auth:  NewAuthService(repo),
-		User:  NewUserService(repo),
-		Token: NewTokenService(repo),
-		JWT:   NewJWTService(config.ConfigureJWT(), repo),
+		Auth:  NewAuthService(ioc),
+		User:  NewUserService(ioc),
+		Token: NewTokenService(ioc),
+		JWT:   NewJWTService(ioc),
 	}
 	return
 }

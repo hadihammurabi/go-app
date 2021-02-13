@@ -3,6 +3,7 @@ package service
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 	"github.com/hadihammurabi/belajar-go-rest-api/repository"
+	"github.com/sarulabs/di"
 
 	uuid "github.com/satori/go.uuid"
 )
@@ -13,9 +14,10 @@ type TokenService struct {
 }
 
 // NewTokenService func
-func NewTokenService(repo *repository.Repository) entity.TokenService {
+func NewTokenService(ioc di.Container) entity.TokenService {
+	repo := ioc.Get("repository").(*repository.Repository)
 	return &TokenService{
-		repo: repo,
+		repo,
 	}
 }
 
