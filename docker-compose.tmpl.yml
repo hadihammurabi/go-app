@@ -22,7 +22,7 @@ services:
       DB_NAME: ${DB_NAME}
       DB_PORT: 5432
     volumes:
-      - ~/visiting-toba-vol/images/:/go/src/visiting-toba/images/
+      - ~/github.com/hadihammurabi/belajar-go-rest-api/images/:/go/src/app/images/
   db:
     container_name: ${CONTAINER_NAME}_db
     image: postgres:alpine
@@ -32,4 +32,4 @@ services:
       POSTGRES_PASSWORD: ${DB_PASS}
       POSTGRES_DB: ${DB_NAME}
     volumes:
-      - ~/visiting-toba-vol/db/:/var/lib/postgresql/data/
+      - ~/github.com/hadihammurabi/belajar-go-rest-api/db/:/var/lib/postgresql/data/
