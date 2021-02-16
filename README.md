@@ -27,7 +27,7 @@ Struktur proyek ini mengikuti konsep-konsep arsitektural seperti:
 - Clean Architecture
 
 # Stack Teknologi
-Nama | Peran
+Nama | Kegunaan
 -|-
 [Go](https://golang.org) | Bahasa Pemrograman
 [Fiber](https://docs.gofiber.io) | Web Framework
@@ -36,7 +36,7 @@ Nama | Peran
 [Jwt](https://jwt.io) | Token untuk Otentikasi
 
 # Utilitas Pihak Ketiga
-Nama | Peran
+Nama | Kegunaan
 -|-
 [Validator](https://github.com/go-playground/validator) | Validasi data
 [Migrate](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate) | Migrasi database
