@@ -29,7 +29,7 @@ func main() {
 
 	forever := make(chan bool)
 	go func() {
-		httpApp.HTTP.Listen(":8080")
+		httpApp.HTTP.Listen(conf.APP.Port)
 	}()
 	<-forever
 }

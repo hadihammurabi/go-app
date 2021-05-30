@@ -6,12 +6,14 @@ import (
 )
 
 type Config struct {
+	APP *AppConfig
 	JWT *JWTConfig
 	DB  *gorm.DB
 }
 
 func New() (*Config, error) {
 	jwtConf := ConfigureJWT()
+	appConf := ConfigureApp()
 
 	dbConf, err := database.ConfigureDatabase()
 	if err != nil {
@@ -19,6 +21,7 @@ func New() (*Config, error) {
 	}
 
 	conf := &Config{
+		APP: appConf,
 		JWT: jwtConf,
 		DB:  dbConf,
 	}
