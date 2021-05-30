@@ -15,8 +15,6 @@ func NewUserHandler(delivery *Delivery) {
 	router.Get("/:id", delivery.UserShow)
 	router.Post("/", delivery.UserCreate)
 	router.Put("/:id/change-password", delivery.UserChangePassword)
-
-	return
 }
 
 // UserIndex func
