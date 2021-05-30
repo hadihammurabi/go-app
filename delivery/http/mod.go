@@ -10,6 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/recover"
 )
 
 // Delivery struct
@@ -26,6 +27,7 @@ func Init(ioc di.Container) *Delivery {
 	app.Use(logger.New(logger.Config{
 		Format: "[\"${time}\", \"${method}\", \"${path}\", \"${status}\", \"${ip}\", \"${latency}\"]\n",
 	}))
+	app.Use(recover.New())
 	app.Use(cors.New())
 
 	middleware.Middlewares = map[int]fiber.Handler{}
