@@ -12,7 +12,7 @@ services:
     links:
       - db
     environment:
-      APP_HOST: 0.0.0.0:8081
+      APP_HOST: 0.0.0.0:8080
       APP_KEY: 5468c45197ea108da15f3d6453a3d0879b919d6096fe87bddfe42dfcf6e5731d
       APP_TIMEZONE: Asia/Jakarta
       DB_DRIVER: postgresql
@@ -22,7 +22,7 @@ services:
       DB_NAME: ${DB_NAME}
       DB_PORT: 5432
     volumes:
-      - ~/github.com/hadihammurabi/belajar-go-rest-api/images/:/go/src/app/images/
+      - app-data-images:/go/src/app/images/
   db:
     container_name: ${CONTAINER_NAME}_db
     image: postgres:alpine
@@ -32,4 +32,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASS}
       POSTGRES_DB: ${DB_NAME}
     volumes:
-      - ~/github.com/hadihammurabi/belajar-go-rest-api/db/:/var/lib/postgresql/data/
+      - db-data:/var/lib/postgresql/data/
+volumes:
+  app-data-images:
+  db-data:
