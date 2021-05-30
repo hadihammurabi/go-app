@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	deliveryHttp "github.com/hadihammurabi/belajar-go-rest-api/delivery/http"
 
 	_ "github.com/hadihammurabi/belajar-go-rest-api/docs"
@@ -18,7 +19,12 @@ import (
 func main() {
 	_ = godotenv.Load()
 
-	ioc := NewIOC()
+	conf, err := config.New()
+	if err != nil {
+		panic(err)
+	}
+
+	ioc := NewIOC(conf)
 	httpApp := deliveryHttp.Init(ioc)
 
 	forever := make(chan bool)

@@ -20,7 +20,7 @@ type JWTService struct {
 
 // NewJWTService func
 func NewJWTService(ioc di.Container) entity.JWTService {
-	jwtConfig := ioc.Get("jwt").(*(config.JWTConfig))
+	jwtConfig := ioc.Get("config").(*(config.Config)).JWT
 
 	return &JWTService{
 		Config:       jwtConfig,

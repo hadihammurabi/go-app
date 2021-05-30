@@ -19,6 +19,7 @@ type Delivery struct {
 	Middlewares func(int) fiber.Handler
 	Service     *service.Service
 	Validator   *config.Validator
+	Config      *config.Config
 }
 
 // Init func
@@ -34,11 +35,13 @@ func Init(ioc di.Container) *Delivery {
 	middleware.Middlewares[middleware.AUTH] = middleware.NewAuthMiddleware(config.ConfigureJWT())
 
 	service := ioc.Get("service").(*service.Service)
+	conf := ioc.Get("config").(*config.Config)
 
 	delivery := &Delivery{
 		HTTP:        app,
 		Middlewares: middleware.Use,
 		Service:     service,
+		Config:      conf,
 		Validator:   config.NewValidator(),
 	}
 	delivery.ConfigureRoute()

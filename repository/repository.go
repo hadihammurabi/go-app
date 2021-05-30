@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 	"gorm.io/gorm"
 
@@ -23,5 +24,5 @@ func NewRepository(ioc di.Container) (repo *Repository) {
 }
 
 func getDatabase(ioc di.Container) *gorm.DB {
-	return ioc.Get("database").(*gorm.DB)
+	return ioc.Get("config").(*config.Config).DB
 }
