@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/repository"
-	"github.com/hadihammurabi/belajar-go-rest-api/service"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/repository"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/service"
 	"github.com/sarulabs/di"
 )
 

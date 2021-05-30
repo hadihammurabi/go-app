@@ -4,7 +4,7 @@ import (
 	"errors"
 	"os"
 
-	"github.com/hadihammurabi/belajar-go-rest-api/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/entity"
 
 	"gorm.io/gorm"
 )
@@ -68,11 +68,10 @@ func ConfigureDatabase() (*gorm.DB, error) {
 		return db, err
 	} else if driver == driverSqlite {
 		db, err := ConfigureSqlite(config)
-		migrateSqlite(db)
 		return db, err
 	}
 
-	return nil, errors.New("Unknown database driver")
+	return nil, errors.New("unknown database driver")
 }
 
 // MigrateDatabase func

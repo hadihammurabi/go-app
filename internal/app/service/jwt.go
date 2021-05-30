@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/entity"
 	"github.com/sarulabs/di"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -37,7 +37,7 @@ func (jwtService JWTService) Create(userData *entity.User) (*entity.Token, error
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	t, err := token.SignedString([]byte(jwtService.Config.Secret))
 	if err != nil {
-		return nil, errors.New("Token generation fail")
+		return nil, errors.New("token generation fail")
 	}
 
 	expToTime := time.Unix(claims.ExpiresAt, 0)
@@ -47,7 +47,7 @@ func (jwtService JWTService) Create(userData *entity.User) (*entity.Token, error
 		ExpiredAt: &expToTime,
 	})
 	if err != nil {
-		return nil, errors.New("Token generation fail")
+		return nil, errors.New("token generation fail")
 	}
 
 	return tokenCreated, nil

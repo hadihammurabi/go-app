@@ -2,8 +2,8 @@ package http
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/delivery/http/middleware"
-	"github.com/hadihammurabi/belajar-go-rest-api/service"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/delivery/http/middleware"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/service"
 	"github.com/sarulabs/di"
 
 	"github.com/gofiber/fiber/v2/middleware/cors"

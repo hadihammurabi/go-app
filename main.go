@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	deliveryHttp "github.com/hadihammurabi/belajar-go-rest-api/delivery/http"
+	deliveryHttp "github.com/hadihammurabi/belajar-go-rest-api/internal/app/delivery/http"
 
 	_ "github.com/hadihammurabi/belajar-go-rest-api/docs"
 

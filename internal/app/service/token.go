@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/entity"
-	"github.com/hadihammurabi/belajar-go-rest-api/repository"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/repository"
 	"github.com/sarulabs/di"
 
 	uuid "github.com/satori/go.uuid"
