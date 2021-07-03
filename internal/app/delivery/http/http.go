@@ -1,6 +1,9 @@
 package http
 
 import (
+	"fmt"
+	"log"
+
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/delivery/http/middleware"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/service"
@@ -46,4 +49,11 @@ func Init(ioc di.Container) *Delivery {
 	}
 	delivery.ConfigureRoute()
 	return delivery
+}
+
+func (d *Delivery) Run() {
+	connURL := fmt.Sprintf(":%s", d.Config.APP.Port)
+	if err := d.HTTP.Listen(connURL); err != nil {
+		log.Printf("Server is not running! Reason: %v", err)
+	}
 }

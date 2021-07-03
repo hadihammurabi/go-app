@@ -28,8 +28,6 @@ func main() {
 	httpApp := deliveryHttp.Init(ioc)
 
 	forever := make(chan bool)
-	go func() {
-		httpApp.HTTP.Listen(conf.APP.Port)
-	}()
+	go httpApp.Run()
 	<-forever
 }
