@@ -22,11 +22,11 @@ func SaveBase64StringToFile(path string, fileNameWithoutType string, encodedBase
 	pictureBase64Decoded := base64.NewDecoder(base64.StdEncoding, strings.NewReader(encodedFileData))
 
 	profilePictureFile, err := os.Create(picturePath)
-	defer profilePictureFile.Close()
-
 	if err != nil {
 		return "", err
 	}
+
+	defer profilePictureFile.Close()
 
 	_, err = io.Copy(profilePictureFile, pictureBase64Decoded)
 	if err != nil {
