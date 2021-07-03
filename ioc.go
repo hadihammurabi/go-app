@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/delivery/http"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/service"
 	"github.com/sarulabs/di"
@@ -10,20 +11,6 @@ import (
 // NewIOC func
 func NewIOC(conf *config.Config) di.Container {
 	builder, _ := di.NewBuilder()
-	// builder.Add(di.Def{
-	// 	Name: "database",
-	// 	Build: func(ctn di.Container) (interface{}, error) {
-	// 		db, err := database.ConfigureDatabase()
-	// 		return db, err
-	// 	},
-	// })
-
-	// builder.Add(di.Def{
-	// 	Name: "jwt",
-	// 	Build: func(ctn di.Container) (interface{}, error) {
-	// 		return config.ConfigureJWT(), nil
-	// 	},
-	// })
 
 	builder.Add(di.Def{
 		Name: "config",
@@ -43,6 +30,13 @@ func NewIOC(conf *config.Config) di.Container {
 		Name: "service",
 		Build: func(ctn di.Container) (interface{}, error) {
 			return service.NewService(builder.Build()), nil
+		},
+	})
+
+	builder.Add(di.Def{
+		Name: "delivery/http",
+		Build: func(ctn di.Container) (interface{}, error) {
+			return http.Init(builder.Build()), nil
 		},
 	})
 
