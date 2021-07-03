@@ -6,6 +6,7 @@ import (
 
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/util"
 	"github.com/sarulabs/di"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -33,9 +34,7 @@ func NewJWTService(ioc di.Container) entity.JWTService {
 func (jwtService JWTService) Create(userData *entity.User) (*entity.Token, error) {
 	claims := &jwt.StandardClaims{}
 	claims.ExpiresAt = time.Now().Add(time.Hour * 3).Unix()
-
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	t, err := token.SignedString([]byte(jwtService.Config.Secret))
+	t, err := util.CreateJWTWithClaims(jwtService.Config.Secret, claims)
 	if err != nil {
 		return nil, errors.New("token generation fail")
 	}
