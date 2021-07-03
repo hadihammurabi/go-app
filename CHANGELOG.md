@@ -1,35 +1,89 @@
-#  (2021-02-10)
+<a name="v0.0.3"></a>
+## [v0.0.3] - 2021-07-03
+### Chore
+- move database connection to platform dir
+- **config:** move database config to global config
+- **config:** move database connection to platform dir
 
+### Feat
+- **ioc:** include http delivery
+- **util:** jwt token creation
 
-### Bug Fixes
-
-* change validator package from config to utils ([fd33c7b](https://github.com/hadihammurabi/belajar-go-rest-api/commit/fd33c7b372a0df9b1b3e55d4770f191f159b544c))
-
-
-### Features
-
-* **auth:** get user data from  JWT ([b8de370](https://github.com/hadihammurabi/belajar-go-rest-api/commit/b8de3705e254beeff73d56662cbb9a6fce68b59e))
-* **jwt:** add custom JWT claims ([50b3c1f](https://github.com/hadihammurabi/belajar-go-rest-api/commit/50b3c1fd79c332b9c083ebc3858c2115daef166e))
-* **token:** add token to db after jwt generated ([debccb2](https://github.com/hadihammurabi/belajar-go-rest-api/commit/debccb2b34aa332d3eb393b79819f9dde6c3f651))
-* **utils:** add file utilities ([36b0bed](https://github.com/hadihammurabi/belajar-go-rest-api/commit/36b0bed53bf41e0d96e41cfa7beeb288444ddd19))
-* **utils:** add random utilities ([ba026ca](https://github.com/hadihammurabi/belajar-go-rest-api/commit/ba026ca48f41c244835a2281d5b2357b9e22de8f))
-
-
-#  (2020-11-01)
-
-
-### Features
-
-* **cors:** add CORS with default configurations ([1f8cd0e](https://github.com/hadihammurabi/belajar-go-rest-api/commit/1f8cd0e13aa7d32f8462637d2322cab83d1f21fc))
-* **logger:** add logger with JSON friendly outputs ([ae88e56](https://github.com/hadihammurabi/belajar-go-rest-api/commit/ae88e5627a69772a7820e598622a69409b31eeda))
+### Fix
+- **util:** defered file closing statement
 
 ### Refactor
-* **repository:** change repositories name ([3fa37b4](https://github.com/hadihammurabi/belajar-go-rest-api/commit/3fa37b48d0f727c4e84acdf4552a286924413a55))
-* **service:** change services name ([9f727ea](https://github.com/hadihammurabi/belajar-go-rest-api/commit/9f727eaa4cc94fc82c412bc2290c66c720a49ba4))
-* **delivery-http:** change handlers name ([7739092](https://github.com/hadihammurabi/belajar-go-rest-api/commit/7739092d86a55cdcb6d980f920970e771ff2dda3))
-* **delivery-http:** separate routes to each ([9d0f600](https://github.com/hadihammurabi/belajar-go-rest-api/commit/9d0f6006e7151afccf3b348f41de07474da78240))
-* **database:** add entry point for database ([0b574c1](https://github.com/hadihammurabi/belajar-go-rest-api/commit/0b574c194acd960b4ffacfce58621eaf0771920a))
-* **repository:** add entry point for repository ([8d4cfe3](https://github.com/hadihammurabi/belajar-go-rest-api/commit/8d4cfe35a980dd499d5227ce0066626c8dc00d75))
-* **service:** add entry point to access all services ([b10526d](https://github.com/hadihammurabi/belajar-go-rest-api/commit/b10526da71a08ce0c218f9761798317fee7a9cdd))
-* **delivery-http:** move http router to http related modules ([4ff8b44](https://github.com/hadihammurabi/belajar-go-rest-api/commit/4ff8b447ea5a09016af18c3ed96b5af3eff7ae19))
-* **structure:** directory naming aim to clean arch ([1c7000b](https://github.com/hadihammurabi/belajar-go-rest-api/commit/1c7000b13db3ece6cc3cc1110a9496f761bbeedf))
+- change db migrator to Soda CLI
+- attach binary tools within project
+- **delivery-http:** create run func for delivery struct
+
+### TODO
+- implement context from delivery, to services then repositories
+
+
+<a name="v0.0.2"></a>
+## [v0.0.2] - 2021-05-30
+### Feat
+- **auth:** save access token to DB
+- **config:** create app config for app related configurations
+- **docs:** display swagger as endpoint documentation
+- **ioc:** configure services
+- **ioc:** configure repository
+- **repo:** add utility to get database from ioc
+- **service:** add utility to get repo from ioc
+
+### Fix
+- util package name
+- **ioc:** configure token and user repo
+
+### Refactor
+- organize all app files in internal/app dir
+- volumes setting for docker compose template
+- fix little warn
+- add recover middleware
+- move validator to config package
+- change base package name
+- **config:** single object for all config
+
+
+<a name="v0.0.1"></a>
+## v0.0.1 - 2021-02-10
+### Docs
+- **readme:** add architecture concept
+
+### Feat
+- **auth:** get user data from  JWT
+- **cors:** add CORS with default configurations
+- **jwt:** add custom JWT claims
+- **logger:** add logger with JSON friendly outputs
+- **token:** add token to db after jwt generated
+- **utils:** add file utilities
+- **utils:** add random utilities
+
+### Fix
+- change validator package from config to utils
+
+### Refactor
+- move validator from config to utils
+- **auth:** add auth service interface
+- **auth:** add JWT service interface
+- **config:** add jwt config
+- **database:** add entry point for database config
+- **delivery-http:** separate routes to each controller
+- **delivery-http:** move http router to http related modules
+- **delivery-http:** change handlers name
+- **repository:** add entry point for repository
+- **repository:** change repositories name
+- **service:** add entry point to access all services
+- **service:** change services name
+- **structure:** directory naming aim to clean arch
+- **structure:** move all input type to DTO
+- **structure:** ready to implement auth middleware
+- **user:** add user service interface
+- **user:** add user repository interface
+- **util:** change package name from utils to util
+
+
+[Unreleased]: https://github.com/hadihammurabi/belajar-go-rest-api/compare/v0.0.3...HEAD
+[v0.0.3]: https://github.com/hadihammurabi/belajar-go-rest-api/compare/v0.0.2...v0.0.3
+[v0.0.2]: https://github.com/hadihammurabi/belajar-go-rest-api/compare/v0.0.1...v0.0.2
