@@ -1,7 +1,6 @@
 package config
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/config/database"
 	"gorm.io/gorm"
 )
 
@@ -15,7 +14,7 @@ func New() (*Config, error) {
 	jwtConf := ConfigureJWT()
 	appConf := ConfigureApp()
 
-	dbConf, err := database.ConfigureDatabase()
+	dbConf, err := ConfigureDatabase()
 	if err != nil {
 		return nil, err
 	}

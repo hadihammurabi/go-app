@@ -1,10 +1,9 @@
-package database
+package config
 
 import (
 	"errors"
 	"os"
 
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/entity"
 	"github.com/hadihammurabi/belajar-go-rest-api/platform/database"
 
 	"gorm.io/gorm"
@@ -31,11 +30,4 @@ func ConfigureDatabase() (*gorm.DB, error) {
 	}
 
 	return nil, errors.New("unknown database driver")
-}
-
-// MigrateDatabase func
-func MigrateDatabase(db *gorm.DB) {
-	db.AutoMigrate(
-		&entity.User{},
-	)
 }
