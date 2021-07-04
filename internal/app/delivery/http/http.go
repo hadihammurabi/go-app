@@ -5,7 +5,6 @@ import (
 	"log"
 
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/delivery/http/middleware"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/service"
 	"github.com/sarulabs/di"
 
@@ -18,11 +17,10 @@ import (
 
 // Delivery struct
 type Delivery struct {
-	HTTP        *fiber.App
-	Middlewares func(int) fiber.Handler
-	Service     *service.Service
-	Validator   *config.Validator
-	Config      *config.Config
+	HTTP      *fiber.App
+	Service   *service.Service
+	Validator *config.Validator
+	Config    *config.Config
 }
 
 // Init func
@@ -34,18 +32,14 @@ func Init(ioc di.Container) *Delivery {
 	app.Use(recover.New())
 	app.Use(cors.New())
 
-	middleware.Middlewares = map[int]fiber.Handler{}
-	middleware.Middlewares[middleware.AUTH] = middleware.NewAuthMiddleware(config.ConfigureJWT())
-
 	service := ioc.Get("service").(*service.Service)
 	conf := ioc.Get("config").(*config.Config)
 
 	delivery := &Delivery{
-		HTTP:        app,
-		Middlewares: middleware.Use,
-		Service:     service,
-		Config:      conf,
-		Validator:   config.NewValidator(),
+		HTTP:      app,
+		Service:   service,
+		Config:    conf,
+		Validator: config.NewValidator(),
 	}
 	delivery.ConfigureRoute()
 	return delivery

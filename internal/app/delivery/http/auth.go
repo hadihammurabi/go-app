@@ -1,12 +1,9 @@
 package http
 
 import (
-	"fmt"
-
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/delivery/http/middleware"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/entity"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -14,7 +11,7 @@ import (
 func NewAuthHandler(delivery *Delivery) {
 	router := delivery.HTTP.Group("/auth")
 	router.Post("/login", delivery.Login)
-	router.Get("/info", delivery.Middlewares(middleware.AUTH), delivery.Info)
+	router.Get("/info", middleware.Auth(delivery.Config), delivery.Info)
 }
 
 // Login func
@@ -43,14 +40,6 @@ func (delivery Delivery) Login(c *fiber.Ctx) error {
 
 // Info func
 func (delivery Delivery) Info(c *fiber.Ctx) error {
-	fromLocals := c.Locals("user").(*jwt.Token)
-	user, err := delivery.Service.JWT.GetUser(c.Context(), fromLocals.Raw)
-	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"message": err.Error(),
-		})
-	}
-
-	email := user.Email
-	return c.SendString(fmt.Sprintf("welcome, %s", email))
+	fromLocals := c.Locals("user").(*entity.User)
+	return c.JSON(fromLocals)
 }

@@ -29,6 +29,11 @@ func (c cache) IsAvailable() error {
 		return errors.New("cache is not available")
 	}
 
+	ctx := context.Background()
+	if err := c.client.Ping(ctx).Err(); err != nil {
+		return err
+	}
+
 	return nil
 }
 

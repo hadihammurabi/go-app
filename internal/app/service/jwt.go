@@ -5,13 +5,12 @@ import (
 	"errors"
 	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/entity"
 	"github.com/hadihammurabi/belajar-go-rest-api/platform/cache"
 	"github.com/hadihammurabi/belajar-go-rest-api/util"
 	"github.com/sarulabs/di"
-
-	jwt "github.com/dgrijalva/jwt-go"
 )
 
 // JWTService interface
@@ -42,15 +41,19 @@ func NewJWTService(ioc di.Container) JWTService {
 
 // Create func
 func (s jwtService) Create(userData *entity.User) (*entity.Token, error) {
-	claims := &jwt.StandardClaims{}
-	claims.ExpiresAt = time.Now().Add(time.Hour * 3).Unix()
+	claims := &entity.JWTClaims{
+		UserID: userData.ID,
+		StandardClaims: &jwt.StandardClaims{
+			ExpiresAt: time.Now().Add(time.Hour * 3).Unix(),
+		},
+	}
 	t, err := util.CreateJWTWithClaims(s.JWTConfig.Secret, claims)
 	if err != nil {
 		return nil, errors.New("token generation fail")
 	}
 
 	if s.Cache != nil {
-		s.Cache.Set(util.ToCacheKey("auth", "token", t), userData, 1*time.Hour)
+		s.Cache.Set(util.ToCacheKey("auth", "token", t), userData, 3*time.Hour)
 	}
 
 	return &entity.Token{
