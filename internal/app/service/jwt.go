@@ -53,6 +53,7 @@ func (s jwtService) Create(userData *entity.User) (*entity.Token, error) {
 	}
 
 	if s.Cache != nil {
+		userData.CreatedAt = nil
 		s.Cache.Set(util.ToCacheKey("auth", "token", t), userData, 3*time.Hour)
 	}
 
