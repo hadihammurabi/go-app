@@ -2,7 +2,6 @@ package repository
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/entity"
 	"gorm.io/gorm"
 
 	"github.com/sarulabs/di"
@@ -10,8 +9,8 @@ import (
 
 // Repository struct
 type Repository struct {
-	User  entity.UserRepository
-	Token entity.TokenRepository
+	User  UserRepository
+	Token TokenRepository
 }
 
 // NewRepository func
