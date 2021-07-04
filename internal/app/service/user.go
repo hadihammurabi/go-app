@@ -1,6 +1,8 @@
 package service
 
 import (
+	"context"
+
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/entity"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/repository"
 	"github.com/sarulabs/di"
@@ -10,11 +12,11 @@ import (
 
 // UserService interface
 type UserService interface {
-	All() ([]*entity.User, error)
-	Create(user *entity.User) (*entity.User, error)
-	FindByID(id uuid.UUID) (*entity.User, error)
-	FindByEmail(email string) (*entity.User, error)
-	ChangePassword(id uuid.UUID, password string) (*entity.User, error)
+	All(context.Context) ([]*entity.User, error)
+	Create(context.Context, *entity.User) (*entity.User, error)
+	FindByID(context.Context, uuid.UUID) (*entity.User, error)
+	FindByEmail(context.Context, string) (*entity.User, error)
+	ChangePassword(context.Context, uuid.UUID, string) (*entity.User, error)
 }
 
 // userService struct
@@ -31,26 +33,26 @@ func NewUserService(ioc di.Container) UserService {
 }
 
 // All func
-func (u userService) All() ([]*entity.User, error) {
-	return u.repo.User.All()
+func (u userService) All(c context.Context) ([]*entity.User, error) {
+	return u.repo.User.All(c)
 }
 
 // Create func
-func (u userService) Create(user *entity.User) (*entity.User, error) {
-	return u.repo.User.Create(user)
+func (u userService) Create(c context.Context, user *entity.User) (*entity.User, error) {
+	return u.repo.User.Create(c, user)
 }
 
 // FindByEmail func
-func (u userService) FindByEmail(email string) (*entity.User, error) {
-	return u.repo.User.FindByEmail(email)
+func (u userService) FindByEmail(c context.Context, email string) (*entity.User, error) {
+	return u.repo.User.FindByEmail(c, email)
 }
 
 // FindByID func
-func (u userService) FindByID(id uuid.UUID) (*entity.User, error) {
-	return u.repo.User.FindByID(id)
+func (u userService) FindByID(c context.Context, id uuid.UUID) (*entity.User, error) {
+	return u.repo.User.FindByID(c, id)
 }
 
 // ChangePassword func
-func (u userService) ChangePassword(id uuid.UUID, password string) (*entity.User, error) {
-	return u.repo.User.ChangePassword(id, password)
+func (u userService) ChangePassword(c context.Context, id uuid.UUID, password string) (*entity.User, error) {
+	return u.repo.User.ChangePassword(c, id, password)
 }

@@ -29,7 +29,7 @@ func (delivery Delivery) Login(c *fiber.Ctx) error {
 		Password: userInput.Password,
 	}
 
-	token, err := delivery.Service.Auth.Login(user)
+	token, err := delivery.Service.Auth.Login(c.Context(), user)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": err.Error(),
@@ -44,7 +44,7 @@ func (delivery Delivery) Login(c *fiber.Ctx) error {
 // Info func
 func (delivery Delivery) Info(c *fiber.Ctx) error {
 	fromLocals := c.Locals("user").(*jwt.Token)
-	user, err := delivery.Service.JWT.GetUser(fromLocals.Raw)
+	user, err := delivery.Service.JWT.GetUser(c.Context(), fromLocals.Raw)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": err.Error(),

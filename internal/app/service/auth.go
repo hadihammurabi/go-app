@@ -1,13 +1,15 @@
 package service
 
 import (
+	"context"
+
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/entity"
 	"github.com/sarulabs/di"
 )
 
 // AuthService interface
 type AuthService interface {
-	Login(userInput *entity.User) (string, error)
+	Login(context.Context, *entity.User) (string, error)
 }
 
 // authService struct
@@ -27,8 +29,8 @@ func NewAuthService(ioc di.Container) AuthService {
 }
 
 // Login func
-func (a authService) Login(userInput *entity.User) (string, error) {
-	user, err := a.userService.FindByEmail(userInput.Email)
+func (a authService) Login(c context.Context, userInput *entity.User) (string, error) {
+	user, err := a.userService.FindByEmail(c, userInput.Email)
 	if err != nil {
 		return "", err
 	}

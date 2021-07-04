@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"errors"
 	"time"
 
@@ -15,7 +16,7 @@ import (
 // JWTService interface
 type JWTService interface {
 	Create(*entity.User) (*entity.Token, error)
-	GetUser(string) (*entity.User, error)
+	GetUser(context.Context, string) (*entity.User, error)
 }
 
 // jwtService struct
@@ -59,13 +60,13 @@ func (s jwtService) Create(userData *entity.User) (*entity.Token, error) {
 }
 
 // GetUser func
-func (s jwtService) GetUser(token string) (*entity.User, error) {
+func (s jwtService) GetUser(c context.Context, token string) (*entity.User, error) {
 	tokenData, err := s.TokenService.FindByToken(token)
 	if err != nil {
 		return nil, err
 	}
 
-	user, err := s.UserService.FindByID(tokenData.UserID)
+	user, err := s.UserService.FindByID(c, tokenData.UserID)
 	if err != nil {
 		return nil, err
 	}

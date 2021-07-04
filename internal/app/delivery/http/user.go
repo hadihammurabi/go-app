@@ -19,7 +19,7 @@ func NewUserHandler(delivery *Delivery) {
 
 // UserIndex func
 func (delivery *Delivery) UserIndex(c *fiber.Ctx) error {
-	users, _ := delivery.Service.User.All()
+	users, _ := delivery.Service.User.All(c.Context())
 	return c.JSON(&fiber.Map{
 		"data": users,
 	})
@@ -32,7 +32,7 @@ func (delivery *Delivery) UserCreate(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
 
-	userCreated, _ := delivery.Service.User.Create(user)
+	userCreated, _ := delivery.Service.User.Create(c.Context(), user)
 	return c.JSON(&fiber.Map{
 		"data": userCreated,
 	})
@@ -45,7 +45,7 @@ func (delivery *Delivery) UserShow(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
 
-	user, err := delivery.Service.User.FindByID(id)
+	user, err := delivery.Service.User.FindByID(c.Context(), id)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 	}
@@ -67,7 +67,7 @@ func (delivery *Delivery) UserChangePassword(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
 
-	user, err := delivery.Service.User.ChangePassword(id, userInput.Password)
+	user, err := delivery.Service.User.ChangePassword(c.Context(), id, userInput.Password)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 	}
