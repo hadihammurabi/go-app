@@ -11,7 +11,7 @@ import (
 func NewAuthHandler(delivery *Delivery) {
 	router := delivery.HTTP.Group("/auth")
 	router.Post("/login", delivery.Login)
-	router.Get("/info", middleware.Auth(delivery.Config), delivery.Info)
+	router.Get("/info", delivery.Middlewares(middleware.AUTH), delivery.Info)
 }
 
 // Login func

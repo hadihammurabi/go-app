@@ -5,13 +5,18 @@ import (
 
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/service"
 	"github.com/hadihammurabi/belajar-go-rest-api/util"
+	"github.com/sarulabs/di"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 // Auth func
-func Auth(config *config.Config) func(c *fiber.Ctx) error {
+func Auth(ioc di.Container) func(c *fiber.Ctx) error {
+	config := ioc.Get("config").(*config.Config)
+	service := ioc.Get("service").(*service.Service)
+
 	return func(c *fiber.Ctx) error {
 		tokenType, token, err := util.JWTFromHeader(c.Get("Authorization"))
 		if err != nil {
@@ -26,13 +31,9 @@ func Auth(config *config.Config) func(c *fiber.Ctx) error {
 		if config.Cache != nil && err == nil {
 			tokenData, err := config.Cache.Get(util.ToCacheKey("auth", "token", token))
 			if err == nil {
-				var User *entity.User
-				util.MapToStruct(tokenData.(map[string]interface{}), &User)
-				c.Locals("user", &entity.User{
-					Base: entity.Base{
-						ID: User.ID,
-					},
-				})
+				var user *entity.User
+				util.MapToStruct(tokenData.(map[string]interface{}), &user)
+				c.Locals("user", user)
 				return c.Next()
 			}
 		}
@@ -41,11 +42,8 @@ func Auth(config *config.Config) func(c *fiber.Ctx) error {
 		if err != nil {
 			return err
 		}
-		c.Locals("user", &entity.User{
-			Base: entity.Base{
-				ID: claims.UserID,
-			},
-		})
+		user, _ := service.User.FindByID(c.Context(), claims.UserID)
+		c.Locals("user", user)
 		return c.Next()
 	}
 }
