@@ -8,40 +8,49 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-// UserService struct
-type UserService struct {
+// UserService interface
+type UserService interface {
+	All() ([]*entity.User, error)
+	Create(user *entity.User) (*entity.User, error)
+	FindByID(id uuid.UUID) (*entity.User, error)
+	FindByEmail(email string) (*entity.User, error)
+	ChangePassword(id uuid.UUID, password string) (*entity.User, error)
+}
+
+// userService struct
+type userService struct {
 	repo *repository.Repository
 }
 
 // NewUserService func
-func NewUserService(ioc di.Container) entity.UserService {
+func NewUserService(ioc di.Container) UserService {
 	repo := getRepository(ioc)
-	return &UserService{
+	return &userService{
 		repo,
 	}
 }
 
 // All func
-func (u UserService) All() ([]*entity.User, error) {
+func (u userService) All() ([]*entity.User, error) {
 	return u.repo.User.All()
 }
 
 // Create func
-func (u UserService) Create(user *entity.User) (*entity.User, error) {
+func (u userService) Create(user *entity.User) (*entity.User, error) {
 	return u.repo.User.Create(user)
 }
 
 // FindByEmail func
-func (u UserService) FindByEmail(email string) (*entity.User, error) {
+func (u userService) FindByEmail(email string) (*entity.User, error) {
 	return u.repo.User.FindByEmail(email)
 }
 
 // FindByID func
-func (u UserService) FindByID(id uuid.UUID) (*entity.User, error) {
+func (u userService) FindByID(id uuid.UUID) (*entity.User, error) {
 	return u.repo.User.FindByID(id)
 }
 
 // ChangePassword func
-func (u UserService) ChangePassword(id uuid.UUID, password string) (*entity.User, error) {
+func (u userService) ChangePassword(id uuid.UUID, password string) (*entity.User, error) {
 	return u.repo.User.ChangePassword(id, password)
 }

@@ -1,17 +1,16 @@
 package service
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/entity"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/repository"
 	"github.com/sarulabs/di"
 )
 
 // Service struct
 type Service struct {
-	Auth  entity.AuthService
-	User  entity.UserService
-	Token entity.TokenService
-	JWT   entity.JWTService
+	Auth  AuthService
+	User  UserService
+	Token TokenService
+	JWT   JWTService
 }
 
 // NewService func

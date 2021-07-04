@@ -50,12 +50,3 @@ type UserLoginDTO struct {
 type UserChangePasswordDTO struct {
 	Password string `json:"password"`
 }
-
-// UserService interface
-type UserService interface {
-	All() ([]*User, error)
-	Create(user *User) (*User, error)
-	FindByID(id uuid.UUID) (*User, error)
-	FindByEmail(email string) (*User, error)
-	ChangePassword(id uuid.UUID, password string) (*User, error)
-}

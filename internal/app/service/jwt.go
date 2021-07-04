@@ -12,18 +12,24 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
-// JWTService struct
-type JWTService struct {
+// JWTService interface
+type JWTService interface {
+	Create(*entity.User) (*entity.Token, error)
+	GetUser(string) (*entity.User, error)
+}
+
+// jwtService struct
+type jwtService struct {
 	Config       *config.JWTConfig
-	UserService  entity.UserService
-	TokenService entity.TokenService
+	UserService  UserService
+	TokenService TokenService
 }
 
 // NewJWTService func
-func NewJWTService(ioc di.Container) entity.JWTService {
+func NewJWTService(ioc di.Container) JWTService {
 	jwtConfig := ioc.Get("config").(*(config.Config)).JWT
 
-	return &JWTService{
+	return &jwtService{
 		Config:       jwtConfig,
 		UserService:  NewUserService(ioc),
 		TokenService: NewTokenService(ioc),
@@ -31,16 +37,16 @@ func NewJWTService(ioc di.Container) entity.JWTService {
 }
 
 // Create func
-func (jwtService JWTService) Create(userData *entity.User) (*entity.Token, error) {
+func (s jwtService) Create(userData *entity.User) (*entity.Token, error) {
 	claims := &jwt.StandardClaims{}
 	claims.ExpiresAt = time.Now().Add(time.Hour * 3).Unix()
-	t, err := util.CreateJWTWithClaims(jwtService.Config.Secret, claims)
+	t, err := util.CreateJWTWithClaims(s.Config.Secret, claims)
 	if err != nil {
 		return nil, errors.New("token generation fail")
 	}
 
 	expToTime := time.Unix(claims.ExpiresAt, 0)
-	tokenCreated, err := jwtService.TokenService.Create(&entity.Token{
+	tokenCreated, err := s.TokenService.Create(&entity.Token{
 		UserID:    userData.ID,
 		Token:     t,
 		ExpiredAt: &expToTime,
@@ -53,13 +59,13 @@ func (jwtService JWTService) Create(userData *entity.User) (*entity.Token, error
 }
 
 // GetUser func
-func (jwtService JWTService) GetUser(token string) (*entity.User, error) {
-	tokenData, err := jwtService.TokenService.FindByToken(token)
+func (s jwtService) GetUser(token string) (*entity.User, error) {
+	tokenData, err := s.TokenService.FindByToken(token)
 	if err != nil {
 		return nil, err
 	}
 
-	user, err := jwtService.UserService.FindByID(tokenData.UserID)
+	user, err := s.UserService.FindByID(tokenData.UserID)
 	if err != nil {
 		return nil, err
 	}

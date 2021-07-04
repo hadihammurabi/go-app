@@ -5,16 +5,21 @@ import (
 	"github.com/sarulabs/di"
 )
 
-// AuthService struct
-type AuthService struct {
-	userService  entity.UserService
-	tokenService entity.TokenService
-	jwtService   entity.JWTService
+// AuthService interface
+type AuthService interface {
+	Login(userInput *entity.User) (string, error)
+}
+
+// authService struct
+type authService struct {
+	userService  UserService
+	tokenService TokenService
+	jwtService   JWTService
 }
 
 // NewAuthService func
-func NewAuthService(ioc di.Container) entity.AuthService {
-	return &AuthService{
+func NewAuthService(ioc di.Container) AuthService {
+	return &authService{
 		userService:  NewUserService(ioc),
 		tokenService: NewTokenService(ioc),
 		jwtService:   NewJWTService(ioc),
@@ -22,7 +27,7 @@ func NewAuthService(ioc di.Container) entity.AuthService {
 }
 
 // Login func
-func (a AuthService) Login(userInput *entity.User) (string, error) {
+func (a authService) Login(userInput *entity.User) (string, error) {
 	user, err := a.userService.FindByEmail(userInput.Email)
 	if err != nil {
 		return "", err
