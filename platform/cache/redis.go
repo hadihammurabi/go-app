@@ -45,10 +45,10 @@ func (c cache) Set(key string, val interface{}, exp ...time.Duration) error {
 
 	jsonMarshal, err := json.Marshal(val)
 	if err == nil {
-		return c.client.Set(ctx, key, val, expireAt).Err()
+		return c.client.Set(ctx, key, string(jsonMarshal), expireAt).Err()
 	}
 
-	return c.client.Set(ctx, key, jsonMarshal, expireAt).Err()
+	return c.client.Set(ctx, key, val, expireAt).Err()
 }
 
 func (c cache) Get(key string) (interface{}, error) {

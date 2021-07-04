@@ -7,6 +7,7 @@ import (
 
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/platform/cache"
 	"github.com/hadihammurabi/belajar-go-rest-api/util"
 	"github.com/sarulabs/di"
 
@@ -21,17 +22,19 @@ type JWTService interface {
 
 // jwtService struct
 type jwtService struct {
-	Config       *config.JWTConfig
+	JWTConfig    *config.JWTConfig
+	Cache        cache.Cache
 	UserService  UserService
 	TokenService TokenService
 }
 
 // NewJWTService func
 func NewJWTService(ioc di.Container) JWTService {
-	jwtConfig := ioc.Get("config").(*(config.Config)).JWT
+	config := getConfig(ioc)
 
 	return &jwtService{
-		Config:       jwtConfig,
+		JWTConfig:    config.JWT,
+		Cache:        config.Cache,
 		UserService:  NewUserService(ioc),
 		TokenService: NewTokenService(ioc),
 	}
@@ -41,22 +44,18 @@ func NewJWTService(ioc di.Container) JWTService {
 func (s jwtService) Create(userData *entity.User) (*entity.Token, error) {
 	claims := &jwt.StandardClaims{}
 	claims.ExpiresAt = time.Now().Add(time.Hour * 3).Unix()
-	t, err := util.CreateJWTWithClaims(s.Config.Secret, claims)
+	t, err := util.CreateJWTWithClaims(s.JWTConfig.Secret, claims)
 	if err != nil {
 		return nil, errors.New("token generation fail")
 	}
 
-	expToTime := time.Unix(claims.ExpiresAt, 0)
-	tokenCreated, err := s.TokenService.Create(&entity.Token{
-		UserID:    userData.ID,
-		Token:     t,
-		ExpiredAt: &expToTime,
-	})
-	if err != nil {
-		return nil, errors.New("token generation fail")
+	if s.Cache != nil {
+		s.Cache.Set(util.ToCacheKey("auth", "token", t), userData, 1*time.Hour)
 	}
 
-	return tokenCreated, nil
+	return &entity.Token{
+		Token: t,
+	}, nil
 }
 
 // GetUser func
