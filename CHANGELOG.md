@@ -1,3 +1,23 @@
+<a name="v0.0.4"></a>
+## [v0.0.4] - 2021-07-04
+### Chore
+- service and repository require context
+
+### Feat
+- git chglog
+- **auth:** get user data from redis or jwt
+- **auth:** save user login token to redis
+- **cache:** add support for redis
+- **util:** map to struct
+
+### Fix
+- **auth:** use main db to get user data when cache is not available
+
+### Refactor
+- **repository:** move contract to each repo
+- **service:** move contract to each svc
+
+
 <a name="v0.0.3"></a>
 ## [v0.0.3] - 2021-07-03
 ### Chore
@@ -84,6 +104,7 @@
 - **util:** change package name from utils to util
 
 
-[Unreleased]: https://github.com/hadihammurabi/belajar-go-rest-api/compare/v0.0.3...HEAD
+[Unreleased]: https://github.com/hadihammurabi/belajar-go-rest-api/compare/v0.0.4...HEAD
+[v0.0.4]: https://github.com/hadihammurabi/belajar-go-rest-api/compare/v0.0.3...v0.0.4
 [v0.0.3]: https://github.com/hadihammurabi/belajar-go-rest-api/compare/v0.0.2...v0.0.3
 [v0.0.2]: https://github.com/hadihammurabi/belajar-go-rest-api/compare/v0.0.1...v0.0.2
