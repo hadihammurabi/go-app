@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/hadihammurabi/belajar-go-rest-api/platform/cache"
+	"github.com/hadihammurabi/belajar-go-rest-api/platform/messaging"
 	"gorm.io/gorm"
 )
 
@@ -12,6 +13,7 @@ type Config struct {
 	JWT   *JWTConfig
 	DB    *gorm.DB
 	Cache cache.Cache
+	MQ    messaging.Messaging
 }
 
 func New() (*Config, error) {
@@ -35,7 +37,14 @@ func New() (*Config, error) {
 		if err == nil {
 			conf.Cache = cacheConf
 		}
+	}
 
+	mqDriver := os.Getenv("MQ_DRIVER")
+	if mqDriver != "" {
+		mqConf, err := ConfigureMQ()
+		if err == nil {
+			conf.MQ = mqConf
+		}
 	}
 
 	return conf, nil
