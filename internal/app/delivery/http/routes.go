@@ -20,4 +20,5 @@ func (delivery *Delivery) ConfigureRoute() {
 
 	NewAuthHandler(delivery)
 	NewUserHandler(delivery)
+	NewHelloHandler(delivery)
 }
