@@ -25,4 +25,5 @@ func Init(ioc di.Container) *Delivery {
 }
 
 func (d *Delivery) Run() {
+	ConsumeHelloProcess(d)
 }
