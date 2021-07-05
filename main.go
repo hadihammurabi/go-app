@@ -5,7 +5,8 @@ import (
 	"os"
 
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	deliveryHttp "github.com/hadihammurabi/belajar-go-rest-api/internal/app/delivery/http"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/delivery/http"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/delivery/mq"
 	"github.com/hadihammurabi/belajar-go-rest-api/util"
 
 	_ "github.com/hadihammurabi/belajar-go-rest-api/docs"
@@ -29,7 +30,8 @@ func main() {
 	}
 
 	ioc := NewIOC(conf)
-	httpApp := deliveryHttp.Init(ioc)
+	httpApp := ioc.Get("delivery/http").(*http.Delivery)
+	mqApp := ioc.Get("delivery/mq").(*mq.Delivery)
 
 	var gracefulStop = make(chan os.Signal)
 	util.GracefulStop(gracefulStop, func() {
@@ -42,5 +44,6 @@ func main() {
 
 	forever := make(chan bool)
 	go httpApp.Run()
+	go mqApp.Run()
 	<-forever
 }
