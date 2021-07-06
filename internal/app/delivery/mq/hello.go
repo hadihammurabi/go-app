@@ -1,8 +1,6 @@
 package mq
 
 import (
-	"fmt"
-
 	gorabbitmq "github.com/hadihammurabi/go-rabbitmq"
 	"github.com/streadway/amqp"
 )
@@ -17,14 +15,32 @@ func ConsumeHelloProcess(delivery *Delivery) (gorabbitmq.MQ, error) {
 		return nil, err
 	}
 
-	mqProcess.Consume(mqProcess.GetQueue(), &gorabbitmq.MQConfigConsume{
-		OnMessage: func(msgs <-chan amqp.Delivery) {
-			for msg := range msgs {
-				msg.Ack(false)
-				fmt.Println("GOT MESSAGE: ", string(msg.Body))
-			}
-		},
-	})
+	mqResult, err := gorabbitmq.NewMQBuilder().SetConnection(&gorabbitmq.MQConfigConnection{
+		URL: delivery.Config.MQ.GetURL(),
+	}).SetQueue(&gorabbitmq.MQConfigQueue{
+		Name: "hello:result",
+	}).Build()
+	if err != nil {
+		return nil, err
+	}
+
+	msgs, err := mqProcess.Consume(mqProcess.GetQueue(), &gorabbitmq.MQConfigConsume{})
+	if err != nil {
+		return nil, err
+	}
+
+	go func() {
+		for msg := range msgs {
+			msg.Ack(false)
+			mqResult.Publish(&gorabbitmq.MQConfigPublish{
+				RoutingKey: mqResult.GetQueue().Name,
+				Message: amqp.Publishing{
+					ContentType: "application/json",
+					Body:        msg.Body,
+				},
+			})
+		}
+	}()
 
 	return mqProcess, nil
 }

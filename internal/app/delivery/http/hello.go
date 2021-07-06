@@ -25,6 +25,22 @@ func (delivery *Delivery) HelloIndex(c *fiber.Ctx) error {
 		return err
 	}
 
+	mqResult, err := gorabbitmq.NewMQBuilder().SetConnection(&gorabbitmq.MQConfigConnection{
+		URL: delivery.Config.MQ.GetURL(),
+	}).SetQueue(&gorabbitmq.MQConfigQueue{
+		Name: "hello:result",
+	}).Build()
+	if err != nil {
+		return err
+	}
+
+	defer func() {
+		mqProcess.GetConnection().Close()
+		mqResult.GetConnection().Close()
+		mqProcess.GetChannel().Close()
+		mqResult.GetChannel().Close()
+	}()
+
 	data, _ := json.Marshal(map[string]interface{}{
 		"message": "hello",
 	})
@@ -39,8 +55,22 @@ func (delivery *Delivery) HelloIndex(c *fiber.Ctx) error {
 		return err
 	}
 
-	return c.JSON(fiber.Map{
-		"status":  "success",
-		"message": "message sent to MQ",
-	})
+	mqResult.GetChannel().Qos(1, 0, false)
+	msgs, err := mqResult.Consume(mqResult.GetQueue(), &gorabbitmq.MQConfigConsume{})
+	if err != nil {
+		return err
+	}
+
+	for msg := range msgs {
+		msg.Ack(false)
+		if msg.ContentType == "application/json" {
+			var data map[string]interface{}
+			json.Unmarshal(msg.Body, &data)
+			return c.JSON(data)
+		} else {
+			return c.Send(msg.Body)
+		}
+	}
+
+	return nil
 }
