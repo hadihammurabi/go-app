@@ -16,29 +16,25 @@ func NewHelloHandler(delivery *Delivery) {
 
 // HelloIndex func
 func (delivery *Delivery) HelloIndex(c *fiber.Ctx) error {
-	mqProcess, err := gorabbitmq.NewMQBuilder().SetConnection(&gorabbitmq.MQConfigConnection{
-		URL: delivery.Config.MQ.GetURL(),
-	}).SetQueue(&gorabbitmq.MQConfigQueue{
-		Name: "hello:process",
-	}).Build()
+	mqProcess, err := gorabbitmq.NewMQBuilder().SetConnection(delivery.Config.MQ.GetURL()).
+		SetQueue(&gorabbitmq.MQConfigQueue{
+			Name: "hello:process",
+		}).Build()
 	if err != nil {
 		return err
 	}
 
-	mqResult, err := gorabbitmq.NewMQBuilder().SetConnection(&gorabbitmq.MQConfigConnection{
-		URL: delivery.Config.MQ.GetURL(),
-	}).SetQueue(&gorabbitmq.MQConfigQueue{
-		Name: "hello:result",
-	}).Build()
+	mqResult, err := gorabbitmq.NewMQBuilder().SetConnection(delivery.Config.MQ.GetURL()).
+		SetQueue(&gorabbitmq.MQConfigQueue{
+			Name: "hello:result",
+		}).Build()
 	if err != nil {
 		return err
 	}
 
 	defer func() {
-		mqProcess.GetConnection().Close()
-		mqResult.GetConnection().Close()
-		mqProcess.GetChannel().Close()
-		mqResult.GetChannel().Close()
+		mqProcess.Close()
+		mqResult.Close()
 	}()
 
 	data, _ := json.Marshal(map[string]interface{}{

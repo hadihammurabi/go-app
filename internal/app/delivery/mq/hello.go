@@ -6,23 +6,26 @@ import (
 )
 
 func ConsumeHelloProcess(delivery *Delivery) (gorabbitmq.MQ, error) {
-	mqProcess, err := gorabbitmq.NewMQBuilder().SetConnection(&gorabbitmq.MQConfigConnection{
-		URL: delivery.Config.MQ.GetURL(),
-	}).SetQueue(&gorabbitmq.MQConfigQueue{
-		Name: "hello:process",
-	}).Build()
+	mqProcess, err := gorabbitmq.NewMQBuilder().SetConnection(delivery.Config.MQ.GetURL()).
+		SetQueue(&gorabbitmq.MQConfigQueue{
+			Name: "hello:process",
+		}).Build()
 	if err != nil {
 		return nil, err
 	}
 
-	mqResult, err := gorabbitmq.NewMQBuilder().SetConnection(&gorabbitmq.MQConfigConnection{
-		URL: delivery.Config.MQ.GetURL(),
-	}).SetQueue(&gorabbitmq.MQConfigQueue{
-		Name: "hello:result",
-	}).Build()
+	mqResult, err := gorabbitmq.NewMQBuilder().SetConnection(delivery.Config.MQ.GetURL()).
+		SetQueue(&gorabbitmq.MQConfigQueue{
+			Name: "hello:result",
+		}).Build()
 	if err != nil {
 		return nil, err
 	}
+
+	// defer func() {
+	// 	mqProcess.Close()
+	// 	mqResult.Close()
+	// }()
 
 	msgs, err := mqProcess.Consume(mqProcess.GetQueue(), &gorabbitmq.MQConfigConsume{})
 	if err != nil {
