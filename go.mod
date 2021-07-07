@@ -14,7 +14,7 @@ require (
 	github.com/go-playground/validator/v10 v10.4.1
 	github.com/go-redis/redis/v8 v8.11.0
 	github.com/gofiber/fiber/v2 v2.3.0
-	github.com/hadihammurabi/go-rabbitmq v0.0.0-20210705131702-1ce596a7285d
+	github.com/hadihammurabi/go-rabbitmq v0.0.0-20210707053517-1913cd5f52fb
 	github.com/joho/godotenv v1.3.0
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/sarulabs/di v2.0.0+incompatible
