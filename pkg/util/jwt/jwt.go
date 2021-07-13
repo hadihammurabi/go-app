@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
 )
 
 func CreateJWTWithClaims(secret string, claims *entity.JWTClaims) (string, error) {

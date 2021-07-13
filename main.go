@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/delivery/http"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/delivery/mq"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/http"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/mq"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/runner"
 
 	_ "github.com/hadihammurabi/belajar-go-rest-api/docs"

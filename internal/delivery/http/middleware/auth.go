@@ -4,8 +4,8 @@ import (
 	"errors"
 
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/entity"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/service"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
 	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/jwt"
 	marshalUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/marshal"
 	stringUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/string"

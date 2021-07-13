@@ -4,10 +4,10 @@ import (
 	"log"
 
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/delivery/http"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/delivery/mq"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/repository"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/service"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/http"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/mq"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/repository"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
 	"github.com/sarulabs/di"
 )
 

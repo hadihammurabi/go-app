@@ -2,7 +2,7 @@ package mq
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/service"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
 	gorabbitmq "github.com/hadihammurabi/go-rabbitmq"
 	"github.com/sarulabs/di"
 )

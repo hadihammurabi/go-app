@@ -7,7 +7,7 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/cache"
 	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/jwt"
 	stringUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/string"
