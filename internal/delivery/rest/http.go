@@ -1,11 +1,11 @@
-package http
+package rest
 
 import (
 	"fmt"
 	"log"
 
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/http/middleware"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/rest/middleware"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
 	"github.com/sarulabs/di"
 

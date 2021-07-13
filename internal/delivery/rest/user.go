@@ -1,4 +1,4 @@
-package http
+package rest
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"

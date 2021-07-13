@@ -4,8 +4,8 @@ import (
 	"log"
 
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/http"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/mq"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/rest"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
 	"github.com/sarulabs/di"
@@ -36,10 +36,11 @@ func NewIOC(conf *config.Config) di.Container {
 		},
 	})
 
+	deliveryRest := rest.Init(builder.Build())
 	builder.Add(di.Def{
 		Name: "delivery/http",
 		Build: func(ctn di.Container) (interface{}, error) {
-			return http.Init(builder.Build()), nil
+			return deliveryRest, nil
 		},
 	})
 

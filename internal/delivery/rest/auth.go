@@ -1,7 +1,7 @@
-package http
+package rest
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/http/middleware"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/rest/middleware"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
 
 	"github.com/gofiber/fiber/v2"
