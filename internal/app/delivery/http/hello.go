@@ -16,18 +16,18 @@ func NewHelloHandler(delivery *Delivery) {
 
 // HelloIndex func
 func (delivery *Delivery) HelloIndex(c *fiber.Ctx) error {
-	mqProcess, err := gorabbitmq.NewMQBuilder().SetConnection(delivery.Config.MQ.GetURL()).
-		SetQueue(&gorabbitmq.MQConfigQueue{
-			Name: "hello:process",
-		}).Build()
+	mqProcess, err := gorabbitmq.NewMQBuilder().
+		SetConnection(delivery.Config.MQ.GetURL()).
+		SetQueue(gorabbitmq.NewQueueOptions().SetName("hello:process")).
+		Build()
 	if err != nil {
 		return err
 	}
 
-	mqResult, err := gorabbitmq.NewMQBuilder().SetConnection(delivery.Config.MQ.GetURL()).
-		SetQueue(&gorabbitmq.MQConfigQueue{
-			Name: "hello:result",
-		}).Build()
+	mqResult, err := gorabbitmq.NewMQBuilder().
+		WithConnection(mqProcess.Connection()).
+		SetQueue(gorabbitmq.NewQueueOptions().SetName("hello:process")).
+		Build()
 	if err != nil {
 		return err
 	}
@@ -41,7 +41,7 @@ func (delivery *Delivery) HelloIndex(c *fiber.Ctx) error {
 		"message": "hello",
 	})
 	err = mqProcess.Publish(&gorabbitmq.MQConfigPublish{
-		RoutingKey: mqProcess.GetQueue().Name,
+		RoutingKey: mqProcess.Queue().Name,
 		Message: amqp.Publishing{
 			ContentType: "application/json",
 			Body:        data,
@@ -51,8 +51,8 @@ func (delivery *Delivery) HelloIndex(c *fiber.Ctx) error {
 		return err
 	}
 
-	mqResult.GetChannel().Qos(1, 0, false)
-	msgs, err := mqResult.Consume(mqResult.GetQueue(), &gorabbitmq.MQConfigConsume{})
+	mqResult.Channel().Qos(1, 0, false)
+	msgs, err := mqResult.Consume(nil)
 	if err != nil {
 		return err
 	}
