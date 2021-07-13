@@ -7,7 +7,7 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/cache"
 	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/jwt"
 	stringUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/string"
@@ -16,8 +16,8 @@ import (
 
 // JWTService interface
 type JWTService interface {
-	Create(*entity.User) (*entity.Token, error)
-	GetUser(context.Context, string) (*entity.User, error)
+	Create(*model.User) (*model.Token, error)
+	GetUser(context.Context, string) (*model.User, error)
 }
 
 // jwtService struct
@@ -41,8 +41,8 @@ func NewJWTService(ioc di.Container) JWTService {
 }
 
 // Create func
-func (s jwtService) Create(userData *entity.User) (*entity.Token, error) {
-	claims := &entity.JWTClaims{
+func (s jwtService) Create(userData *model.User) (*model.Token, error) {
+	claims := &model.JWTClaims{
 		UserID: userData.ID,
 		StandardClaims: &jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Hour * 3).Unix(),
@@ -58,13 +58,13 @@ func (s jwtService) Create(userData *entity.User) (*entity.Token, error) {
 		s.Cache.Set(stringUtil.ToCacheKey("auth", "token", t), userData, 3*time.Hour)
 	}
 
-	return &entity.Token{
+	return &model.Token{
 		Token: t,
 	}, nil
 }
 
 // GetUser func
-func (s jwtService) GetUser(c context.Context, token string) (*entity.User, error) {
+func (s jwtService) GetUser(c context.Context, token string) (*model.User, error) {
 	tokenData, err := s.TokenService.FindByToken(token)
 	if err != nil {
 		return nil, err

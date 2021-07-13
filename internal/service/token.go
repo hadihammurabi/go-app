@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/repository"
 	"github.com/sarulabs/di"
 
@@ -10,9 +10,9 @@ import (
 
 // TokenService interface
 type TokenService interface {
-	Create(*entity.Token) (*entity.Token, error)
-	FindByUserID(uuid.UUID) (*entity.Token, error)
-	FindByToken(string) (*entity.Token, error)
+	Create(*model.Token) (*model.Token, error)
+	FindByUserID(uuid.UUID) (*model.Token, error)
+	FindByToken(string) (*model.Token, error)
 }
 
 // tokenService struct
@@ -29,16 +29,16 @@ func NewTokenService(ioc di.Container) TokenService {
 }
 
 // Create func
-func (u tokenService) Create(token *entity.Token) (*entity.Token, error) {
+func (u tokenService) Create(token *model.Token) (*model.Token, error) {
 	return u.repo.Token.Create(token)
 }
 
 // FindByUserID func
-func (u tokenService) FindByUserID(id uuid.UUID) (*entity.Token, error) {
+func (u tokenService) FindByUserID(id uuid.UUID) (*model.Token, error) {
 	return u.repo.Token.FindByUserID(id)
 }
 
 // FindByToken func
-func (u tokenService) FindByToken(token string) (*entity.Token, error) {
+func (u tokenService) FindByToken(token string) (*model.Token, error) {
 	return u.repo.Token.FindByToken(token)
 }

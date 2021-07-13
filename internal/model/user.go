@@ -1,4 +1,4 @@
-package entity
+package model
 
 import (
 	"errors"
@@ -34,7 +34,7 @@ func (u *User) BeforeSave(tx *gorm.DB) (err error) {
 func (u User) IsPasswordValid(password string) error {
 	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
 	if err != nil {
-		return errors.New("Invalid credentials")
+		return errors.New("invalid credentials")
 	}
 
 	return nil

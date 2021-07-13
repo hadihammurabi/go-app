@@ -5,10 +5,10 @@ import (
 	"strings"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
 )
 
-func CreateJWTWithClaims(secret string, claims *entity.JWTClaims) (string, error) {
+func CreateJWTWithClaims(secret string, claims *model.JWTClaims) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(secret))
 }
@@ -23,7 +23,7 @@ func JWTFromHeader(auth string) (string, string, error) {
 }
 
 func VerifyJWT(token string, secret string) (*jwt.Token, error) {
-	parsed, err := jwt.ParseWithClaims(token, &entity.JWTClaims{}, func(t *jwt.Token) (interface{}, error) {
+	parsed, err := jwt.ParseWithClaims(token, &model.JWTClaims{}, func(t *jwt.Token) (interface{}, error) {
 		return []byte(secret), nil
 	})
 	if err != nil {
@@ -33,13 +33,13 @@ func VerifyJWT(token string, secret string) (*jwt.Token, error) {
 	return parsed, nil
 }
 
-func GetJWTData(token string, secret string) (*entity.JWTClaims, error) {
+func GetJWTData(token string, secret string) (*model.JWTClaims, error) {
 	tokenVerified, err := VerifyJWT(token, secret)
 	if err != nil {
 		return nil, err
 	}
 
-	claims, ok := tokenVerified.Claims.(*entity.JWTClaims)
+	claims, ok := tokenVerified.Claims.(*model.JWTClaims)
 	if !ok && !tokenVerified.Valid {
 		return nil, errors.New("invalid token")
 	}

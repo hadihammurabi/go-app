@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
 	"github.com/sarulabs/di"
 
 	uuid "github.com/satori/go.uuid"
@@ -10,9 +10,9 @@ import (
 
 // TokenRepository interface
 type TokenRepository interface {
-	Create(*entity.Token) (*entity.Token, error)
-	FindByUserID(uuid.UUID) (*entity.Token, error)
-	FindByToken(string) (*entity.Token, error)
+	Create(*model.Token) (*model.Token, error)
+	FindByUserID(uuid.UUID) (*model.Token, error)
+	FindByToken(string) (*model.Token, error)
 }
 
 // tokenRepository struct
@@ -30,21 +30,21 @@ func NewTokenRepository(ioc di.Container) TokenRepository {
 }
 
 // Create func
-func (u tokenRepository) Create(token *entity.Token) (*entity.Token, error) {
+func (u tokenRepository) Create(token *model.Token) (*model.Token, error) {
 	err := u.db.Create(&token).Error
 	return token, err
 }
 
 // FindByUserID func
-func (u tokenRepository) FindByUserID(id uuid.UUID) (*entity.Token, error) {
-	token := &entity.Token{}
+func (u tokenRepository) FindByUserID(id uuid.UUID) (*model.Token, error) {
+	token := &model.Token{}
 	err := u.db.Where("id = ?", id).First(&token).Error
 	return token, err
 }
 
 // FindByToken func
-func (u tokenRepository) FindByToken(token string) (*entity.Token, error) {
-	tokenDB := &entity.Token{}
+func (u tokenRepository) FindByToken(token string) (*model.Token, error) {
+	tokenDB := &model.Token{}
 	err := u.db.Where("token = ?", token).First(&tokenDB).Error
 	return tokenDB, err
 }

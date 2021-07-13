@@ -4,7 +4,7 @@ import (
 	"errors"
 
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
 	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/jwt"
 	marshalUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/marshal"
@@ -33,7 +33,7 @@ func Auth(ioc di.Container) func(c *fiber.Ctx) error {
 		if config.Cache != nil && err == nil {
 			tokenData, err := config.Cache.Get(stringUtil.ToCacheKey("auth", "token", token))
 			if err == nil {
-				var user *entity.User
+				var user *model.User
 				marshalUtil.MapToStruct(tokenData.(map[string]interface{}), &user)
 				c.Locals("user", user)
 				return c.Next()
