@@ -8,8 +8,9 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/entity"
-	"github.com/hadihammurabi/belajar-go-rest-api/platform/cache"
-	"github.com/hadihammurabi/belajar-go-rest-api/util"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/cache"
+	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/jwt"
+	stringUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/string"
 	"github.com/sarulabs/di"
 )
 
@@ -47,14 +48,14 @@ func (s jwtService) Create(userData *entity.User) (*entity.Token, error) {
 			ExpiresAt: time.Now().Add(time.Hour * 3).Unix(),
 		},
 	}
-	t, err := util.CreateJWTWithClaims(s.JWTConfig.Secret, claims)
+	t, err := jwtUtil.CreateJWTWithClaims(s.JWTConfig.Secret, claims)
 	if err != nil {
 		return nil, errors.New("token generation fail")
 	}
 
 	if s.Cache != nil {
 		userData.CreatedAt = nil
-		s.Cache.Set(util.ToCacheKey("auth", "token", t), userData, 3*time.Hour)
+		s.Cache.Set(stringUtil.ToCacheKey("auth", "token", t), userData, 3*time.Hour)
 	}
 
 	return &entity.Token{

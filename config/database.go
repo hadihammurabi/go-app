@@ -4,7 +4,7 @@ import (
 	"errors"
 	"os"
 
-	"github.com/hadihammurabi/belajar-go-rest-api/platform/database"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/database"
 
 	"gorm.io/gorm"
 )

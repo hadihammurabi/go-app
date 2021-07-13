@@ -7,7 +7,7 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/delivery/http"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/delivery/mq"
-	"github.com/hadihammurabi/belajar-go-rest-api/util"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/runner"
 
 	_ "github.com/hadihammurabi/belajar-go-rest-api/docs"
 
@@ -34,7 +34,7 @@ func main() {
 	mqApp := ioc.Get("delivery/mq").(*mq.Delivery)
 
 	var gracefulStop = make(chan os.Signal)
-	util.GracefulStop(gracefulStop, func() {
+	runner.GracefulStop(gracefulStop, func() {
 		sig := <-gracefulStop
 		log.Printf("Caught SIG: %+v\n", sig)
 		log.Println("Wait to finishing process")

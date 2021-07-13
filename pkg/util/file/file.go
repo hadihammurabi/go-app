@@ -1,4 +1,4 @@
-package util
+package file
 
 import (
 	"encoding/base64"

@@ -6,7 +6,9 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/entity"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/app/service"
-	"github.com/hadihammurabi/belajar-go-rest-api/util"
+	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/jwt"
+	marshalUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/marshal"
+	stringUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/string"
 	"github.com/sarulabs/di"
 
 	"github.com/gofiber/fiber/v2"
@@ -18,7 +20,7 @@ func Auth(ioc di.Container) func(c *fiber.Ctx) error {
 	service := ioc.Get("service").(*service.Service)
 
 	return func(c *fiber.Ctx) error {
-		tokenType, token, err := util.JWTFromHeader(c.Get("Authorization"))
+		tokenType, token, err := jwtUtil.JWTFromHeader(c.Get("Authorization"))
 		if err != nil {
 			return err
 		}
@@ -29,16 +31,16 @@ func Auth(ioc di.Container) func(c *fiber.Ctx) error {
 
 		err = config.Cache.IsAvailable()
 		if config.Cache != nil && err == nil {
-			tokenData, err := config.Cache.Get(util.ToCacheKey("auth", "token", token))
+			tokenData, err := config.Cache.Get(stringUtil.ToCacheKey("auth", "token", token))
 			if err == nil {
 				var user *entity.User
-				util.MapToStruct(tokenData.(map[string]interface{}), &user)
+				marshalUtil.MapToStruct(tokenData.(map[string]interface{}), &user)
 				c.Locals("user", user)
 				return c.Next()
 			}
 		}
 
-		claims, err := util.GetJWTData(token, config.JWT.Secret)
+		claims, err := jwtUtil.GetJWTData(token, config.JWT.Secret)
 		if err != nil {
 			return err
 		}

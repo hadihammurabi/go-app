@@ -4,7 +4,7 @@ import (
 	"errors"
 	"os"
 
-	"github.com/hadihammurabi/belajar-go-rest-api/platform/cache"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/cache"
 )
 
 const (

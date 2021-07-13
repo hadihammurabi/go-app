@@ -3,8 +3,8 @@ package config
 import (
 	"os"
 
-	"github.com/hadihammurabi/belajar-go-rest-api/platform/cache"
-	"github.com/hadihammurabi/belajar-go-rest-api/platform/messaging"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/cache"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/messaging"
 	"gorm.io/gorm"
 )
 
