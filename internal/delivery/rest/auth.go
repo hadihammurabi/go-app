@@ -2,6 +2,7 @@ package rest
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/rest/middleware"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/rest/response"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/dto"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
 
@@ -19,7 +20,7 @@ func NewAuthHandler(delivery *Delivery) {
 func (delivery Delivery) Login(c *fiber.Ctx) error {
 	userInput := &dto.UserLoginRequest{}
 	if err := c.BodyParser(userInput); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(err)
+		return response.Fail(c, err)
 	}
 
 	user := &model.User{
@@ -29,18 +30,17 @@ func (delivery Delivery) Login(c *fiber.Ctx) error {
 
 	token, err := delivery.Service.Auth.Login(c.Context(), user)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"message": err.Error(),
-		})
+		return response.Fail(c, err)
 	}
 
-	return c.JSON(&fiber.Map{
+	return response.Ok(c, &fiber.Map{
 		"token": token,
+		"type":  "Bearer",
 	})
 }
 
 // Info func
 func (delivery Delivery) Info(c *fiber.Ctx) error {
 	fromLocals := c.Locals("user").(*model.User)
-	return c.JSON(fromLocals)
+	return response.Ok(c, fromLocals)
 }
