@@ -48,7 +48,7 @@ Nama | Kegunaan
 Agar projek dapat dijalankan, diperlukan beberapa hal untuk dipersiapkan, antara lain:
 1. Menjalankan migration dengan menyesuaikan akses database.
 ```bash
-./.bin/soda m -c db/database.yml -p db/migrations
+./bin/soda m -c db/database.yml -p db/migrations
 ```
 
 ## Mode Development
