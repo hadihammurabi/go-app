@@ -31,7 +31,11 @@ func main() {
 
 	ioc := NewIOC(conf)
 	restApp := ioc.Get("delivery/http").(*rest.Delivery)
-	mqApp := ioc.Get("delivery/mq").(*mq.Delivery)
+	mqAppFromDI, err := ioc.SafeGet("delivery/mq")
+	var mqApp *mq.Delivery
+	if err == nil {
+		mqApp = mqAppFromDI.(*mq.Delivery)
+	}
 
 	var gracefulStop = make(chan os.Signal)
 	runner.GracefulStop(gracefulStop, func() {
@@ -44,6 +48,8 @@ func main() {
 
 	forever := make(chan bool)
 	go restApp.Run()
-	go mqApp.Run()
+	if mqAppFromDI != nil {
+		go mqApp.Run()
+	}
 	<-forever
 }

@@ -33,5 +33,5 @@ func Init(ioc di.Container) (*Delivery, error) {
 }
 
 func (d *Delivery) Run() {
-	ConsumeHelloProcess(d)
+	// TODO: Call all MQ consumer here
 }
