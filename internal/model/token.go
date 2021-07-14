@@ -27,10 +27,3 @@ type JWTClaims struct {
 	*jwt.StandardClaims
 	UserID uuid.UUID `json:"user_id,omitempty"`
 }
-
-// CreateTokenDTO model
-type CreateTokenDTO struct {
-	UserID    uuid.UUID `json:"user_id,omitempty"`
-	Token     string    `json:"token,omitempty"`
-	ExpiredAt int       `json:"expired_at,omitempty"`
-}

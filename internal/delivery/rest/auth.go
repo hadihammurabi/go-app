@@ -2,6 +2,7 @@ package rest
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/rest/middleware"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/dto"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
 
 	"github.com/gofiber/fiber/v2"
@@ -16,7 +17,7 @@ func NewAuthHandler(delivery *Delivery) {
 
 // Login func
 func (delivery Delivery) Login(c *fiber.Ctx) error {
-	userInput := &model.UserLoginDTO{}
+	userInput := &dto.UserLoginRequest{}
 	if err := c.BodyParser(userInput); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}

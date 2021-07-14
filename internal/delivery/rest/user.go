@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/dto"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
 	uuid "github.com/satori/go.uuid"
 
@@ -61,7 +62,7 @@ func (delivery *Delivery) UserChangePassword(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
 
-	userInput := &model.UserChangePasswordDTO{}
+	userInput := &dto.UserChangePasswordRequest{}
 	if err := c.BodyParser(userInput); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
