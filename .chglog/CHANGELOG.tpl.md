@@ -7,6 +7,7 @@
 ### {{ .Title }}
 {{ range .Commits -}}
 - {{ if .Scope }}**{{ .Scope }}:** {{ end }}{{ .Subject }}
+([#{{ .Hash.Short }}]({{ $.Info.RepositoryURL }}/commit/{{ .Hash.Long }}))
 {{ end }}
 {{ end -}}
 {{ end -}}
@@ -19,6 +20,7 @@
 ### {{ .Title }}
 {{ range .Commits -}}
 - {{ if .Scope }}**{{ .Scope }}:** {{ end }}{{ .Subject }}
+([#{{ .Hash.Short }}]({{ $.Info.RepositoryURL }}/commit/{{ .Hash.Long }}))
 {{ end }}
 {{ end -}}
 
