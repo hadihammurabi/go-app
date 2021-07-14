@@ -19,7 +19,6 @@ require (
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/sarulabs/di v2.0.0+incompatible
 	github.com/satori/go.uuid v1.2.0
-	github.com/streadway/amqp v1.0.0
 	github.com/swaggo/swag v1.7.0
 	golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a
 	golang.org/x/net v0.0.0-20210614182718-04defd469f4e // indirect

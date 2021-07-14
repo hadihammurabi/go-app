@@ -13,7 +13,7 @@ import (
 func NewAuthHandler(delivery *Delivery) {
 	router := delivery.HTTP.Group("/auth")
 	router.Post("/login", delivery.Login)
-	router.Get("/info", delivery.Middlewares(middleware.AUTH), delivery.Info)
+	router.Get("/me", delivery.Middlewares(middleware.AUTH), delivery.Me)
 }
 
 // Login func
@@ -30,7 +30,7 @@ func (delivery Delivery) Login(c *fiber.Ctx) error {
 
 	token, err := delivery.Service.Auth.Login(c.Context(), user)
 	if err != nil {
-		return response.Fail(c, err)
+		return response.Fail(c, "invalid credentials")
 	}
 
 	return response.Ok(c, &fiber.Map{
@@ -39,8 +39,8 @@ func (delivery Delivery) Login(c *fiber.Ctx) error {
 	})
 }
 
-// Info func
-func (delivery Delivery) Info(c *fiber.Ctx) error {
+// Me func
+func (delivery Delivery) Me(c *fiber.Ctx) error {
 	fromLocals := c.Locals("user").(*model.User)
 	return response.Ok(c, fromLocals)
 }
