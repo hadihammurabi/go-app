@@ -24,7 +24,7 @@ func NewAuthHandler(delivery *Delivery) {
 // @Produce  json
 // @Param credential body dto.UserLoginRequest true "user email and password"
 // @Failure 400 {object} response.FailResponse
-// @Success 200 {object} response.OkResponse
+// @Success 200 {object} response.OkResponse{data=dto.UserLoginResponse}
 func (delivery Delivery) Login(c *fiber.Ctx) error {
 	userInput := &dto.UserLoginRequest{}
 	if err := c.BodyParser(userInput); err != nil {
@@ -41,9 +41,9 @@ func (delivery Delivery) Login(c *fiber.Ctx) error {
 		return response.Fail(c, "invalid credentials")
 	}
 
-	return response.Ok(c, &fiber.Map{
-		"token": token,
-		"type":  "Bearer",
+	return response.Ok(c, &dto.UserLoginResponse{
+		Token: token,
+		Type:  "Bearer",
 	})
 }
 
