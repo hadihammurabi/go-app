@@ -17,6 +17,14 @@ func NewAuthHandler(delivery *Delivery) {
 }
 
 // Login func
+// @Summary Authenticate user using email and password
+// @Tags authentication
+// @Router /auth/login [post]
+// @Accept  json
+// @Produce  json
+// @Param credential body dto.UserLoginRequest true "user email and password"
+// @Failure 400 {object} response.FailResponse
+// @Success 200 {object} response.OkResponse
 func (delivery Delivery) Login(c *fiber.Ctx) error {
 	userInput := &dto.UserLoginRequest{}
 	if err := c.BodyParser(userInput); err != nil {
