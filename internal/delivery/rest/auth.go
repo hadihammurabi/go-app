@@ -48,6 +48,13 @@ func (delivery Delivery) Login(c *fiber.Ctx) error {
 }
 
 // Me func
+// @Summary Get logged in user profile
+// @Tags authentication
+// @Router /auth/me [get]
+// @Security ApiKeyAuth
+// @Produce  json
+// @Failure 400 {object} response.FailResponse
+// @Success 200 {object} response.OkResponse{data=model.User}
 func (delivery Delivery) Me(c *fiber.Ctx) error {
 	fromLocals := c.Locals("user").(*model.User)
 	return response.Ok(c, fromLocals)
