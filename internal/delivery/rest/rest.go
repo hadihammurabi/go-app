@@ -29,7 +29,7 @@ type Delivery struct {
 func Init(ioc di.Container) *Delivery {
 	app := fiber.New()
 	app.Use(logger.New(logger.Config{
-		Format: "[\"${time}\", \"${method}\", \"${path}\", \"${status}\", \"${ip}\", \"${latency}\"]\n",
+		Format: "${time} | ${method} | ${path} | ${status} | ${ip} | ${latency}\n",
 	}))
 	app.Use(recover.New())
 	app.Use(cors.New())
