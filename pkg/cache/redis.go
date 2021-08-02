@@ -10,21 +10,21 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
-type cache struct {
+type Redis struct {
 	client *redis.Client
 }
 
-func ConfigureRedis() (Cache, error) {
+func ConfigureRedis() (*Redis, error) {
 	rdb := redis.NewClient(&redis.Options{
 		Addr: os.Getenv("REDIS_ADDRESS"),
 	})
 
-	return &cache{
+	return &Redis{
 		client: rdb,
 	}, nil
 }
 
-func (c cache) IsAvailable() error {
+func (c Redis) IsAvailable() error {
 	if c.client == nil {
 		return errors.New("cache is not available")
 	}
@@ -37,7 +37,7 @@ func (c cache) IsAvailable() error {
 	return nil
 }
 
-func (c cache) Set(key string, val interface{}, exp ...time.Duration) error {
+func (c Redis) Set(key string, val interface{}, exp ...time.Duration) error {
 	if err := c.IsAvailable(); err != nil {
 		return err
 	}
@@ -56,7 +56,7 @@ func (c cache) Set(key string, val interface{}, exp ...time.Duration) error {
 	return c.client.Set(ctx, key, val, expireAt).Err()
 }
 
-func (c cache) Get(key string) (interface{}, error) {
+func (c Redis) Get(key string) (interface{}, error) {
 	if err := c.IsAvailable(); err != nil {
 		return nil, err
 	}

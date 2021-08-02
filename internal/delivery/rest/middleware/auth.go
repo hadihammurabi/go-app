@@ -29,9 +29,9 @@ func Auth(ioc di.IOC) func(c *fiber.Ctx) error {
 			return errors.New("invalid token")
 		}
 
-		err = config.Cache.IsAvailable()
-		if config.Cache != nil && err == nil {
-			tokenData, err := config.Cache.Get(stringUtil.ToCacheKey("auth", "token", token))
+		err = config.Redis.IsAvailable()
+		if config.Redis != nil && err == nil {
+			tokenData, err := config.Redis.Get(stringUtil.ToCacheKey("auth", "token", token))
 			if err == nil {
 				var user *model.User
 				marshalUtil.MapToStruct(tokenData.(map[string]interface{}), &user)

@@ -12,7 +12,7 @@ type Config struct {
 	APP   *AppConfig
 	JWT   *JWTConfig
 	DB    *gorm.DB
-	Cache cache.Cache
+	Redis *cache.Redis
 	MQ    messaging.Messaging
 }
 
@@ -31,12 +31,9 @@ func New() (*Config, error) {
 		DB:  dbConf,
 	}
 
-	cacheDriver := os.Getenv("CACHE_DRIVER")
-	if cacheDriver != "" {
-		cacheConf, err := ConfigureCache()
-		if err == nil {
-			conf.Cache = cacheConf
-		}
+	redis, err := ConfigureRedis()
+	if err == nil {
+		conf.Redis = redis
 	}
 
 	mqDriver := os.Getenv("MQ_DRIVER")
