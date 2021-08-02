@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"runtime"
 
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/mq"
@@ -25,6 +26,7 @@ import (
 // @in header
 // @name Authorization
 func main() {
+	runtime.GOMAXPROCS(runtime.NumCPU())
 	_ = godotenv.Load()
 
 	conf, err := config.New()
