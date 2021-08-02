@@ -3,7 +3,7 @@ package service
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/repository"
-	"github.com/sarulabs/di"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 )
 
 // Service struct
@@ -15,7 +15,7 @@ type Service struct {
 }
 
 // NewService func
-func NewService(ioc di.Container) (service *Service) {
+func NewService(ioc di.IOC) (service *Service) {
 	service = &Service{
 		Auth:  NewAuthService(ioc),
 		User:  NewUserService(ioc),
@@ -25,10 +25,10 @@ func NewService(ioc di.Container) (service *Service) {
 	return
 }
 
-func getConfig(ioc di.Container) *config.Config {
-	return ioc.Get("config").(*config.Config)
+func getConfig(ioc di.IOC) *config.Config {
+	return ioc["config"].(*config.Config)
 }
 
-func getRepository(ioc di.Container) *repository.Repository {
-	return ioc.Get("repository").(*repository.Repository)
+func getRepository(ioc di.IOC) *repository.Repository {
+	return ioc["repository"].(*repository.Repository)
 }

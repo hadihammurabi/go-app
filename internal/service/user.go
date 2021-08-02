@@ -5,7 +5,7 @@ import (
 
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/repository"
-	"github.com/sarulabs/di"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 
 	uuid "github.com/satori/go.uuid"
 )
@@ -25,7 +25,7 @@ type userService struct {
 }
 
 // NewUserService func
-func NewUserService(ioc di.Container) UserService {
+func NewUserService(ioc di.IOC) UserService {
 	repo := getRepository(ioc)
 	return &userService{
 		repo,

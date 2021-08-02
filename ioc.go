@@ -8,53 +8,21 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/rest"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
-	"github.com/sarulabs/di"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 )
 
 // NewIOC func
-func NewIOC(conf *config.Config) di.Container {
-	builder, _ := di.NewBuilder()
-
-	builder.Add(di.Def{
-		Name: "config",
-		Build: func(ctn di.Container) (interface{}, error) {
-			return conf, nil
-		},
-	})
-
-	builder.Add(di.Def{
-		Name: "repository",
-		Build: func(ctn di.Container) (interface{}, error) {
-			return repository.NewRepository(builder.Build()), nil
-		},
-	})
-
-	builder.Add(di.Def{
-		Name: "service",
-		Build: func(ctn di.Container) (interface{}, error) {
-			return service.NewService(builder.Build()), nil
-		},
-	})
-
-	deliveryRest := rest.Init(builder.Build())
-	builder.Add(di.Def{
-		Name: "delivery/http",
-		Build: func(ctn di.Container) (interface{}, error) {
-			return deliveryRest, nil
-		},
-	})
-
-	deliveryMQ, err := mq.Init(builder.Build())
+func NewIOC(conf *config.Config) di.IOC {
+	ioc := di.IOC{}
+	ioc["config"] = conf
+	ioc["repository"] = repository.NewRepository(ioc)
+	ioc["service"] = service.NewService(ioc)
+	ioc["delivery/http"] = rest.Init(ioc)
+	deliveryMQ, err := mq.Init(ioc)
 	if err != nil {
 		log.Printf("can not configure MQ. Caused by %s\n", err.Error())
 	} else {
-		builder.Add(di.Def{
-			Name: "delivery/mq",
-			Build: func(ctn di.Container) (interface{}, error) {
-				return deliveryMQ, nil
-			},
-		})
+		ioc["delivery/mq"] = deliveryMQ
 	}
-
-	return builder.Build()
+	return ioc
 }

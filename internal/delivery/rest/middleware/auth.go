@@ -6,18 +6,18 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/jwt"
 	marshalUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/marshal"
 	stringUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/string"
-	"github.com/sarulabs/di"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 // Auth func
-func Auth(ioc di.Container) func(c *fiber.Ctx) error {
-	config := ioc.Get("config").(*config.Config)
-	service := ioc.Get("service").(*service.Service)
+func Auth(ioc di.IOC) func(c *fiber.Ctx) error {
+	config := ioc["config"].(*config.Config)
+	service := ioc["service"].(*service.Service)
 
 	return func(c *fiber.Ctx) error {
 		tokenType, token, err := jwtUtil.JWTFromHeader(c.Get("Authorization"))

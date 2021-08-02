@@ -7,7 +7,7 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/rest/middleware"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
-	"github.com/sarulabs/di"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -26,7 +26,7 @@ type Delivery struct {
 }
 
 // Init func
-func Init(ioc di.Container) *Delivery {
+func Init(ioc di.IOC) *Delivery {
 	app := fiber.New()
 	app.Use(logger.New(logger.Config{
 		Format: "${time} | ${method} | ${path} | ${status} | ${ip} | ${latency}\n",
@@ -34,8 +34,8 @@ func Init(ioc di.Container) *Delivery {
 	app.Use(recover.New())
 	app.Use(cors.New())
 
-	service := ioc.Get("service").(*service.Service)
-	conf := ioc.Get("config").(*config.Config)
+	service := ioc["service"].(*service.Service)
+	conf := ioc["config"].(*config.Config)
 
 	middleware.Middlewares = map[int]fiber.Handler{}
 	middleware.Middlewares[middleware.AUTH] = middleware.Auth(ioc)

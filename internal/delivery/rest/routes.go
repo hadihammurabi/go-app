@@ -15,7 +15,7 @@ func (delivery *Delivery) ConfigureRoute() {
 		})
 	})
 
-	docs.SwaggerInfo.Host = "localhost"
+	docs.SwaggerInfo.Host = "localhost:8080"
 	delivery.HTTP.Use("/docs", swagger.Handler)
 
 	NewAuthHandler(delivery)

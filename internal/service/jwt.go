@@ -9,9 +9,9 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/cache"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/jwt"
 	stringUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/string"
-	"github.com/sarulabs/di"
 )
 
 // JWTService interface
@@ -29,7 +29,7 @@ type jwtService struct {
 }
 
 // NewJWTService func
-func NewJWTService(ioc di.Container) JWTService {
+func NewJWTService(ioc di.IOC) JWTService {
 	config := getConfig(ioc)
 
 	return &jwtService{

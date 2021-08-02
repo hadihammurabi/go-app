@@ -18,7 +18,6 @@ require (
 	github.com/hadihammurabi/go-rabbitmq v0.0.0-20210713045157-73eaba3760e8
 	github.com/joho/godotenv v1.3.0
 	github.com/mailru/easyjson v0.7.7 // indirect
-	github.com/sarulabs/di v2.0.0+incompatible
 	github.com/satori/go.uuid v1.2.0
 	github.com/swaggo/swag v1.7.0
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a

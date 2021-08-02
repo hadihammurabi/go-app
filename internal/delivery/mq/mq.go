@@ -3,8 +3,8 @@ package mq
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 	gorabbitmq "github.com/hadihammurabi/go-rabbitmq"
-	"github.com/sarulabs/di"
 )
 
 // Delivery struct
@@ -15,9 +15,9 @@ type Delivery struct {
 }
 
 // Init func
-func Init(ioc di.Container) (*Delivery, error) {
-	service := ioc.Get("service").(*service.Service)
-	conf := ioc.Get("config").(*config.Config)
+func Init(ioc di.IOC) (*Delivery, error) {
+	service := ioc["service"].(*service.Service)
+	conf := ioc["config"].(*config.Config)
 
 	mq, err := gorabbitmq.NewMQ(conf.MQ.GetURL())
 	if err != nil {

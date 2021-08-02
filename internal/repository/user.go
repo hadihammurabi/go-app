@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
-	"github.com/sarulabs/di"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 
 	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
@@ -25,7 +25,7 @@ type userRepository struct {
 }
 
 // NewUserRepository func
-func NewUserRepository(ioc di.Container) UserRepository {
+func NewUserRepository(ioc di.IOC) UserRepository {
 	database := getDatabase(ioc)
 	repo := &userRepository{
 		db: database,

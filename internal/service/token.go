@@ -3,7 +3,7 @@ package service
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/repository"
-	"github.com/sarulabs/di"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 
 	uuid "github.com/satori/go.uuid"
 )
@@ -21,7 +21,7 @@ type tokenService struct {
 }
 
 // NewTokenService func
-func NewTokenService(ioc di.Container) TokenService {
+func NewTokenService(ioc di.IOC) TokenService {
 	repo := getRepository(ioc)
 	return &tokenService{
 		repo,

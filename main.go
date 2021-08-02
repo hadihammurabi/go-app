@@ -45,10 +45,10 @@ func main() {
 	}
 
 	ioc := NewIOC(conf)
-	restApp := ioc.Get("delivery/http").(*rest.Delivery)
-	mqAppFromDI, err := ioc.SafeGet("delivery/mq")
+	restApp := ioc["delivery/http"].(*rest.Delivery)
+	mqAppFromDI, ok := ioc["delivery/mq"]
 	var mqApp *mq.Delivery
-	if err == nil {
+	if ok {
 		mqApp = mqAppFromDI.(*mq.Delivery)
 	}
 

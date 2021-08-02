@@ -2,9 +2,8 @@ package repository
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 	"gorm.io/gorm"
-
-	"github.com/sarulabs/di"
 )
 
 // Repository struct
@@ -14,7 +13,7 @@ type Repository struct {
 }
 
 // NewRepository func
-func NewRepository(ioc di.Container) (repo *Repository) {
+func NewRepository(ioc di.IOC) (repo *Repository) {
 	repo = &Repository{
 		User:  NewUserRepository(ioc),
 		Token: NewTokenRepository(ioc),
@@ -22,6 +21,6 @@ func NewRepository(ioc di.Container) (repo *Repository) {
 	return
 }
 
-func getDatabase(ioc di.Container) *gorm.DB {
-	return ioc.Get("config").(*config.Config).DB
+func getDatabase(ioc di.IOC) *gorm.DB {
+	return ioc["config"].(*config.Config).DB
 }
