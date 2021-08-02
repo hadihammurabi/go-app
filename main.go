@@ -9,6 +9,9 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/rest"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/runner"
 
+	"net/http"
+	_ "net/http/pprof"
+
 	_ "github.com/hadihammurabi/belajar-go-rest-api/docs"
 
 	"github.com/joho/godotenv"
@@ -47,6 +50,7 @@ func main() {
 	})
 
 	forever := make(chan bool)
+	go http.ListenAndServe("localhost:6060", nil)
 	go restApp.Run()
 	if mqAppFromDI != nil {
 		go mqApp.Run()
