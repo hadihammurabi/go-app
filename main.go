@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"runtime"
+	"syscall"
 
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/mq"
@@ -27,6 +28,15 @@ import (
 // @name Authorization
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
+	var rLimit syscall.Rlimit
+	if err := syscall.Getrlimit(syscall.RLIMIT_NOFILE, &rLimit); err != nil {
+		panic(err)
+	}
+	rLimit.Cur = rLimit.Max
+	if err := syscall.Setrlimit(syscall.RLIMIT_NOFILE, &rLimit); err != nil {
+		panic(err)
+	}
+
 	_ = godotenv.Load()
 
 	conf, err := config.New()
