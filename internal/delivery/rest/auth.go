@@ -1,7 +1,6 @@
 package rest
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/rest/middleware"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/rest/response"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/dto"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
@@ -13,7 +12,7 @@ import (
 func NewAuthHandler(delivery *Delivery) {
 	router := delivery.HTTP.Group("/auth")
 	router.Post("/login", delivery.Login)
-	router.Get("/me", delivery.Middlewares(middleware.AUTH), delivery.Me)
+	router.Get("/me", delivery.Middlewares.Auth, delivery.Me)
 }
 
 // Login func

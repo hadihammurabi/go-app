@@ -19,7 +19,7 @@ import (
 // Delivery struct
 type Delivery struct {
 	HTTP        *fiber.App
-	Middlewares func(int) fiber.Handler
+	Middlewares *middleware.Middlewares
 	Service     *service.Service
 	Validator   *config.Validator
 	Config      *config.Config
@@ -37,12 +37,10 @@ func Init(ioc di.IOC) *Delivery {
 	service := ioc["service"].(*service.Service)
 	conf := ioc["config"].(*config.Config)
 
-	middleware.Middlewares = map[int]fiber.Handler{}
-	middleware.Middlewares[middleware.AUTH] = middleware.Auth(ioc)
-
+	middlewares := middleware.NewMiddleware(ioc)
 	delivery := &Delivery{
 		HTTP:        app,
-		Middlewares: middleware.Use,
+		Middlewares: middlewares,
 		Service:     service,
 		Config:      conf,
 		Validator:   config.NewValidator(),
