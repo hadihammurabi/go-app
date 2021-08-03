@@ -8,10 +8,8 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/cache"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/jwt"
-	stringUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/string"
 )
 
 // JWTService interface
@@ -22,8 +20,8 @@ type JWTService interface {
 
 // jwtService struct
 type jwtService struct {
-	JWTConfig    *config.JWTConfig
-	Cache        *cache.Redis
+	JWTConfig *config.JWTConfig
+	// Cache        *cache.Redis
 	UserService  UserService
 	TokenService TokenService
 }
@@ -33,8 +31,8 @@ func NewJWTService(ioc di.IOC) JWTService {
 	config := getConfig(ioc)
 
 	return &jwtService{
-		JWTConfig:    config.JWT,
-		Cache:        config.Redis,
+		JWTConfig: config.JWT,
+		// Cache:        config.Redis,
 		UserService:  NewUserService(ioc),
 		TokenService: NewTokenService(ioc),
 	}
@@ -53,10 +51,10 @@ func (s jwtService) Create(userData *model.User) (*model.Token, error) {
 		return nil, errors.New("token generation fail")
 	}
 
-	if s.Cache != nil {
-		userData.CreatedAt = nil
-		s.Cache.Set(stringUtil.ToCacheKey("auth", "token", t), userData, 3*time.Hour)
-	}
+	// if s.Cache != nil {
+	// 	userData.CreatedAt = nil
+	// 	s.Cache.Set(stringUtil.ToCacheKey("auth", "token", t), userData, 3*time.Hour)
+	// }
 
 	return &model.Token{
 		Token: t,

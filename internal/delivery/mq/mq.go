@@ -22,9 +22,7 @@ func Init(ioc di.IOC) *Delivery {
 	delivery := &Delivery{
 		Service: service,
 		Config:  conf,
-	}
-	if conf.MQ != nil {
-		delivery.MQ = conf.MQ
+		// MQ: conf.MQ,
 	}
 	return delivery
 }

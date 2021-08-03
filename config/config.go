@@ -1,19 +1,15 @@
 package config
 
 import (
-	"log"
-
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/cache"
-	gorabbitmq "github.com/hadihammurabi/go-rabbitmq"
 	"gorm.io/gorm"
 )
 
 type Config struct {
-	APP   *AppConfig
-	JWT   *JWTConfig
-	DB    *gorm.DB
-	Redis *cache.Redis
-	MQ    gorabbitmq.MQ
+	APP *AppConfig
+	JWT *JWTConfig
+	DB  *gorm.DB
+	// Redis *cache.Redis
+	// MQ    gorabbitmq.MQ
 }
 
 func New() (*Config, error) {
@@ -31,17 +27,19 @@ func New() (*Config, error) {
 		DB:  dbConf,
 	}
 
-	redis, err := ConfigureRedis()
-	if err == nil {
-		conf.Redis = redis
-	}
+	// redis, err := ConfigureRedis()
+	// if err != nil {
+	// 	log.Printf("can not configure Redis. Caused by %s\n", err.Error())
+	// } else {
+	// 	conf.Redis = redis
+	// }
 
-	mqConf, err := ConfigureRabbitMQ()
-	if err != nil {
-		log.Printf("can not configure MQ. Caused by %s\n", err.Error())
-	} else {
-		conf.MQ = mqConf
-	}
+	// mqConf, err := ConfigureRabbitMQ()
+	// if err != nil {
+	// 	log.Printf("can not configure MQ. Caused by %s\n", err.Error())
+	// } else {
+	// 	conf.MQ = mqConf
+	// }
 
 	return conf, nil
 }
