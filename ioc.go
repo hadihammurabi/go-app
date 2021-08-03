@@ -1,8 +1,6 @@
 package main
 
 import (
-	"log"
-
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/mq"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/rest"
@@ -18,11 +16,6 @@ func NewIOC(conf *config.Config) di.IOC {
 	ioc["repository"] = repository.NewRepository(ioc)
 	ioc["service"] = service.NewService(ioc)
 	ioc["delivery/http"] = rest.Init(ioc)
-	deliveryMQ, err := mq.Init(ioc)
-	if err != nil {
-		log.Printf("can not configure MQ. Caused by %s\n", err.Error())
-	} else {
-		ioc["delivery/mq"] = deliveryMQ
-	}
+	ioc["delivery/mq"] = mq.Init(ioc)
 	return ioc
 }

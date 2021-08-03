@@ -1,10 +1,10 @@
 package config
 
 import (
-	"os"
+	"log"
 
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/cache"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/messaging"
+	gorabbitmq "github.com/hadihammurabi/go-rabbitmq"
 	"gorm.io/gorm"
 )
 
@@ -13,7 +13,7 @@ type Config struct {
 	JWT   *JWTConfig
 	DB    *gorm.DB
 	Redis *cache.Redis
-	MQ    messaging.Messaging
+	MQ    gorabbitmq.MQ
 }
 
 func New() (*Config, error) {
@@ -36,12 +36,11 @@ func New() (*Config, error) {
 		conf.Redis = redis
 	}
 
-	mqDriver := os.Getenv("MQ_DRIVER")
-	if mqDriver != "" {
-		mqConf, err := ConfigureMQ()
-		if err == nil {
-			conf.MQ = mqConf
-		}
+	mqConf, err := ConfigureRabbitMQ()
+	if err != nil {
+		log.Printf("can not configure MQ. Caused by %s\n", err.Error())
+	} else {
+		conf.MQ = mqConf
 	}
 
 	return conf, nil

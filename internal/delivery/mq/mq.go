@@ -15,21 +15,18 @@ type Delivery struct {
 }
 
 // Init func
-func Init(ioc di.IOC) (*Delivery, error) {
+func Init(ioc di.IOC) *Delivery {
 	service := ioc["service"].(*service.Service)
 	conf := ioc["config"].(*config.Config)
-
-	mq, err := gorabbitmq.NewMQ(conf.MQ.GetURL())
-	if err != nil {
-		return nil, err
-	}
 
 	delivery := &Delivery{
 		Service: service,
 		Config:  conf,
-		MQ:      mq,
 	}
-	return delivery, nil
+	if conf.MQ != nil {
+		delivery.MQ = conf.MQ
+	}
+	return delivery
 }
 
 func (d *Delivery) Run() {

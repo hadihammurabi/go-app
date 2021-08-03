@@ -2,18 +2,10 @@ package messaging
 
 import (
 	"os"
+
+	gorabbitmq "github.com/hadihammurabi/go-rabbitmq"
 )
 
-type rabbitMQConfig struct {
-	URL string
-}
-
-func ConfigureRabbitMQ() Messaging {
-	return &rabbitMQConfig{
-		URL: os.Getenv("MQ_URL"),
-	}
-}
-
-func (c *rabbitMQConfig) GetURL() string {
-	return c.URL
+func ConfigureRabbitMQ() (gorabbitmq.MQ, error) {
+	return gorabbitmq.NewMQ(os.Getenv("MQ_URL"))
 }
