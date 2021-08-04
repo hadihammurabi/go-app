@@ -22,5 +22,5 @@ func NewRepository(ioc di.IOC) (repo *Repository) {
 }
 
 func getDatabase(ioc di.IOC) *gorm.DB {
-	return ioc["config"].(*config.Config).DB
+	return ioc[di.DI_CONFIG].(*config.Config).DB
 }

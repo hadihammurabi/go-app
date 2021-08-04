@@ -13,8 +13,8 @@ type Middlewares struct {
 }
 
 func NewMiddleware(ioc di.IOC) *Middlewares {
-	config := ioc["config"].(*config.Config)
-	service := ioc["service"].(*service.Service)
+	config := ioc[di.DI_CONFIG].(*config.Config)
+	service := ioc[di.DI_SERVICE].(*service.Service)
 
 	return &Middlewares{
 		config:  config,

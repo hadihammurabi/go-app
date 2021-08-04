@@ -12,10 +12,10 @@ import (
 // NewIOC func
 func NewIOC(conf *config.Config) di.IOC {
 	ioc := di.IOC{}
-	ioc["config"] = conf
-	ioc["repository"] = repository.NewRepository(ioc)
-	ioc["service"] = service.NewService(ioc)
-	ioc["delivery/http"] = rest.Init(ioc)
-	ioc["delivery/mq"] = mq.Init(ioc)
+	ioc[di.DI_CONFIG] = conf
+	ioc[di.DI_REPOSITORY] = repository.NewRepository(ioc)
+	ioc[di.DI_SERVICE] = service.NewService(ioc)
+	ioc[di.DI_DELIVERY_REST] = rest.Init(ioc)
+	ioc[di.DI_DELIVERY_MQ] = mq.Init(ioc)
 	return ioc
 }

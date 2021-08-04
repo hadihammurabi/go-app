@@ -9,6 +9,7 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/mq"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/rest"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/runner"
 
 	"net/http"
@@ -45,8 +46,8 @@ func main() {
 	}
 
 	ioc := NewIOC(conf)
-	restApp := ioc["delivery/http"].(*rest.Delivery)
-	mqAppFromDI, ok := ioc["delivery/mq"]
+	restApp := ioc[di.DI_DELIVERY_REST].(*rest.Delivery)
+	mqAppFromDI, ok := ioc[di.DI_DELIVERY_MQ]
 	var mqApp *mq.Delivery
 	if ok {
 		mqApp = mqAppFromDI.(*mq.Delivery)

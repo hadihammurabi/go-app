@@ -26,9 +26,9 @@ func NewService(ioc di.IOC) (service *Service) {
 }
 
 func getConfig(ioc di.IOC) *config.Config {
-	return ioc["config"].(*config.Config)
+	return ioc[di.DI_CONFIG].(*config.Config)
 }
 
 func getRepository(ioc di.IOC) *repository.Repository {
-	return ioc["repository"].(*repository.Repository)
+	return ioc[di.DI_REPOSITORY].(*repository.Repository)
 }

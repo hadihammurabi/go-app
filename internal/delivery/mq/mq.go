@@ -16,8 +16,8 @@ type Delivery struct {
 
 // Init func
 func Init(ioc di.IOC) *Delivery {
-	service := ioc["service"].(*service.Service)
-	conf := ioc["config"].(*config.Config)
+	service := ioc[di.DI_SERVICE].(*service.Service)
+	conf := ioc[di.DI_CONFIG].(*config.Config)
 
 	delivery := &Delivery{
 		Service: service,
