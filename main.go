@@ -44,7 +44,7 @@ func main() {
 		panic(err)
 	}
 
-	ioc := NewIOC(conf)
+	ioc := internal.NewIOC(conf)
 	app := ioc[di.DI_APP].(*internal.App)
 
 	var gracefulStop = make(chan os.Signal)
