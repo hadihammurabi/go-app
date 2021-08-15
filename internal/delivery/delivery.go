@@ -12,13 +12,18 @@ type Delivery struct {
 }
 
 func NewDelivery(ioc di.IOC) *Delivery {
+	deliveryRest := rest.Init(ioc)
+	deliveryMQ := mq.Init(ioc)
+
 	return &Delivery{
-		Rest: ioc[di.DI_DELIVERY_REST].(*rest.Delivery),
-		MQ:   ioc[di.DI_DELIVERY_MQ].(*mq.Delivery),
+		Rest: deliveryRest,
+		MQ:   deliveryMQ,
 	}
 }
 
-func (d Delivery) Start() {
+func (d Delivery) Run() {
 	go d.Rest.Run()
-	go d.MQ.Run()
+	if d.MQ != nil {
+		go d.MQ.Run()
+	}
 }

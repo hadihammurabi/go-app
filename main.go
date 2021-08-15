@@ -7,8 +7,7 @@ import (
 	"syscall"
 
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/mq"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/rest"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/runner"
 
@@ -46,27 +45,19 @@ func main() {
 	}
 
 	ioc := NewIOC(conf)
-	restApp := ioc[di.DI_DELIVERY_REST].(*rest.Delivery)
-	mqAppFromDI, ok := ioc[di.DI_DELIVERY_MQ]
-	var mqApp *mq.Delivery
-	if ok {
-		mqApp = mqAppFromDI.(*mq.Delivery)
-	}
+	app := ioc[di.DI_APP].(*internal.App)
 
 	var gracefulStop = make(chan os.Signal)
 	runner.GracefulStop(gracefulStop, func() {
 		sig := <-gracefulStop
 		log.Printf("Caught SIG: %+v\n", sig)
 		log.Println("Wait to finishing process")
-		restApp.HTTP.Shutdown()
+		app.Delivery.Rest.HTTP.Shutdown()
 		os.Exit(0)
 	})
 
 	forever := make(chan bool)
 	go http.ListenAndServe("localhost:6060", nil)
-	go restApp.Run()
-	if mqAppFromDI != nil {
-		go mqApp.Run()
-	}
+	go app.Delivery.Run()
 	<-forever
 }
