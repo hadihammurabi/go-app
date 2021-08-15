@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	uuid "github.com/satori/go.uuid"
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -18,7 +18,8 @@ type Token struct {
 
 // BeforeCreate func
 func (u *Token) BeforeCreate(tx *gorm.DB) (err error) {
-	u.ID = uuid.NewV4()
+	id, err := uuid.NewRandom()
+	u.ID = id
 	return
 }
 

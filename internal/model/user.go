@@ -3,7 +3,7 @@ package model
 import (
 	"errors"
 
-	uuid "github.com/satori/go.uuid"
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
@@ -17,7 +17,8 @@ type User struct {
 
 // BeforeCreate func
 func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
-	u.ID = uuid.NewV4()
+	id, err := uuid.NewRandom()
+	u.ID = id
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(u.Password), 10)
 	u.Password = string(hashedPassword)
 	return

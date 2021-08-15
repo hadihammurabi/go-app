@@ -10,10 +10,10 @@ require (
 	github.com/go-redis/redis/v8 v8.11.0
 	github.com/gofiber/fiber/v2 v2.14.0
 	github.com/gofiber/websocket/v2 v2.0.7
+	github.com/google/uuid v1.3.0
 	github.com/hadihammurabi/go-rabbitmq v0.0.0-20210713045157-73eaba3760e8
 	github.com/joho/godotenv v1.3.0
 	github.com/kr/text v0.2.0 // indirect
-	github.com/satori/go.uuid v1.2.0
 	github.com/stretchr/testify v1.6.1 // indirect
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a
 	golang.org/x/net v0.0.0-20210614182718-04defd469f4e // indirect

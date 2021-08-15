@@ -1,9 +1,9 @@
 package delivery
 
 import (
+	"github.com/google/uuid"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/dto"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
-	uuid "github.com/satori/go.uuid"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -40,7 +40,7 @@ func (delivery *Delivery) UserCreate(c *fiber.Ctx) error {
 
 // UserShow func
 func (delivery *Delivery) UserShow(c *fiber.Ctx) error {
-	id, err := uuid.FromString(c.Params("id"))
+	id, err := uuid.Parse(c.Params("id"))
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}
@@ -57,7 +57,7 @@ func (delivery *Delivery) UserShow(c *fiber.Ctx) error {
 
 // UserChangePassword func
 func (delivery *Delivery) UserChangePassword(c *fiber.Ctx) error {
-	id, err := uuid.FromString(c.Params("id"))
+	id, err := uuid.Parse(c.Params("id"))
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}

@@ -1,10 +1,10 @@
 package repository
 
 import (
+	"github.com/google/uuid"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 
-	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
 )
 
