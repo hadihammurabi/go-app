@@ -13,4 +13,4 @@ build-compose:
 	&& docker build -t $$IMAGE_TAG .
 
 dev:
-	./bin/fiber dev -p "./bin/swag init" -D docs
+	./bin/fiber dev

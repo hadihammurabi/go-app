@@ -1,9 +1,6 @@
 package rest
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/docs"
-
-	swagger "github.com/arsmn/fiber-swagger/v2"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -14,9 +11,6 @@ func (delivery *Delivery) ConfigureRoute() {
 			"message": "Selamat datang di Belajar REST API dengan Go",
 		})
 	})
-
-	docs.SwaggerInfo.Host = "localhost:8080"
-	delivery.HTTP.Use("/docs", swagger.Handler)
 
 	NewAuthHandler(delivery)
 	NewUserHandler(delivery)
