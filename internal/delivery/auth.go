@@ -1,7 +1,7 @@
-package rest
+package delivery
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/rest/response"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/response"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/dto"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
 

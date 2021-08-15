@@ -1,4 +1,4 @@
-package rest
+package delivery
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/dto"
@@ -9,12 +9,12 @@ import (
 )
 
 // NewUserHandler func
-func NewUserHandler(delivery *Delivery) {
-	router := delivery.HTTP.Group("/users")
-	router.Get("/", delivery.UserIndex)
-	router.Get("/:id", delivery.UserShow)
-	router.Post("/", delivery.UserCreate)
-	router.Put("/:id/change-password", delivery.UserChangePassword)
+func NewUserHandler(d *Delivery) {
+	router := d.HTTP.Group("/users")
+	router.Get("/", d.UserIndex)
+	router.Get("/:id", d.UserShow)
+	router.Post("/", d.UserCreate)
+	router.Put("/:id/change-password", d.UserChangePassword)
 }
 
 // UserIndex func

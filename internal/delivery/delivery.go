@@ -1,22 +1,61 @@
 package delivery
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/rest"
+	"fmt"
+	"log"
+
+	"github.com/hadihammurabi/belajar-go-rest-api/config"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/middleware"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
+
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/recover"
 )
 
+// Delivery struct
 type Delivery struct {
-	Rest *rest.Delivery
+	HTTP        *fiber.App
+	Middlewares *middleware.Middlewares
+	Service     *service.Service
+	Validator   *config.Validator
+	Config      *config.Config
 }
 
 func NewDelivery(ioc di.IOC) *Delivery {
-	deliveryRest := rest.Init(ioc)
+	app := fiber.New()
+	app.Use(logger.New(logger.Config{
+		Format: "${time} | ${method} | ${path} | ${status} | ${ip} | ${latency}\n",
+	}))
+	app.Use(recover.New())
+	app.Use(cors.New())
 
-	return &Delivery{
-		Rest: deliveryRest,
+	service := ioc[di.DI_SERVICE].(*service.Service)
+	conf := ioc[di.DI_CONFIG].(*config.Config)
+
+	middlewares := middleware.NewMiddleware(ioc)
+	delivery := &Delivery{
+		HTTP:        app,
+		Middlewares: middlewares,
+		Service:     service,
+		Config:      conf,
+		Validator:   config.NewValidator(),
+	}
+	delivery.ConfigureRoute()
+	return delivery
+}
+
+func (d *Delivery) Run() {
+	connURL := fmt.Sprintf(":%s", d.Config.APP.Port)
+	if err := d.HTTP.Listen(connURL); err != nil {
+		log.Printf("Server is not running! Reason: %v", err)
 	}
 }
 
-func (d Delivery) Run() {
-	go d.Rest.Run()
+func (d *Delivery) Stop() {
+	d.HTTP.Shutdown()
+	log.Println("Server was stopped")
 }

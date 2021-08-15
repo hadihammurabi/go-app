@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"os"
 	"runtime"
 	"syscall"
@@ -40,10 +39,8 @@ func main() {
 
 	var gracefulStop = make(chan os.Signal)
 	runner.GracefulStop(gracefulStop, func() {
-		sig := <-gracefulStop
-		log.Printf("Caught SIG: %+v\n", sig)
-		log.Println("Wait to finishing process")
-		app.Delivery.Rest.HTTP.Shutdown()
+		<-gracefulStop
+		app.Delivery.Stop()
 		os.Exit(0)
 	})
 
