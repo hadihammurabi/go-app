@@ -17,14 +17,13 @@ type App struct {
 func NewIOC(conf *config.Config) di.IOC {
 	ioc := di.IOC{}
 	ioc[di.DI_CONFIG] = conf
+	ioc[di.DI_REPOSITORY] = repository.NewRepository(ioc)
+	ioc[di.DI_SERVICE] = service.NewService(ioc)
 	ioc[di.DI_APP] = NewApp(ioc)
 	return ioc
 }
 
 func NewApp(ioc di.IOC) *App {
-	ioc[di.DI_REPOSITORY] = repository.NewRepository(ioc)
-	ioc[di.DI_SERVICE] = service.NewService(ioc)
-
 	return &App{
 		Delivery: delivery.NewDelivery(ioc),
 	}
