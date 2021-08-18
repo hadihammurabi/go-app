@@ -19,7 +19,7 @@ import (
 // Delivery struct
 type Delivery struct {
 	HTTP        *fiber.App
-	Middlewares *middleware.Middlewares
+	Middlewares middleware.Middlewares
 	Service     service.Service
 	Validator   *config.Validator
 	Config      config.Config

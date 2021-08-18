@@ -9,9 +9,7 @@ import (
 )
 
 type App struct {
-	Delivery   *delivery.Delivery
-	Service    *service.Service
-	Repository *repository.Repository
+	Delivery *delivery.Delivery
 }
 
 func NewIOC(conf config.Config) di.IOC {

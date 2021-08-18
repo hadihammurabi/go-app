@@ -12,11 +12,11 @@ type Middlewares struct {
 	service service.Service
 }
 
-func NewMiddleware(ioc di.IOC) *Middlewares {
+func NewMiddleware(ioc di.IOC) Middlewares {
 	config := ioc[di.DI_CONFIG].(config.Config)
 	service := ioc[di.DI_SERVICE].(service.Service)
 
-	return &Middlewares{
+	return Middlewares{
 		config:  config,
 		service: service,
 	}
