@@ -14,7 +14,7 @@ type App struct {
 	Repository *repository.Repository
 }
 
-func NewIOC(conf *config.Config) di.IOC {
+func NewIOC(conf config.Config) di.IOC {
 	ioc := di.IOC{}
 	ioc[di.DI_CONFIG] = conf
 	ioc[di.DI_REPOSITORY] = repository.NewRepository(ioc)

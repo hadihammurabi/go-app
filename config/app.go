@@ -10,13 +10,13 @@ type AppConfig struct {
 }
 
 // ConfigureApp func
-func ConfigureApp() *AppConfig {
+func ConfigureApp() AppConfig {
 	port := os.Getenv("APP_PORT")
 	if port == "" {
 		port = "8080"
 	}
 
-	return &AppConfig{
+	return AppConfig{
 		Port: port,
 	}
 }

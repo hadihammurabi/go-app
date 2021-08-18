@@ -5,23 +5,23 @@ import (
 )
 
 type Config struct {
-	APP *AppConfig
-	JWT *JWTConfig
+	APP AppConfig
+	JWT JWTConfig
 	DB  *gorm.DB
 	// Redis *cache.Redis
 	// MQ    gorabbitmq.MQ
 }
 
-func New() (*Config, error) {
+func New() (Config, error) {
 	jwtConf := ConfigureJWT()
 	appConf := ConfigureApp()
 
 	dbConf, err := ConfigureDatabase()
 	if err != nil {
-		return nil, err
+		return Config{}, err
 	}
 
-	conf := &Config{
+	conf := Config{
 		APP: appConf,
 		JWT: jwtConf,
 		DB:  dbConf,
