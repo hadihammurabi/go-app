@@ -20,7 +20,7 @@ type UserService interface {
 
 // userService struct
 type userService struct {
-	repo *repository.Repository
+	repo repository.Repository
 }
 
 // NewUserService func

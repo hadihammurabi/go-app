@@ -16,7 +16,7 @@ type TokenService interface {
 
 // tokenService struct
 type tokenService struct {
-	repo *repository.Repository
+	repo repository.Repository
 }
 
 // NewTokenService func

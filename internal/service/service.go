@@ -29,6 +29,6 @@ func getConfig(ioc di.IOC) config.Config {
 	return ioc[di.DI_CONFIG].(config.Config)
 }
 
-func getRepository(ioc di.IOC) *repository.Repository {
-	return ioc[di.DI_REPOSITORY].(*repository.Repository)
+func getRepository(ioc di.IOC) repository.Repository {
+	return ioc[di.DI_REPOSITORY].(repository.Repository)
 }

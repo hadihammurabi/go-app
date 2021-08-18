@@ -13,12 +13,11 @@ type Repository struct {
 }
 
 // NewRepository func
-func NewRepository(ioc di.IOC) (repo *Repository) {
-	repo = &Repository{
+func NewRepository(ioc di.IOC) Repository {
+	return Repository{
 		User:  NewUserRepository(ioc),
 		Token: NewTokenRepository(ioc),
 	}
-	return
 }
 
 func getDatabase(ioc di.IOC) *gorm.DB {
