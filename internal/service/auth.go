@@ -21,7 +21,7 @@ type authService struct {
 
 // NewAuthService func
 func NewAuthService(ioc di.IOC) AuthService {
-	return &authService{
+	return authService{
 		userService:  NewUserService(ioc),
 		tokenService: NewTokenService(ioc),
 		jwtService:   NewJWTService(ioc),

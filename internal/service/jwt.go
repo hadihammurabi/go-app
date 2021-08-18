@@ -20,7 +20,7 @@ type JWTService interface {
 
 // jwtService struct
 type jwtService struct {
-	JWTConfig *config.JWTConfig
+	JWTConfig config.JWTConfig
 	// Cache        *cache.Redis
 	UserService  UserService
 	TokenService TokenService
@@ -30,7 +30,7 @@ type jwtService struct {
 func NewJWTService(ioc di.IOC) JWTService {
 	config := getConfig(ioc)
 
-	return &jwtService{
+	return jwtService{
 		JWTConfig: config.JWT,
 		// Cache:        config.Redis,
 		UserService:  NewUserService(ioc),

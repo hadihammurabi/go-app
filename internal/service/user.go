@@ -26,7 +26,7 @@ type userService struct {
 // NewUserService func
 func NewUserService(ioc di.IOC) UserService {
 	repo := getRepository(ioc)
-	return &userService{
+	return userService{
 		repo,
 	}
 }

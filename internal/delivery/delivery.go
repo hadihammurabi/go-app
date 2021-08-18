@@ -20,7 +20,7 @@ import (
 type Delivery struct {
 	HTTP        *fiber.App
 	Middlewares *middleware.Middlewares
-	Service     *service.Service
+	Service     service.Service
 	Validator   *config.Validator
 	Config      *config.Config
 }
@@ -33,7 +33,7 @@ func NewDelivery(ioc di.IOC) *Delivery {
 	app.Use(recover.New())
 	app.Use(cors.New())
 
-	service := ioc[di.DI_SERVICE].(*service.Service)
+	service := ioc[di.DI_SERVICE].(service.Service)
 	conf := ioc[di.DI_CONFIG].(*config.Config)
 
 	middlewares := middleware.NewMiddleware(ioc)

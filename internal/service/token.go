@@ -22,7 +22,7 @@ type tokenService struct {
 // NewTokenService func
 func NewTokenService(ioc di.IOC) TokenService {
 	repo := getRepository(ioc)
-	return &tokenService{
+	return tokenService{
 		repo,
 	}
 }

@@ -15,8 +15,8 @@ type Service struct {
 }
 
 // NewService func
-func NewService(ioc di.IOC) (service *Service) {
-	service = &Service{
+func NewService(ioc di.IOC) (service Service) {
+	service = Service{
 		Auth:  NewAuthService(ioc),
 		User:  NewUserService(ioc),
 		Token: NewTokenService(ioc),
