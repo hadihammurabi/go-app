@@ -7,7 +7,7 @@ import (
 type Config struct {
 	APP AppConfig
 	JWT JWTConfig
-	DB  *gorm.DB
+	DB  gorm.DB
 	// Redis *cache.Redis
 	// MQ    gorabbitmq.MQ
 }
