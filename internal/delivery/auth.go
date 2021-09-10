@@ -3,7 +3,7 @@ package delivery
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/response"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/dto"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -30,7 +30,7 @@ func (delivery Delivery) Login(c *fiber.Ctx) error {
 		return response.Fail(c, err)
 	}
 
-	user := &model.User{
+	user := &entity.User{
 		Email:    userInput.Email,
 		Password: userInput.Password,
 	}
@@ -53,8 +53,8 @@ func (delivery Delivery) Login(c *fiber.Ctx) error {
 // @Security ApiKeyAuth
 // @Produce  json
 // @Failure 400 {object} response.FailResponse
-// @Success 200 {object} response.OkResponse{data=model.User}
+// @Success 200 {object} response.OkResponse{data=entity.User}
 func (delivery Delivery) Me(c *fiber.Ctx) error {
-	fromLocals := c.Locals("user").(*model.User)
+	fromLocals := c.Locals("user").(*entity.User)
 	return response.Ok(c, fromLocals)
 }

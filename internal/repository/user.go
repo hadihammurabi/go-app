@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 
 	"gorm.io/gorm"
@@ -12,11 +12,11 @@ import (
 
 // UserRepository interface
 type UserRepository interface {
-	All(context.Context) ([]*model.User, error)
-	Create(context.Context, *model.User) (*model.User, error)
-	FindByID(context.Context, uuid.UUID) (*model.User, error)
-	FindByEmail(context.Context, string) (*model.User, error)
-	ChangePassword(context.Context, uuid.UUID, string) (*model.User, error)
+	All(context.Context) ([]*entity.User, error)
+	Create(context.Context, *entity.User) (*entity.User, error)
+	FindByID(context.Context, uuid.UUID) (*entity.User, error)
+	FindByEmail(context.Context, string) (*entity.User, error)
+	ChangePassword(context.Context, uuid.UUID, string) (*entity.User, error)
 }
 
 // userRepository struct
@@ -34,36 +34,36 @@ func NewUserRepository(ioc di.IOC) UserRepository {
 }
 
 // All func
-func (u userRepository) All(c context.Context) (users []*model.User, err error) {
-	users = make([]*model.User, 0)
+func (u userRepository) All(c context.Context) (users []*entity.User, err error) {
+	users = make([]*entity.User, 0)
 	err = u.db.WithContext(c).Find(&users).Error
 	return users, err
 }
 
 // Create func
-func (u userRepository) Create(c context.Context, user *model.User) (*model.User, error) {
+func (u userRepository) Create(c context.Context, user *entity.User) (*entity.User, error) {
 	err := u.db.WithContext(c).Create(&user).Error
 	return user, err
 }
 
 // FindByEmail func
-func (u userRepository) FindByEmail(c context.Context, email string) (*model.User, error) {
-	user := &model.User{}
-	err := u.db.WithContext(c).Where(&model.User{
+func (u userRepository) FindByEmail(c context.Context, email string) (*entity.User, error) {
+	user := &entity.User{}
+	err := u.db.WithContext(c).Where(&entity.User{
 		Email: email,
 	}).First(&user).Error
 	return user, err
 }
 
 // FindByID func
-func (u userRepository) FindByID(c context.Context, id uuid.UUID) (*model.User, error) {
-	user := &model.User{}
+func (u userRepository) FindByID(c context.Context, id uuid.UUID) (*entity.User, error) {
+	user := &entity.User{}
 	err := u.db.WithContext(c).Where("id = ?", id).First(&user).Error
 	return user, err
 }
 
 // ChangePassword func
-func (u userRepository) ChangePassword(c context.Context, id uuid.UUID, password string) (*model.User, error) {
+func (u userRepository) ChangePassword(c context.Context, id uuid.UUID, password string) (*entity.User, error) {
 	user, err := u.FindByID(c, id)
 	if err != nil {
 		return nil, err

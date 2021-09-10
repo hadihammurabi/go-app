@@ -3,7 +3,7 @@ package delivery
 import (
 	"github.com/google/uuid"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/dto"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -27,7 +27,7 @@ func (delivery *Delivery) UserIndex(c *fiber.Ctx) error {
 
 // UserCreate func
 func (delivery *Delivery) UserCreate(c *fiber.Ctx) error {
-	user := &model.User{}
+	user := &entity.User{}
 	if err := c.BodyParser(user); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
 	}

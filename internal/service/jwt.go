@@ -7,15 +7,15 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/model"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/jwt"
 )
 
 // JWTService interface
 type JWTService interface {
-	Create(*model.User) (*model.Token, error)
-	GetUser(context.Context, string) (*model.User, error)
+	Create(*entity.User) (*entity.Token, error)
+	GetUser(context.Context, string) (*entity.User, error)
 }
 
 // jwtService struct
@@ -39,8 +39,8 @@ func NewJWTService(ioc di.IOC) JWTService {
 }
 
 // Create func
-func (s jwtService) Create(userData *model.User) (*model.Token, error) {
-	claims := &model.JWTClaims{
+func (s jwtService) Create(userData *entity.User) (*entity.Token, error) {
+	claims := &entity.JWTClaims{
 		UserID: userData.ID,
 		StandardClaims: &jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Hour * 3).Unix(),
@@ -56,13 +56,13 @@ func (s jwtService) Create(userData *model.User) (*model.Token, error) {
 	// 	s.Cache.Set(stringUtil.ToCacheKey("auth", "token", t), userData, 3*time.Hour)
 	// }
 
-	return &model.Token{
+	return &entity.Token{
 		Token: t,
 	}, nil
 }
 
 // GetUser func
-func (s jwtService) GetUser(c context.Context, token string) (*model.User, error) {
+func (s jwtService) GetUser(c context.Context, token string) (*entity.User, error) {
 	tokenData, err := s.TokenService.FindByToken(token)
 	if err != nil {
 		return nil, err
