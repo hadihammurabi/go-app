@@ -2,7 +2,7 @@ package repository
 
 import (
 	"github.com/google/uuid"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/db/table"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 
 	"gorm.io/gorm"
@@ -10,9 +10,9 @@ import (
 
 // TokenRepository interface
 type TokenRepository interface {
-	Create(*entity.Token) (*entity.Token, error)
-	FindByUserID(uuid.UUID) (*entity.Token, error)
-	FindByToken(string) (*entity.Token, error)
+	Create(*table.Token) (*table.Token, error)
+	FindByUserID(uuid.UUID) (*table.Token, error)
+	FindByToken(string) (*table.Token, error)
 }
 
 // tokenRepository struct
@@ -30,21 +30,21 @@ func NewTokenRepository(ioc di.IOC) TokenRepository {
 }
 
 // Create func
-func (u tokenRepository) Create(token *entity.Token) (*entity.Token, error) {
+func (u tokenRepository) Create(token *table.Token) (*table.Token, error) {
 	err := u.db.Create(&token).Error
 	return token, err
 }
 
 // FindByUserID func
-func (u tokenRepository) FindByUserID(id uuid.UUID) (*entity.Token, error) {
-	token := &entity.Token{}
+func (u tokenRepository) FindByUserID(id uuid.UUID) (*table.Token, error) {
+	token := &table.Token{}
 	err := u.db.Where("id = ?", id).First(&token).Error
 	return token, err
 }
 
 // FindByToken func
-func (u tokenRepository) FindByToken(token string) (*entity.Token, error) {
-	tokenDB := &entity.Token{}
+func (u tokenRepository) FindByToken(token string) (*table.Token, error) {
+	tokenDB := &table.Token{}
 	err := u.db.Where("token = ?", token).First(&tokenDB).Error
 	return tokenDB, err
 }

@@ -3,28 +3,31 @@ package entity
 import (
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/google/uuid"
-	"gorm.io/gorm"
+	"github.com/hadihammurabi/belajar-go-rest-api/db/table"
 )
 
-// Token model
+// Token entity
 type Token struct {
-	Base
 	UserID    uuid.UUID  `json:"user_id,omitempty"`
 	Token     string     `json:"token,omitempty"`
 	ExpiredAt *time.Time `json:"expired_at,omitempty"`
 }
 
-// BeforeCreate func
-func (u *Token) BeforeCreate(tx *gorm.DB) (err error) {
-	id, err := uuid.NewRandom()
-	u.ID = id
-	return
+// ToTable func
+func (u Token) ToTable() *table.Token {
+	return &table.Token{
+		UserID:    u.UserID,
+		Token:     u.Token,
+		ExpiredAt: u.ExpiredAt,
+	}
 }
 
-// JWTClaims model
-type JWTClaims struct {
-	*jwt.StandardClaims
-	UserID uuid.UUID `json:"user_id,omitempty"`
+// TokenFromTable func
+func TokenFromTable(fromTable *table.Token) *Token {
+	return &Token{
+		UserID:    fromTable.UserID,
+		Token:     fromTable.Token,
+		ExpiredAt: fromTable.ExpiredAt,
+	}
 }

@@ -2,8 +2,8 @@ package internal
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
+	"github.com/hadihammurabi/belajar-go-rest-api/db/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 )

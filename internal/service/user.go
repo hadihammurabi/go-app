@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"github.com/hadihammurabi/belajar-go-rest-api/db/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 )
 
@@ -32,26 +32,55 @@ func NewUserService(ioc di.IOC) UserService {
 }
 
 // All func
-func (u userService) All(c context.Context) ([]*entity.User, error) {
-	return u.repo.User.All(c)
+func (u userService) All(c context.Context) (users []*entity.User, err error) {
+	usersFromTable, err := u.repo.User.All(c)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, uft := range usersFromTable {
+		users = append(users, entity.UserFromTable(uft))
+	}
+
+	return users, nil
 }
 
 // Create func
 func (u userService) Create(c context.Context, user *entity.User) (*entity.User, error) {
-	return u.repo.User.Create(c, user)
+	userFromTable, err := u.repo.User.Create(c, user.ToTable())
+	if err != nil {
+		return nil, err
+	}
+
+	return entity.UserFromTable(userFromTable), nil
 }
 
 // FindByEmail func
 func (u userService) FindByEmail(c context.Context, email string) (*entity.User, error) {
-	return u.repo.User.FindByEmail(c, email)
+	userFromTable, err := u.repo.User.FindByEmail(c, email)
+	if err != nil {
+		return nil, err
+	}
+
+	return entity.UserFromTable(userFromTable), nil
 }
 
 // FindByID func
 func (u userService) FindByID(c context.Context, id uuid.UUID) (*entity.User, error) {
-	return u.repo.User.FindByID(c, id)
+	userFromTable, err := u.repo.User.FindByID(c, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return entity.UserFromTable(userFromTable), nil
 }
 
 // ChangePassword func
 func (u userService) ChangePassword(c context.Context, id uuid.UUID, password string) (*entity.User, error) {
-	return u.repo.User.ChangePassword(c, id, password)
+	userFromTable, err := u.repo.User.ChangePassword(c, id, password)
+	if err != nil {
+		return nil, err
+	}
+
+	return entity.UserFromTable(userFromTable), nil
 }
