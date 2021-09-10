@@ -13,4 +13,4 @@ build-compose:
 	&& docker build -t $$IMAGE_TAG .
 
 dev:
-	./bin/fiber dev
+	./bin/dev.sh
