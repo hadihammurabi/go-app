@@ -1,8 +1,8 @@
 package delivery
 
 import (
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/dto"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/response"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/dto"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
 
 	"github.com/gofiber/fiber/v2"
@@ -23,7 +23,7 @@ func NewAuthHandler(delivery *Delivery) {
 // @Produce  json
 // @Param credential body dto.UserLoginRequest true "user email and password"
 // @Failure 400 {object} response.FailResponse
-// @Success 200 {object} response.OkResponse{data=dto.UserLoginResponse}
+// @Success 200 {object} response.OkResponse{data=UserLoginResponse}
 func (delivery Delivery) Login(c *fiber.Ctx) error {
 	userInput := &dto.UserLoginRequest{}
 	if err := c.BodyParser(userInput); err != nil {

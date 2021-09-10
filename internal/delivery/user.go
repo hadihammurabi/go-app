@@ -2,7 +2,7 @@ package delivery
 
 import (
 	"github.com/google/uuid"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/dto"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/dto"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
 
 	"github.com/gofiber/fiber/v2"
