@@ -29,15 +29,19 @@ func ConfigurePostgresql() (*gorm.DB, error) {
 	pass := os.Getenv("DB_PASS")
 	name := os.Getenv("DB_NAME")
 
+	dsn := fmt.Sprintf(
+		"host=%s user=%s database=%s port=%s sslmode=disable",
+		host,
+		user,
+		name,
+		port,
+	)
+	if pass != "" {
+		dsn += " password=" + pass
+	}
+	fmt.Println(dsn)
 	db, err := gorm.Open(postgres.New(postgres.Config{
-		DSN: fmt.Sprintf(
-			"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
-			host,
-			user,
-			pass,
-			name,
-			port,
-		),
+		DSN:                  dsn,
 		PreferSimpleProtocol: true,
 	}), &gorm.Config{})
 
