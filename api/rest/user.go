@@ -8,17 +8,33 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+type User interface {
+	Index(*fiber.Ctx) error
+	Store(*fiber.Ctx) error
+	Show(*fiber.Ctx) error
+	ChangePassword(*fiber.Ctx) error
+}
+
+type restUser struct {
+	*APIRest
+}
+
+var _ User = &restUser{}
+
 // NewUserHandler func
 func NewUserHandler(d *APIRest) {
+	api := &restUser{
+		d,
+	}
 	router := d.HTTP.Group("/users")
-	router.Get("/", d.UserIndex)
-	router.Get("/:id", d.UserShow)
-	router.Post("/", d.UserCreate)
-	router.Put("/:id/change-password", d.UserChangePassword)
+	router.Get("/", api.Index)
+	router.Get("/:id", api.Show)
+	router.Post("/", api.Store)
+	router.Put("/:id/change-password", api.ChangePassword)
 }
 
 // UserIndex func
-func (api *APIRest) UserIndex(c *fiber.Ctx) error {
+func (api restUser) Index(c *fiber.Ctx) error {
 	users, _ := api.Service.User.All(c.Context())
 	return c.JSON(&fiber.Map{
 		"data": users,
@@ -26,7 +42,7 @@ func (api *APIRest) UserIndex(c *fiber.Ctx) error {
 }
 
 // UserCreate func
-func (api *APIRest) UserCreate(c *fiber.Ctx) error {
+func (api restUser) Store(c *fiber.Ctx) error {
 	user := &entity.User{}
 	if err := c.BodyParser(user); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
@@ -39,7 +55,7 @@ func (api *APIRest) UserCreate(c *fiber.Ctx) error {
 }
 
 // UserShow func
-func (api *APIRest) UserShow(c *fiber.Ctx) error {
+func (api restUser) Show(c *fiber.Ctx) error {
 	id, err := uuid.Parse(c.Params("id"))
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
@@ -56,7 +72,7 @@ func (api *APIRest) UserShow(c *fiber.Ctx) error {
 }
 
 // UserChangePassword func
-func (api *APIRest) UserChangePassword(c *fiber.Ctx) error {
+func (api restUser) ChangePassword(c *fiber.Ctx) error {
 	id, err := uuid.Parse(c.Params("id"))
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(err)
