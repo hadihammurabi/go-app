@@ -16,14 +16,6 @@ func NewAuthHandler(delivery *APIRest) {
 }
 
 // Login func
-// @Summary Authenticate user using email and password
-// @Tags authentication
-// @Router /auth/login [post]
-// @Accept  json
-// @Produce  json
-// @Param credential body dto.UserLoginRequest true "user email and password"
-// @Failure 400 {object} response.FailResponse
-// @Success 200 {object} response.OkResponse{data=UserLoginResponse}
 func (api APIRest) Login(c *fiber.Ctx) error {
 	userInput := &dto.UserLoginRequest{}
 	if err := c.BodyParser(userInput); err != nil {
@@ -47,13 +39,6 @@ func (api APIRest) Login(c *fiber.Ctx) error {
 }
 
 // Me func
-// @Summary Get logged in user profile
-// @Tags authentication
-// @Router /auth/me [get]
-// @Security ApiKeyAuth
-// @Produce  json
-// @Failure 400 {object} response.FailResponse
-// @Success 200 {object} response.OkResponse{data=entity.User}
 func (api APIRest) Me(c *fiber.Ctx) error {
 	fromLocals := c.Locals("user").(*entity.User)
 	return response.Ok(c, fromLocals)
