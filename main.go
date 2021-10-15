@@ -40,12 +40,12 @@ func main() {
 	var gracefulStop = make(chan os.Signal)
 	runner.GracefulStop(gracefulStop, func() {
 		<-gracefulStop
-		app.Delivery.Stop()
+		app.APIRest.Stop()
 		os.Exit(0)
 	})
 
 	forever := make(chan bool)
 	go http.ListenAndServe("localhost:6060", nil)
-	go app.Delivery.Run()
+	go app.APIRest.Run()
 	<-forever
 }

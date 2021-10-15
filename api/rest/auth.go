@@ -1,15 +1,15 @@
-package delivery
+package rest
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/dto"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery/response"
+	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/dto"
+	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/response"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 // NewAuthHandler func
-func NewAuthHandler(delivery *Delivery) {
+func NewAuthHandler(delivery *APIRest) {
 	router := delivery.HTTP.Group("/auth")
 	router.Post("/login", delivery.Login)
 	router.Get("/me", delivery.Middlewares.Auth, delivery.Me)
@@ -24,7 +24,7 @@ func NewAuthHandler(delivery *Delivery) {
 // @Param credential body dto.UserLoginRequest true "user email and password"
 // @Failure 400 {object} response.FailResponse
 // @Success 200 {object} response.OkResponse{data=UserLoginResponse}
-func (delivery Delivery) Login(c *fiber.Ctx) error {
+func (api APIRest) Login(c *fiber.Ctx) error {
 	userInput := &dto.UserLoginRequest{}
 	if err := c.BodyParser(userInput); err != nil {
 		return response.Fail(c, err)
@@ -35,7 +35,7 @@ func (delivery Delivery) Login(c *fiber.Ctx) error {
 		Password: userInput.Password,
 	}
 
-	token, err := delivery.Service.Auth.Login(c.Context(), user)
+	token, err := api.Service.Auth.Login(c.Context(), user)
 	if err != nil {
 		return response.Fail(c, "invalid credentials")
 	}
@@ -54,7 +54,7 @@ func (delivery Delivery) Login(c *fiber.Ctx) error {
 // @Produce  json
 // @Failure 400 {object} response.FailResponse
 // @Success 200 {object} response.OkResponse{data=entity.User}
-func (delivery Delivery) Me(c *fiber.Ctx) error {
+func (api APIRest) Me(c *fiber.Ctx) error {
 	fromLocals := c.Locals("user").(*entity.User)
 	return response.Ok(c, fromLocals)
 }

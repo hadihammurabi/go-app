@@ -1,15 +1,15 @@
 package internal
 
 import (
+	"github.com/hadihammurabi/belajar-go-rest-api/api/rest"
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/db/repository"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/delivery"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 )
 
 type App struct {
-	Delivery *delivery.Delivery
+	APIRest *rest.APIRest
 }
 
 func NewIOC(conf config.Config) di.IOC {
@@ -23,6 +23,6 @@ func NewIOC(conf config.Config) di.IOC {
 
 func NewApp(ioc di.IOC) *App {
 	return &App{
-		Delivery: delivery.NewDelivery(ioc),
+		APIRest: rest.NewAPIRest(ioc),
 	}
 }
