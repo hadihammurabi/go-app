@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"fmt"
+
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 	"gorm.io/gorm"
@@ -22,5 +24,6 @@ func NewRepository(ioc di.IOC) Repository {
 
 func getDatabase(ioc di.IOC) *gorm.DB {
 	config := ioc[di.DI_CONFIG].(config.Config)
-	return &config.DB
+	fmt.Println(config.DB.SQL)
+	return config.DB.GetSQL("command")
 }

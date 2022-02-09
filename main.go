@@ -9,12 +9,22 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/internal"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/runner"
+	"github.com/spf13/viper"
 
 	"net/http"
 	_ "net/http/pprof"
 
 	"github.com/joho/godotenv"
 )
+
+func init() {
+	configLocation := os.Getenv("APP_CONFIG")
+	viper.SetConfigType("yaml")
+	viper.SetConfigFile(configLocation)
+	if err := viper.ReadInConfig(); err != nil {
+		panic(err)
+	}
+}
 
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())

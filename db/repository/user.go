@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 	"github.com/hadihammurabi/belajar-go-rest-api/db/table"
@@ -27,6 +28,7 @@ type userRepository struct {
 // NewUserRepository func
 func NewUserRepository(ioc di.IOC) UserRepository {
 	database := getDatabase(ioc)
+	fmt.Println(database)
 	repo := &userRepository{
 		db: database,
 	}
