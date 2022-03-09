@@ -3,7 +3,7 @@ package service
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/db/repository"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
+	"github.com/hadihammurabi/belajar-go-rest-api/util/di"
 )
 
 // Service struct

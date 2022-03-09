@@ -2,7 +2,7 @@ package repository
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
+	"github.com/hadihammurabi/belajar-go-rest-api/util/di"
 	"gorm.io/gorm"
 )
 

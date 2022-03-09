@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
+	"github.com/hadihammurabi/belajar-go-rest-api/util/di"
 )
 
 // AuthService interface

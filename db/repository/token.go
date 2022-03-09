@@ -3,7 +3,7 @@ package repository
 import (
 	"github.com/google/uuid"
 	"github.com/hadihammurabi/belajar-go-rest-api/db/table"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
+	"github.com/hadihammurabi/belajar-go-rest-api/util/di"
 
 	"gorm.io/gorm"
 )

@@ -7,7 +7,7 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/middleware"
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/di"
+	"github.com/hadihammurabi/belajar-go-rest-api/util/di"
 
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"

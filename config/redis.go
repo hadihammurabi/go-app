@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/cache"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/cache"
 )
 
 // ConfigureRedis func

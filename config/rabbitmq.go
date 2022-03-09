@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/messaging"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/messaging"
 	gorabbitmq "github.com/hadihammurabi/go-rabbitmq"
 )
 
