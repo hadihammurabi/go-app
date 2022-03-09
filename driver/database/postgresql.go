@@ -2,32 +2,30 @@ package database
 
 import (
 	"fmt"
-	"os"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 // ConfigurePostgresql func
-func ConfigurePostgresql() (*gorm.DB, error) {
-	host := os.Getenv("DB_HOST")
+func ConfigurePostgresql(config Config) (*gorm.DB, error) {
+	host := config.Host
 	if host == "" {
 		host = "localhost"
 	}
 
-	port := os.Getenv("DB_PORT")
+	port := fmt.Sprintf("%d", config.Port)
 	if port == "" {
 		port = "5432"
 	}
 
-	location := os.Getenv("DB_LOCATION")
-	if location == "" {
-		location = "db.sqlite3"
+	user := config.Username
+	if user == "" {
+		user = "postgres"
 	}
 
-	user := os.Getenv("DB_USER")
-	pass := os.Getenv("DB_PASS")
-	name := os.Getenv("DB_NAME")
+	pass := config.Password
+	name := config.Name
 
 	dsn := fmt.Sprintf(
 		"host=%s user=%s database=%s port=%s sslmode=disable",

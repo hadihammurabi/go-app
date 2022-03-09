@@ -1,25 +1,21 @@
 package config
 
 import (
-	"gorm.io/gorm"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/database"
 )
 
 type Config struct {
 	APP AppConfig
 	JWT JWTConfig
-	DB  gorm.DB
+	DB  *database.Database
 	// Redis *cache.Redis
 	// MQ    gorabbitmq.MQ
 }
 
 func New() (Config, error) {
-	jwtConf := ConfigureJWT()
 	appConf := ConfigureApp()
-
-	dbConf, err := ConfigureDatabase()
-	if err != nil {
-		return Config{}, err
-	}
+	jwtConf := ConfigureJWT()
+	dbConf := ConfigureDatabase()
 
 	conf := Config{
 		APP: appConf,

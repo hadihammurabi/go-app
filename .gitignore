@@ -1,4 +1,5 @@
 /.env
+/config.y[am]l
 /docker-compose.yml
 /db/database.yml
 db.sqlite3
