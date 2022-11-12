@@ -23,7 +23,7 @@ func JWTFromHeader(auth string) (string, string, error) {
 }
 
 func VerifyJWT(token string, secret string) (*jwt.Token, error) {
-	parsed, err := jwt.ParseWithClaims(token, &entity.JWTClaims{}, func(t *jwt.Token) (interface{}, error) {
+	parsed, err := jwt.ParseWithClaims(token, &entity.JWTClaims{}, func(t *jwt.Token) (any, error) {
 		return []byte(secret), nil
 	})
 	if err != nil {

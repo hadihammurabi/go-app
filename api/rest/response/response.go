@@ -15,15 +15,15 @@ const (
 
 type FailResponse struct {
 	Status ResponseStatus `json:"status"`
-	Errors interface{}    `json:"errors"`
+	Errors any            `json:"errors"`
 }
 
 type OkResponse struct {
 	Status ResponseStatus `json:"status"`
-	Data   interface{}    `json:"data"`
+	Data   any            `json:"data"`
 }
 
-func Fail(c *fiber.Ctx, errs interface{}, status ...int) error {
+func Fail(c *fiber.Ctx, errs any, status ...int) error {
 	s := http.StatusBadRequest
 	if len(status) > 0 {
 		s = status[0]
@@ -35,7 +35,7 @@ func Fail(c *fiber.Ctx, errs interface{}, status ...int) error {
 	})
 }
 
-func Ok(c *fiber.Ctx, data interface{}, status ...int) error {
+func Ok(c *fiber.Ctx, data any, status ...int) error {
 	s := http.StatusOK
 	if len(status) > 0 {
 		s = status[0]

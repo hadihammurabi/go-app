@@ -22,7 +22,7 @@ func (m Middlewares) Auth(c *fiber.Ctx) error {
 	// tokenData, err := m.config.Redis.Get(stringUtil.ToCacheKey("auth", "token", token))
 	// if err == nil {
 	// 	var user *model.User
-	// 	marshalUtil.MapToStruct(tokenData.(map[string]interface{}), &user)
+	// 	marshalUtil.MapToStruct(tokenData.(map[string]any), &user)
 	// 	c.Locals("user", user)
 	// 	return c.Next()
 	// }

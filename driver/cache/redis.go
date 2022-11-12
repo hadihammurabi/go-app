@@ -37,7 +37,7 @@ func (c Redis) IsAvailable() error {
 	return nil
 }
 
-func (c Redis) Set(key string, val interface{}, exp ...time.Duration) error {
+func (c Redis) Set(key string, val any, exp ...time.Duration) error {
 	if err := c.IsAvailable(); err != nil {
 		return err
 	}
@@ -56,7 +56,7 @@ func (c Redis) Set(key string, val interface{}, exp ...time.Duration) error {
 	return c.client.Set(ctx, key, val, expireAt).Err()
 }
 
-func (c Redis) Get(key string) (interface{}, error) {
+func (c Redis) Get(key string) (any, error) {
 	if err := c.IsAvailable(); err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (c Redis) Get(key string) (interface{}, error) {
 		return nil, err
 	}
 
-	var jsonUnmarshal interface{}
+	var jsonUnmarshal any
 	err = json.Unmarshal([]byte(val), &jsonUnmarshal)
 	if err == nil {
 		return jsonUnmarshal, nil

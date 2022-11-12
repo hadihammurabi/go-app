@@ -34,10 +34,10 @@ func (d dbconfig) ToDBConfig() database.Config {
 
 // ConfigureDatabase func
 func ConfigureDatabase() *database.Database {
-	dbconfigsFromConfig := viper.Get("databases").([]interface{})
+	dbconfigsFromConfig := viper.Get("databases").([]any)
 	dbconfigs := []dbconfig{}
 	for _, db := range dbconfigsFromConfig {
-		dbmap := db.(map[interface{}]interface{})
+		dbmap := db.(map[any]any)
 		if dbmap["id"] == nil {
 			dbmap["id"] = ""
 		}

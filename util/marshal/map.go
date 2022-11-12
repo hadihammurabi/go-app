@@ -2,7 +2,7 @@ package marshal
 
 import "encoding/json"
 
-func MapToStruct(data interface{}, v interface{}) error {
+func MapToStruct(data any, v any) error {
 	jsoned, err := json.Marshal(data)
 	if err != nil {
 		return err

@@ -68,7 +68,7 @@ func (v *Validator) FormatErrors(errs validator.ValidationErrors) []ValidationEr
 }
 
 // ValidateStruct func
-func (v *Validator) ValidateStruct(input interface{}) []ValidationError {
+func (v *Validator) ValidateStruct(input any) []ValidationError {
 	err := v.validate.Struct(input)
 
 	if err != nil {
