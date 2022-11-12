@@ -5,16 +5,16 @@ import (
 	"runtime"
 	"syscall"
 
+	"github.com/hadihammurabi/belajar-go-rest-api/api/rest"
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
+	"github.com/hadihammurabi/belajar-go-rest-api/db/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal"
-	"github.com/hadihammurabi/belajar-go-rest-api/util/di"
 	"github.com/hadihammurabi/belajar-go-rest-api/util/runner"
+	"github.com/hadihammurabi/go-ioc/ioc"
 	"github.com/spf13/viper"
 
 	"net/http"
 	_ "net/http/pprof"
-
-	"github.com/joho/godotenv"
 )
 
 func init() {
@@ -37,25 +37,41 @@ func main() {
 		panic(err)
 	}
 
-	_ = godotenv.Load()
-
 	conf, err := config.New()
 	if err != nil {
 		panic(err)
 	}
 
-	ioc := internal.NewIOC(conf)
-	app := ioc[di.DI_APP].(*internal.App)
+	ioc.Set(func() config.Config {
+		return conf
+	})
 
-	var gracefulStop = make(chan os.Signal)
-	runner.GracefulStop(gracefulStop, func() {
-		<-gracefulStop
-		app.APIRest.Stop()
-		os.Exit(0)
+	repo := repository.NewRepository()
+	ioc.Set(func() repository.Repository {
+		return repo
+	})
+
+	app := internal.NewApp()
+	ioc.Set(func() internal.App {
+		return *app
+	})
+
+	apiRest := rest.NewAPIRest()
+	ioc.Set(func() rest.APIRest {
+		return *apiRest
 	})
 
 	forever := make(chan bool)
+	var gracefulStop = make(chan os.Signal)
+	runner.GracefulStop(gracefulStop, func() {
+		<-gracefulStop
+
+		forever <- true
+		apiRest.Stop()
+		os.Exit(0)
+	})
+
 	go http.ListenAndServe("localhost:6060", nil)
-	go app.APIRest.Run()
+	go apiRest.Run()
 	<-forever
 }

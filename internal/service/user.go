@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/hadihammurabi/belajar-go-rest-api/db/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
-	"github.com/hadihammurabi/belajar-go-rest-api/util/di"
+	"github.com/hadihammurabi/go-ioc/ioc"
 )
 
 // UserService interface
@@ -20,12 +20,12 @@ type UserService interface {
 
 // userService struct
 type userService struct {
-	repo repository.Repository
+	repo *repository.Repository
 }
 
 // NewUserService func
-func NewUserService(ioc di.IOC) UserService {
-	repo := getRepository(ioc)
+func NewUserService() UserService {
+	repo := ioc.Get(repository.Repository{})
 	return userService{
 		repo,
 	}

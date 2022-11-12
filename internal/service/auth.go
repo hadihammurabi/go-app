@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
-	"github.com/hadihammurabi/belajar-go-rest-api/util/di"
 )
 
 // AuthService interface
@@ -20,11 +19,11 @@ type authService struct {
 }
 
 // NewAuthService func
-func NewAuthService(ioc di.IOC) AuthService {
+func NewAuthService() AuthService {
 	return authService{
-		userService:  NewUserService(ioc),
-		tokenService: NewTokenService(ioc),
-		jwtService:   NewJWTService(ioc),
+		userService:  NewUserService(),
+		tokenService: NewTokenService(),
+		jwtService:   NewJWTService(),
 	}
 }
 

@@ -2,11 +2,11 @@ package repository
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/db/table"
-	"github.com/hadihammurabi/belajar-go-rest-api/util/di"
+	"github.com/hadihammurabi/go-ioc/ioc"
 
 	"gorm.io/gorm"
 )
@@ -26,9 +26,8 @@ type userRepository struct {
 }
 
 // NewUserRepository func
-func NewUserRepository(ioc di.IOC) UserRepository {
-	database := getDatabase(ioc)
-	fmt.Println(database)
+func NewUserRepository() UserRepository {
+	database := ioc.Get(config.Config{}).DB.GetSQL("")
 	repo := &userRepository{
 		db: database,
 	}

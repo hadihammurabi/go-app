@@ -2,8 +2,9 @@ package repository
 
 import (
 	"github.com/google/uuid"
+	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/db/table"
-	"github.com/hadihammurabi/belajar-go-rest-api/util/di"
+	"github.com/hadihammurabi/go-ioc/ioc"
 
 	"gorm.io/gorm"
 )
@@ -21,8 +22,8 @@ type tokenRepository struct {
 }
 
 // NewTokenRepository func
-func NewTokenRepository(ioc di.IOC) TokenRepository {
-	database := getDatabase(ioc)
+func NewTokenRepository() TokenRepository {
+	database := ioc.Get(config.Config{}).DB.GetSQL("")
 
 	return &tokenRepository{
 		db: database,

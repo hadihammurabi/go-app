@@ -4,7 +4,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/hadihammurabi/belajar-go-rest-api/db/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
-	"github.com/hadihammurabi/belajar-go-rest-api/util/di"
+	"github.com/hadihammurabi/go-ioc/ioc"
 )
 
 // TokenService interface
@@ -16,12 +16,12 @@ type TokenService interface {
 
 // tokenService struct
 type tokenService struct {
-	repo repository.Repository
+	repo *repository.Repository
 }
 
 // NewTokenService func
-func NewTokenService(ioc di.IOC) TokenService {
-	repo := getRepository(ioc)
+func NewTokenService() TokenService {
+	repo := ioc.Get(repository.Repository{})
 	return tokenService{
 		repo,
 	}

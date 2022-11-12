@@ -1,13 +1,5 @@
 package repository
 
-import (
-	"fmt"
-
-	"github.com/hadihammurabi/belajar-go-rest-api/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/util/di"
-	"gorm.io/gorm"
-)
-
 // Repository struct
 type Repository struct {
 	User  UserRepository
@@ -15,15 +7,9 @@ type Repository struct {
 }
 
 // NewRepository func
-func NewRepository(ioc di.IOC) Repository {
+func NewRepository() Repository {
 	return Repository{
-		User:  NewUserRepository(ioc),
-		Token: NewTokenRepository(ioc),
+		User:  NewUserRepository(),
+		Token: NewTokenRepository(),
 	}
-}
-
-func getDatabase(ioc di.IOC) *gorm.DB {
-	config := ioc[di.DI_CONFIG].(config.Config)
-	fmt.Println(config.DB.SQL)
-	return config.DB.GetSQL("command")
 }

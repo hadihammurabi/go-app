@@ -37,7 +37,7 @@ func ConfigurePostgresql(config Config) (*gorm.DB, error) {
 	if pass != "" {
 		dsn += " password=" + pass
 	}
-	fmt.Println(dsn)
+
 	db, err := gorm.Open(postgres.New(postgres.Config{
 		DSN:                  dsn,
 		PreferSimpleProtocol: true,

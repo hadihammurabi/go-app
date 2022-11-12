@@ -8,8 +8,8 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
-	"github.com/hadihammurabi/belajar-go-rest-api/util/di"
 	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/util/jwt"
+	"github.com/hadihammurabi/go-ioc/ioc"
 )
 
 // JWTService interface
@@ -27,14 +27,14 @@ type jwtService struct {
 }
 
 // NewJWTService func
-func NewJWTService(ioc di.IOC) JWTService {
-	config := getConfig(ioc)
+func NewJWTService() JWTService {
+	config := ioc.Get(config.Config{})
 
 	return jwtService{
 		JWTConfig: config.JWT,
 		// Cache:        config.Redis,
-		UserService:  NewUserService(ioc),
-		TokenService: NewTokenService(ioc),
+		UserService:  NewUserService(),
+		TokenService: NewTokenService(),
 	}
 }
 
