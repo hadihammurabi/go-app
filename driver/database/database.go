@@ -1,12 +1,15 @@
 package database
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 const (
 	SQL              = "sql"
 	NoSQL            = "nosql"
 	DriverPostgresql = "postgresql"
 	DriverSqlite     = "sqlite"
+	DriverMysql      = "mysql"
 )
 
 type Config struct {
@@ -20,17 +23,27 @@ type Config struct {
 }
 
 type Database struct {
-	SQL map[string]*gorm.DB
+	*gorm.DB
+	Connections map[string]*gorm.DB
 }
 
 func NewDatabase() *Database {
 	return &Database{
-		SQL: make(map[string]*gorm.DB),
+		Connections: make(map[string]*gorm.DB),
 	}
 }
 
-func (d Database) GetSQL(name string) *gorm.DB {
-	db, ok := d.SQL[name]
+func (d Database) GetConnection(names ...string) *gorm.DB {
+	name := ""
+	if len(names) > 0 {
+		name = names[0]
+	}
+
+	if name == "" {
+		return d.DB
+	}
+
+	db, ok := d.Connections[name]
 	if !ok {
 		return nil
 	}
@@ -38,11 +51,13 @@ func (d Database) GetSQL(name string) *gorm.DB {
 	return db
 }
 
-func (d *Database) AddSQL(name string, config Config) error {
+func (d *Database) AddConnection(name string, config Config) error {
 	var db *gorm.DB
 	var err error
 	if config.Driver == DriverPostgresql {
 		db, err = ConfigurePostgresql(config)
+	} else if config.Driver == DriverMysql {
+		db, err = ConfigureMysql(config)
 	} else if config.Driver == DriverSqlite {
 		db, err = ConfigureSqlite()
 	}
@@ -51,6 +66,6 @@ func (d *Database) AddSQL(name string, config Config) error {
 		return err
 	}
 
-	d.SQL[name] = db
+	d.Connections[name] = db
 	return nil
 }

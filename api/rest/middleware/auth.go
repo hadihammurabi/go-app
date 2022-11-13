@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"errors"
+	"net/http"
 
 	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/util/jwt"
 
@@ -12,11 +12,11 @@ import (
 func (m Middlewares) Auth(c *fiber.Ctx) error {
 	tokenType, token, err := jwtUtil.JWTFromHeader(c.Get("Authorization"))
 	if err != nil {
-		return err
+		return c.Status(http.StatusUnauthorized).SendString("invalid token")
 	}
 
 	if tokenType != "Bearer" {
-		return errors.New("invalid token")
+		return c.Status(http.StatusUnauthorized).SendString("invalid token")
 	}
 
 	// tokenData, err := m.config.Redis.Get(stringUtil.ToCacheKey("auth", "token", token))

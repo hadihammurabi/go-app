@@ -23,7 +23,7 @@ type tokenRepository struct {
 
 // NewTokenRepository func
 func NewTokenRepository() TokenRepository {
-	database := ioc.Get(config.Config{}).DB.GetSQL("")
+	database := ioc.Get(config.Config{}).DB.GetConnection("pg")
 
 	return &tokenRepository{
 		db: database,

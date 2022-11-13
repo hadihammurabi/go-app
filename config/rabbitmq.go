@@ -6,6 +6,6 @@ import (
 )
 
 // ConfigureRabbitMQ func
-func ConfigureRabbitMQ() (gorabbitmq.MQ, error) {
+func ConfigureRabbitMQ() (*gorabbitmq.MQ, error) {
 	return messaging.ConfigureRabbitMQ()
 }

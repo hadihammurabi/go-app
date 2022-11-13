@@ -27,7 +27,7 @@ type userRepository struct {
 
 // NewUserRepository func
 func NewUserRepository() UserRepository {
-	database := ioc.Get(config.Config{}).DB.GetSQL("")
+	database := ioc.Get(config.Config{}).DB.GetConnection()
 	repo := &userRepository{
 		db: database,
 	}

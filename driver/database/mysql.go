@@ -3,12 +3,12 @@ package database
 import (
 	"fmt"
 
-	"gorm.io/driver/postgres"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
-// ConfigurePostgresql func
-func ConfigurePostgresql(config Config) (*gorm.DB, error) {
+// ConfigureMysql func
+func ConfigureMysql(config Config) (*gorm.DB, error) {
 	host := config.Host
 	if host == "" {
 		host = "localhost"
@@ -16,29 +16,27 @@ func ConfigurePostgresql(config Config) (*gorm.DB, error) {
 
 	port := fmt.Sprintf("%d", config.Port)
 	if port == "" {
-		port = "5432"
+		port = "3306"
 	}
 
 	user := config.Username
 	if user == "" {
-		user = "postgres"
+		user = "root"
 	}
 
 	pass := config.Password
 	name := config.Name
 
 	dsn := fmt.Sprintf(
-		"host=%s user=%s database=%s port=%s sslmode=disable",
-		host,
+		"%s:%s@tcp(%s:%s)/%s",
 		user,
-		name,
+		pass,
+		host,
 		port,
+		name,
 	)
-	if pass != "" {
-		dsn += " password=" + pass
-	}
 
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	return db, err
 }

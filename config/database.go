@@ -1,7 +1,10 @@
 package config
 
 import (
+	"fmt"
 	"log"
+
+	"encoding/json"
 
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/database"
 	"github.com/spf13/viper"
@@ -9,14 +12,12 @@ import (
 
 type dbconfig struct {
 	ID       string
-	Type     string
 	Driver   string
 	Host     string
 	Port     int
 	Username string
 	Password string
 	Name     string
-	Panic    bool
 	Options  string
 }
 
@@ -32,71 +33,39 @@ func (d dbconfig) ToDBConfig() database.Config {
 	}
 }
 
+func dbconfigFromMap(id string, in map[string]any) dbconfig {
+	in["id"] = id
+	inJSON, _ := json.Marshal(in)
+
+	config := &dbconfig{}
+	json.Unmarshal(inJSON, config)
+
+	return *config
+}
+
 // ConfigureDatabase func
 func ConfigureDatabase() *database.Database {
-	dbconfigsFromConfig := viper.Get("databases").([]any)
-	dbconfigs := []dbconfig{}
-	for _, db := range dbconfigsFromConfig {
-		dbmap := db.(map[any]any)
-		if dbmap["id"] == nil {
-			dbmap["id"] = ""
-		}
-		if dbmap["type"] == nil {
-			dbmap["type"] = ""
-		}
-		if dbmap["driver"] == nil {
-			dbmap["driver"] = ""
-		}
-		if dbmap["host"] == nil {
-			dbmap["host"] = ""
-		}
-		if dbmap["port"] == nil {
-			dbmap["port"] = 0
-		}
-		if dbmap["username"] == nil {
-			dbmap["username"] = ""
-		}
-		if dbmap["password"] == nil {
-			dbmap["password"] = ""
-		}
-		if dbmap["name"] == nil {
-			dbmap["name"] = ""
-		}
-		if dbmap["panic"] == nil {
-			dbmap["panic"] = false
-		}
-		if dbmap["options"] == nil {
-			dbmap["options"] = ""
-		}
+	dbconfigsFromConfig := viper.Get("databases").(map[string]any)
 
-		dbconfigs = append(dbconfigs, dbconfig{
-			ID:       dbmap["id"].(string),
-			Name:     dbmap["name"].(string),
-			Type:     dbmap["type"].(string),
-			Driver:   dbmap["driver"].(string),
-			Host:     dbmap["host"].(string),
-			Port:     dbmap["port"].(int),
-			Username: dbmap["username"].(string),
-			Password: dbmap["password"].(string),
-			Options:  dbmap["options"].(string),
-			Panic:    dbmap["panic"].(bool),
-		})
+	if dbconfigsFromConfig[dbconfigsFromConfig["active"].(string)] == nil {
+		panic(fmt.Sprintf("database %s not configured", dbconfigsFromConfig["active"]))
+	}
+
+	dbconfigs := []dbconfig{}
+	for id, configs := range dbconfigsFromConfig {
+		if id != "active" {
+			dbconfigs = append(dbconfigs, dbconfigFromMap(id, configs.(map[string]any)))
+		}
 	}
 
 	db := database.NewDatabase()
 	for _, config := range dbconfigs {
-		if config.Type == database.SQL {
-			err := db.AddSQL(config.ID, config.ToDBConfig())
-			if err != nil {
-				switch config.Panic {
-				case true:
-					panic(err)
-				case false:
-					log.Println(err)
-				}
-			}
+		err := db.AddConnection(config.ID, config.ToDBConfig())
+		if err != nil {
+			log.Println(err)
 		}
 	}
+	db.DB = db.GetConnection(dbconfigsFromConfig["active"].(string))
 
 	return db
 }
