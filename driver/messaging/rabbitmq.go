@@ -2,6 +2,7 @@ package messaging
 
 import (
 	gorabbitmq "github.com/hadihammurabi/go-rabbitmq"
+	"github.com/hadihammurabi/go-rabbitmq/exchange"
 	"github.com/streadway/amqp"
 )
 
@@ -12,6 +13,10 @@ type rabbitmq struct {
 func ConfigureRabbitMQ(config Config) (Messaging, error) {
 	mq, err := gorabbitmq.New(config.URL)
 	if err != nil {
+		return nil, err
+	}
+
+	if err = prepareHello(mq); err != nil {
 		return nil, err
 	}
 
@@ -53,4 +58,20 @@ func (m rabbitmq) Consume(channel string) (<-chan Message, error) {
 	}()
 
 	return result, nil
+}
+
+func prepareHello(mq *gorabbitmq.MQ) error {
+	if err := mq.Exchange().WithName("hello").WithType(exchange.TypeDirect).WithDurable(true).Declare(); err != nil {
+		return err
+	}
+
+	if q, err := mq.Queue().WithName("hello").Declare(); err != nil {
+		return err
+	} else {
+		if err = q.Binding().WithExchange("hello").Bind(); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
