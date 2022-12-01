@@ -32,8 +32,16 @@ func NewHelloHandler(delivery *APIRest) {
 
 // Index func
 func (api hello) Index(c *fiber.Ctx) error {
-	message, _ := json.Marshal(map[string]string{
+	var input struct {
+		Name string `json:"name"`
+	}
+	if err := c.QueryParser(&input); err != nil {
+		return response.Fail(c, err.Error(), http.StatusBadRequest)
+	}
+
+	message, _ := json.Marshal(map[string]any{
 		"message": "hello bro!",
+		"data":    input,
 	})
 
 	err := api.Config.Messaging.Publish("hello", "", messaging.Message{
