@@ -14,6 +14,7 @@ type Config struct {
 type Messaging interface {
 	Publish(topic string, channel string, message Message) error
 	Consume(channel string) (<-chan Message, error)
+	Ack(message Message) error
 }
 
 func New(config Config) (Messaging, error) {
@@ -36,7 +37,7 @@ func (t Table) Validate() error {
 }
 
 type Message struct {
-	Headers     Table
-	ContentType string
-	Message     []byte
+	Headers Table
+	Tag     uint64
+	Message []byte
 }

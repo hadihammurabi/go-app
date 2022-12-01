@@ -52,12 +52,17 @@ func (m rabbitmq) Consume(channel string) (<-chan Message, error) {
 		for res := range data {
 			result <- Message{
 				Headers: Table(res.Headers),
+				Tag:     res.DeliveryTag,
 				Message: res.Body,
 			}
 		}
 	}()
 
 	return result, nil
+}
+
+func (m rabbitmq) Ack(message Message) error {
+	return m.mq.Channel().Ack(message.Tag, false)
 }
 
 func prepareHello(mq *gorabbitmq.MQ) error {
