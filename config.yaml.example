@@ -1,0 +1,18 @@
+databases:
+  active: pg
+
+  pg:
+    driver: postgresql
+    host: localhost
+    port: 5432
+    username: postgres
+    password: myStrongesPassword
+    name: appdb
+
+messaging:
+  driver: rabbitmq
+  url: amqp://guest:guest@localhost:5672/
+
+cache:
+  driver: redis
+  url: 
