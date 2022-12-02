@@ -15,6 +15,7 @@ type Messaging interface {
 	Publish(topic string, channel string, message Message) error
 	Consume(channel string) (<-chan Message, error)
 	Ack(message Message) error
+	IsAvailable() bool
 }
 
 func New(config Config) (Messaging, error) {

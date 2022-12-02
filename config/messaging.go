@@ -7,7 +7,10 @@ import (
 
 // ConfigureMessaging func
 func ConfigureMessaging() messaging.Messaging {
-	messagingFromConfig := viper.Get("messaging").(map[string]any)
+	messagingFromConfig, ok := viper.Get("messaging").(map[string]any)
+	if !ok {
+		return nil
+	}
 
 	driver, ok := messagingFromConfig["driver"].(string)
 	if !ok {

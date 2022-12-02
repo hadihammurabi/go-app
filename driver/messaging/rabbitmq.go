@@ -1,6 +1,8 @@
 package messaging
 
 import (
+	"errors"
+
 	gorabbitmq "github.com/hadihammurabi/go-rabbitmq"
 	"github.com/hadihammurabi/go-rabbitmq/exchange"
 	"github.com/streadway/amqp"
@@ -26,6 +28,10 @@ func ConfigureRabbitMQ(config Config) (Messaging, error) {
 }
 
 func (m rabbitmq) Publish(topic string, channel string, message Message) error {
+	if !m.IsAvailable() {
+		return errors.New("messaging is not available")
+	}
+
 	return m.mq.Publish(&gorabbitmq.MQConfigPublish{
 		Exchange:   topic,
 		RoutingKey: channel,
@@ -37,6 +43,10 @@ func (m rabbitmq) Publish(topic string, channel string, message Message) error {
 }
 
 func (m rabbitmq) Consume(channel string) (<-chan Message, error) {
+	if !m.IsAvailable() {
+		return nil, errors.New("messaging is not available")
+	}
+
 	q, err := m.mq.Queue().WithName(channel).Declare()
 	if err != nil {
 		return nil, err
@@ -62,7 +72,15 @@ func (m rabbitmq) Consume(channel string) (<-chan Message, error) {
 }
 
 func (m rabbitmq) Ack(message Message) error {
+	if !m.IsAvailable() {
+		return errors.New("messaging is not available")
+	}
+
 	return m.mq.Channel().Ack(message.Tag, false)
+}
+
+func (m rabbitmq) IsAvailable() bool {
+	return m.mq != nil
 }
 
 func prepareHello(mq *gorabbitmq.MQ) error {
