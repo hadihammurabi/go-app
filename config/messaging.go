@@ -1,12 +1,13 @@
 package config
 
 import (
+	"github.com/gowok/gowok/driver"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/messaging"
 	"github.com/spf13/viper"
 )
 
 // ConfigureMessaging func
-func ConfigureMessaging() messaging.Messaging {
+func ConfigureMessaging() driver.Messaging {
 	messagingFromConfig, _ := viper.Get("messaging").(map[string]any)
 	driver, _ := messagingFromConfig["driver"].(string)
 	url, _ := messagingFromConfig["url"].(string)

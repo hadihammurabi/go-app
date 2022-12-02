@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/gowok/gowok/driver/messaging"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/response"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver/messaging"
 
 	"github.com/gofiber/fiber/v2"
 )

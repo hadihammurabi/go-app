@@ -1,5 +1,7 @@
 package messaging
 
+import "github.com/gowok/gowok/driver"
+
 const (
 	DriverRabbitMQ = "rabbitmq"
 )
@@ -9,14 +11,7 @@ type Config struct {
 	URL    string
 }
 
-type Messaging interface {
-	Publish(topic string, channel string, message Message) error
-	Consume(channel string) (<-chan Message, error)
-	Ack(message Message) error
-	IsAvailable() bool
-}
-
-func New(config Config) (Messaging, error) {
+func New(config Config) (driver.Messaging, error) {
 	if config.Driver == DriverRabbitMQ {
 		newMq, err := ConfigureRabbitMQ(config)
 		if err != nil {

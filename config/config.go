@@ -3,7 +3,6 @@ package config
 import (
 	"github.com/gowok/gowok/driver"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/database"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver/messaging"
 )
 
 type Config struct {
@@ -11,7 +10,7 @@ type Config struct {
 	JWT       JWTConfig
 	DB        *database.Database
 	Cache     driver.Cache
-	Messaging messaging.Messaging
+	Messaging driver.Messaging
 }
 
 func New() (Config, error) {
