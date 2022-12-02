@@ -1,7 +1,7 @@
 package cache
 
 import (
-	"time"
+	"github.com/gowok/gowok/driver"
 )
 
 type Driver string
@@ -15,13 +15,7 @@ type Config struct {
 	URL    string
 }
 
-type Cache interface {
-	Set(key string, value any, ttl ...time.Duration) error
-	Get(key string) (any, error)
-	IsAvailable() bool
-}
-
-func New(config Config) (Cache, error) {
+func New(config Config) (driver.Cache, error) {
 	if config.Driver == DriverRedis {
 		return ConfigureRedis(config)
 	}

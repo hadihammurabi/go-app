@@ -7,13 +7,14 @@ import (
 	"time"
 
 	goredis "github.com/go-redis/redis/v8"
+	"github.com/gowok/gowok/driver"
 )
 
 type redis struct {
 	client *goredis.Client
 }
 
-func ConfigureRedis(config Config) (Cache, error) {
+func ConfigureRedis(config Config) (driver.Cache, error) {
 	rdb := goredis.NewClient(&goredis.Options{
 		Addr: config.URL,
 	})
@@ -23,18 +24,17 @@ func ConfigureRedis(config Config) (Cache, error) {
 	}, nil
 }
 
-func (c redis) IsAvailable() bool {
+func (c redis) IsAvailable(ctx context.Context) bool {
 	if c.client == nil {
 		return true
 	}
 
-	ctx := context.Background()
 	err := c.client.Ping(ctx).Err()
 	return err == nil
 }
 
-func (c redis) Set(key string, val any, ttl ...time.Duration) error {
-	if !c.IsAvailable() {
+func (c redis) Set(ctx context.Context, key string, val any, ttl ...time.Duration) error {
+	if !c.IsAvailable(ctx) {
 		return errors.New("cache is not available")
 	}
 
@@ -43,7 +43,6 @@ func (c redis) Set(key string, val any, ttl ...time.Duration) error {
 		expireAt = ttl[0]
 	}
 
-	ctx := context.Background()
 	jsonMarshal, err := json.Marshal(val)
 	if err == nil {
 		return c.client.Set(ctx, key, string(jsonMarshal), expireAt).Err()
@@ -52,12 +51,11 @@ func (c redis) Set(key string, val any, ttl ...time.Duration) error {
 	return c.client.Set(ctx, key, val, expireAt).Err()
 }
 
-func (c redis) Get(key string) (any, error) {
-	if !c.IsAvailable() {
+func (c redis) Get(ctx context.Context, key string) (any, error) {
+	if !c.IsAvailable(ctx) {
 		return nil, errors.New("cache is not available")
 	}
 
-	ctx := context.Background()
 	val, err := c.client.Get(ctx, key).Result()
 	if err != nil {
 		return nil, err

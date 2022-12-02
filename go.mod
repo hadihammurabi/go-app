@@ -10,6 +10,7 @@ require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/gofiber/fiber/v2 v2.39.0
 	github.com/google/uuid v1.3.0
+	github.com/gowok/gowok v0.1.1
 	github.com/hadihammurabi/go-ioc v0.0.0-20221112133849-01658fd3ec1d
 	github.com/hadihammurabi/go-rabbitmq v0.0.0-20220906174441-bf7ae8da96be
 	github.com/spf13/viper v1.14.0

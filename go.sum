@@ -154,6 +154,8 @@ github.com/google/uuid v1.3.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+
 github.com/googleapis/gax-go/v2 v2.0.4/go.mod h1:0Wqv26UfaUD9n4G6kQubkQ+KchISgw+vpHVxEJEs9eg=
 github.com/googleapis/gax-go/v2 v2.0.5/go.mod h1:DWXyrwAJ9X0FpwwEdw+IPEYBICEFu5mhpdKc/us6bOk=
 github.com/googleapis/google-cloud-go-testing v0.0.0-20200911160855-bcd43fbb19e8/go.mod h1:dvDLG8qkwmyD9a/MJJN3XJcT3xFxOKAvTZGvuZmac9g=
+github.com/gowok/gowok v0.1.1 h1:dnX93HzINiU26xwGWm4xYhRBxEOIDGuPHy1kSBOnpG8=
+github.com/gowok/gowok v0.1.1/go.mod h1:9/+eVtnVXpJnllRdG3W3Bn9K8ac0sQN0lf4utHpJuwE=
 github.com/hadihammurabi/go-ioc v0.0.0-20221112133849-01658fd3ec1d h1:Gn7J/8WMcKStRrbMtM9jX8HXbCf3lAjdB7yTHVaRMQM=
 github.com/hadihammurabi/go-ioc v0.0.0-20221112133849-01658fd3ec1d/go.mod h1:zrNpRSiZjNJ/rEhVmV72EBqIAVDon+dwUA+pm6rOc1g=
 github.com/hadihammurabi/go-rabbitmq v0.0.0-20220906174441-bf7ae8da96be h1:PA/TLcxce6ASrjCqzrxxwHhi7vMxsDTh/3CLTWFfSss=

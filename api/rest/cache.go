@@ -31,12 +31,12 @@ func NewCacheHandler(delivery *APIRest) {
 func (api cache) Index(c *fiber.Ctx) error {
 	key := "users:1"
 
-	err := api.Config.Cache.Set(key, fiber.Map{"username": "alexunder"})
+	err := api.Config.Cache.Set(c.Context(), key, fiber.Map{"username": "alexunder"})
 	if err != nil {
 		return response.Fail(c, err.Error(), http.StatusInternalServerError)
 	}
 
-	val, err := api.Config.Cache.Get(key)
+	val, err := api.Config.Cache.Get(c.Context(), key)
 	if err != nil {
 		return response.Fail(c, err.Error(), http.StatusInternalServerError)
 	}

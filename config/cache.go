@@ -1,12 +1,13 @@
 package config
 
 import (
+	"github.com/gowok/gowok/driver"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/cache"
 	"github.com/spf13/viper"
 )
 
 // ConfigureCache func
-func ConfigureCache() cache.Cache {
+func ConfigureCache() driver.Cache {
 	messagingFromConfig, _ := viper.Get("cache").(map[string]any)
 	driver, _ := messagingFromConfig["driver"].(string)
 	url, _ := messagingFromConfig["url"].(string)
