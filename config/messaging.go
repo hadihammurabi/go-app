@@ -7,20 +7,9 @@ import (
 
 // ConfigureMessaging func
 func ConfigureMessaging() messaging.Messaging {
-	messagingFromConfig, ok := viper.Get("messaging").(map[string]any)
-	if !ok {
-		return nil
-	}
-
-	driver, ok := messagingFromConfig["driver"].(string)
-	if !ok {
-		panic("messaging driver configuration failed")
-	}
-
-	url, ok := messagingFromConfig["url"].(string)
-	if !ok {
-		panic("messaging url configuration failed")
-	}
+	messagingFromConfig, _ := viper.Get("messaging").(map[string]any)
+	driver, _ := messagingFromConfig["driver"].(string)
+	url, _ := messagingFromConfig["url"].(string)
 
 	conf := messaging.Config{
 		Driver: driver,

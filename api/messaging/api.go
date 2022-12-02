@@ -22,10 +22,7 @@ func NewAPIMessaging() *APIMessaging {
 }
 
 func (d *APIMessaging) Run() {
-	err := d.Hello()
-	if err != nil {
-		panic(err)
-	}
+	d.Hello()
 }
 
 func (d *APIMessaging) Stop() {

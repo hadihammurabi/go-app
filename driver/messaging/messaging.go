@@ -1,7 +1,5 @@
 package messaging
 
-import "errors"
-
 const (
 	DriverRabbitMQ = "rabbitmq"
 )
@@ -28,7 +26,7 @@ func New(config Config) (Messaging, error) {
 		return newMq, nil
 	}
 
-	return nil, errors.New("messaging configuration failed")
+	return ConfigureDefault(config)
 }
 
 type Table map[string]any
