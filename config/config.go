@@ -1,15 +1,16 @@
 package config
 
 import (
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/cache"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/database"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/messaging"
 )
 
 type Config struct {
-	APP AppConfig
-	JWT JWTConfig
-	DB  *database.Database
-	// Redis *cache.Redis
+	APP       AppConfig
+	JWT       JWTConfig
+	DB        *database.Database
+	Cache     cache.Cache
 	Messaging messaging.Messaging
 }
 
@@ -18,11 +19,13 @@ func New() (Config, error) {
 	jwtConf := ConfigureJWT()
 	dbConf := ConfigureDatabase()
 	messagingConf := ConfigureMessaging()
+	cacheConf := ConfigureCache()
 
 	conf := Config{
 		APP:       appConf,
 		JWT:       jwtConf,
 		DB:        dbConf,
+		Cache:     cacheConf,
 		Messaging: messagingConf,
 	}
 

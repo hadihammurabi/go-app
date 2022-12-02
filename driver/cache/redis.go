@@ -1,67 +1,60 @@
 package cache
 
 import (
-	"context"
 	"encoding/json"
 	"errors"
-	"os"
 	"time"
 
-	"github.com/go-redis/redis/v8"
+	goredis "github.com/go-redis/redis"
 )
 
-type Redis struct {
-	client *redis.Client
+type redis struct {
+	client *goredis.Client
 }
 
-func ConfigureRedis() (*Redis, error) {
-	rdb := redis.NewClient(&redis.Options{
-		Addr: os.Getenv("REDIS_ADDRESS"),
+func ConfigureRedis(config Config) (Cache, error) {
+	rdb := goredis.NewClient(&goredis.Options{
+		Addr: config.URL,
 	})
 
-	return &Redis{
+	return &redis{
 		client: rdb,
 	}, nil
 }
 
-func (c Redis) IsAvailable() error {
+func (c redis) IsAvailable() bool {
 	if c.client == nil {
+		return true
+	}
+
+	err := c.client.Ping().Err()
+	return err == nil
+}
+
+func (c redis) Set(key string, val any, ttl ...time.Duration) error {
+	if !c.IsAvailable() {
 		return errors.New("cache is not available")
 	}
 
-	ctx := context.Background()
-	if err := c.client.Ping(ctx).Err(); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (c Redis) Set(key string, val any, exp ...time.Duration) error {
-	if err := c.IsAvailable(); err != nil {
-		return err
-	}
-
-	ctx := context.Background()
 	expireAt := time.Duration(0)
-	if len(exp) > 0 {
-		expireAt = exp[0]
+	if len(ttl) > 0 {
+		expireAt = ttl[0]
 	}
 
 	jsonMarshal, err := json.Marshal(val)
 	if err == nil {
-		return c.client.Set(ctx, key, string(jsonMarshal), expireAt).Err()
+		return c.client.Set(key, string(jsonMarshal), expireAt).Err()
 	}
 
-	return c.client.Set(ctx, key, val, expireAt).Err()
+	return c.client.Set(key, val, expireAt).Err()
 }
 
-func (c Redis) Get(key string) (any, error) {
-	if err := c.IsAvailable(); err != nil {
-		return nil, err
+func (c redis) Get(key string) (any, error) {
+	if !c.IsAvailable() {
+		return nil, errors.New("cache is not available")
 	}
-	ctx := context.Background()
-	val, err := c.client.Get(ctx, key).Result()
+
+	val, err := c.client.Get(key).Result()
 	if err != nil {
 		return nil, err
 	}
