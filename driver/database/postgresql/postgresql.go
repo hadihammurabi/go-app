@@ -1,4 +1,4 @@
-package database
+package postgresql
 
 import (
 	"fmt"
@@ -6,6 +6,16 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
+
+type Config struct {
+	Driver   string
+	Host     string
+	Port     int
+	Username string
+	Password string
+	Name     string
+	Options  string
+}
 
 // ConfigurePostgresql func
 func ConfigurePostgresql(config Config) (*gorm.DB, error) {

@@ -1,6 +1,9 @@
 package database
 
 import (
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/database/mysql"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/database/postgresql"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/database/sqlite"
 	"gorm.io/gorm"
 )
 
@@ -55,11 +58,25 @@ func (d *Database) AddConnection(name string, config Config) error {
 	var db *gorm.DB
 	var err error
 	if config.Driver == DriverPostgresql {
-		db, err = ConfigurePostgresql(config)
+		db, err = postgresql.ConfigurePostgresql(postgresql.Config{
+			Host:     config.Host,
+			Port:     config.Port,
+			Username: config.Username,
+			Password: config.Password,
+			Name:     config.Name,
+			Options:  config.Options,
+		})
 	} else if config.Driver == DriverMysql {
-		db, err = ConfigureMysql(config)
+		db, err = mysql.ConfigureMysql(mysql.Config{
+			Host:     config.Host,
+			Port:     config.Port,
+			Username: config.Username,
+			Password: config.Password,
+			Name:     config.Name,
+			Options:  config.Options,
+		})
 	} else if config.Driver == DriverSqlite {
-		db, err = ConfigureSqlite()
+		db, err = sqlite.ConfigureSqlite()
 	}
 
 	if err != nil {
