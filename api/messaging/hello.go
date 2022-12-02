@@ -3,8 +3,6 @@ package messaging
 import "fmt"
 
 func (d *APIMessaging) Hello() error {
-	fmt.Println("config", d.Config.Messaging)
-
 	msgs, err := d.Config.Messaging.Consume("hello")
 	if err != nil {
 		return err

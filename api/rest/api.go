@@ -72,4 +72,5 @@ func (api *APIRest) ConfigureRoute() {
 	NewAuthHandler(api)
 	NewUserHandler(api)
 	NewHelloHandler(api)
+	NewCacheHandler(api)
 }

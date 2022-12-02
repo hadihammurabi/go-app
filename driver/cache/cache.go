@@ -1,7 +1,6 @@
 package cache
 
 import (
-	"errors"
 	"time"
 )
 
@@ -27,5 +26,5 @@ func New(config Config) (Cache, error) {
 		return ConfigureRedis(config)
 	}
 
-	return nil, errors.New("cache configuration failed")
+	return ConfigureDefault(config)
 }

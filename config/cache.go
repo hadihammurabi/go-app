@@ -7,17 +7,9 @@ import (
 
 // ConfigureCache func
 func ConfigureCache() cache.Cache {
-	messagingFromConfig := viper.Get("cache").(map[string]any)
-
-	driver, ok := messagingFromConfig["driver"].(string)
-	if !ok {
-		panic("cache driver configuration failed")
-	}
-
-	url, ok := messagingFromConfig["url"].(string)
-	if !ok {
-		panic("cache url configuration failed")
-	}
+	messagingFromConfig, _ := viper.Get("cache").(map[string]any)
+	driver, _ := messagingFromConfig["driver"].(string)
+	url, _ := messagingFromConfig["url"].(string)
 
 	conf := cache.Config{
 		Driver: cache.Driver(driver),

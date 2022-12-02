@@ -1,11 +1,12 @@
 package cache
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"time"
 
-	goredis "github.com/go-redis/redis"
+	goredis "github.com/go-redis/redis/v8"
 )
 
 type redis struct {
@@ -27,7 +28,8 @@ func (c redis) IsAvailable() bool {
 		return true
 	}
 
-	err := c.client.Ping().Err()
+	ctx := context.Background()
+	err := c.client.Ping(ctx).Err()
 	return err == nil
 }
 
@@ -41,12 +43,13 @@ func (c redis) Set(key string, val any, ttl ...time.Duration) error {
 		expireAt = ttl[0]
 	}
 
+	ctx := context.Background()
 	jsonMarshal, err := json.Marshal(val)
 	if err == nil {
-		return c.client.Set(key, string(jsonMarshal), expireAt).Err()
+		return c.client.Set(ctx, key, string(jsonMarshal), expireAt).Err()
 	}
 
-	return c.client.Set(key, val, expireAt).Err()
+	return c.client.Set(ctx, key, val, expireAt).Err()
 }
 
 func (c redis) Get(key string) (any, error) {
@@ -54,7 +57,8 @@ func (c redis) Get(key string) (any, error) {
 		return nil, errors.New("cache is not available")
 	}
 
-	val, err := c.client.Get(key).Result()
+	ctx := context.Background()
+	val, err := c.client.Get(ctx, key).Result()
 	if err != nil {
 		return nil, err
 	}
