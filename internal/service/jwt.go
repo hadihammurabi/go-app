@@ -8,7 +8,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
-	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/util/jwt"
+	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/jwt"
 	"github.com/hadihammurabi/go-ioc/ioc"
 )
 

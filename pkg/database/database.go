@@ -3,7 +3,7 @@ package database
 import (
 	"errors"
 
-	"github.com/hadihammurabi/belajar-go-rest-api/driver/database/sql"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/database/sql"
 	"gorm.io/gorm"
 )
 

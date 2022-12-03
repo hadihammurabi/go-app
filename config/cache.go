@@ -2,7 +2,7 @@ package config
 
 import (
 	"github.com/gowok/gowok/driver"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver/cache"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/cache"
 	"github.com/spf13/viper"
 )
 

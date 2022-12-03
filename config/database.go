@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/driver/database"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/database"
 	"github.com/hadihammurabi/go-ioc/ioc"
 	"github.com/spf13/viper"
 )

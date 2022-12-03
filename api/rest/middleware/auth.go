@@ -3,7 +3,7 @@ package middleware
 import (
 	"net/http"
 
-	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/util/jwt"
+	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/jwt"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -18,14 +18,6 @@ func (m Middlewares) Auth(c *fiber.Ctx) error {
 	if tokenType != "Bearer" {
 		return c.Status(http.StatusUnauthorized).SendString("invalid token")
 	}
-
-	// tokenData, err := m.config.Redis.Get(stringUtil.ToCacheKey("auth", "token", token))
-	// if err == nil {
-	// 	var user *model.User
-	// 	marshalUtil.MapToStruct(tokenData.(map[string]any), &user)
-	// 	c.Locals("user", user)
-	// 	return c.Next()
-	// }
 
 	claims, err := jwtUtil.GetJWTData(token, m.config.JWT.Secret)
 	if err != nil {

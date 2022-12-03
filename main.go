@@ -8,7 +8,7 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/db/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal"
-	"github.com/hadihammurabi/belajar-go-rest-api/util/runner"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/runner"
 	"github.com/hadihammurabi/go-ioc/ioc"
 
 	"net/http"

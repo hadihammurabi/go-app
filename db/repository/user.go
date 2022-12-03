@@ -5,7 +5,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/hadihammurabi/belajar-go-rest-api/db/table"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver/database"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/database"
 	"github.com/hadihammurabi/go-ioc/ioc"
 
 	"gorm.io/gorm"
