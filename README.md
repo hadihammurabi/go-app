@@ -33,7 +33,7 @@ Nama | Kegunaan
 -|-
 [Go](https://golang.org) | Bahasa Pemrograman
 [Fiber](https://docs.gofiber.io) | Web Framework
-[PostgreSQL](https://www.postgresql.org) | Database Management System
+[PostgreSQL](https://www.postgresql.org), [MySQL](https://www.mysql.com/), [MariaDB](https://mariadb.org/), [SQLite](https://www.sqlite.org/index.html) | Database Management System
 [Gorm](https://gorm.io/index.html) | Object-Relational Mapper
 [Jwt](https://jwt.io) | Token untuk Otentikasi
 
