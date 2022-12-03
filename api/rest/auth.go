@@ -8,37 +8,27 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type Auth interface {
-	Login(*fiber.Ctx) error
-	Me(*fiber.Ctx) error
-}
-
 type auth struct {
 	*APIRest
 }
 
-var _ Auth = &auth{}
-
-// NewAuthHandler func
-func NewAuthHandler(delivery *APIRest) {
-	api := &auth{
-		delivery,
-	}
+// Auth func
+func Auth(api *APIRest) {
 	router := api.HTTP.Group("/auth")
 	router.Post("/login", api.Login)
-	router.Get("/me", delivery.Middlewares.Auth, api.Me)
+	router.Get("/me", api.Middlewares.Auth, api.Me)
 }
 
 // Login func
-func (api auth) Login(c *fiber.Ctx) error {
-	userInput := &dto.UserLoginRequest{}
-	if err := c.BodyParser(userInput); err != nil {
+func (api APIRest) Login(c *fiber.Ctx) error {
+	input := &dto.UserLoginRequest{}
+	if err := c.BodyParser(input); err != nil {
 		return response.Fail(c, err)
 	}
 
 	user := &entity.User{
-		Email:    userInput.Email,
-		Password: userInput.Password,
+		Email:    input.Email,
+		Password: input.Password,
 	}
 
 	token, err := api.Service.Auth.Login(c.Context(), user)
@@ -53,7 +43,7 @@ func (api auth) Login(c *fiber.Ctx) error {
 }
 
 // Me func
-func (api auth) Me(c *fiber.Ctx) error {
+func (api APIRest) Me(c *fiber.Ctx) error {
 	fromLocals := c.Locals("user").(*entity.User)
 	return response.Ok(c, fromLocals)
 }

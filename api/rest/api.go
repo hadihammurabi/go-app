@@ -16,6 +16,12 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+// ConfigureRoute func
+func (api *APIRest) ConfigureRoute() {
+	Index(api)
+	Auth(api)
+}
+
 // APIRest struct
 type APIRest struct {
 	HTTP        *fiber.App
@@ -59,18 +65,4 @@ func (d *APIRest) Run() {
 func (d *APIRest) Stop() {
 	d.HTTP.Shutdown()
 	log.Println("Server was stopped")
-}
-
-// ConfigureRoute func
-func (api *APIRest) ConfigureRoute() {
-	api.HTTP.Get("/", func(c *fiber.Ctx) error {
-		return c.JSON(fiber.Map{
-			"message": "Selamat datang di Belajar REST API dengan Go",
-		})
-	})
-
-	NewAuthHandler(api)
-	NewUserHandler(api)
-	NewHelloHandler(api)
-	NewCacheHandler(api)
 }
