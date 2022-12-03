@@ -1,78 +1,53 @@
 package database
 
 import (
+	"errors"
+
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/database/sql"
 	"gorm.io/gorm"
 )
 
+type Driver string
+
+const (
+	DriverPostgresql Driver = "postgresql"
+	DriverSqlite     Driver = "sqlite"
+	DriverMysql      Driver = "mysql"
+)
+
 type Config struct {
-	Driver   DatabaseDriver
-	Host     string
-	Port     int
-	Username string
-	Password string
-	Name     string
-	Options  string
+	Driver Driver
+	DSN    string
 }
 
 type Database struct {
 	*gorm.DB
-	Connections map[string]*gorm.DB
 }
 
-func NewDatabase() *Database {
-	return &Database{
-		Connections: make(map[string]*gorm.DB),
-	}
-}
-
-func (d Database) GetConnection(names ...string) *gorm.DB {
-	name := ""
-	if len(names) > 0 {
-		name = names[0]
-	}
-
-	if name == "" {
-		return d.DB
-	}
-
-	db, ok := d.Connections[name]
-	if !ok {
-		return nil
-	}
-
-	return db
-}
-
-func (d *Database) AddConnection(name string, config Config) error {
+func NewDatabase(config Config) (Database, error) {
 	var db *gorm.DB
 	var err error
-	if config.Driver.Driver == sql.DriverPostgresql {
+	if config.Driver == DriverPostgresql {
 		db, err = sql.ConfigurePostgresql(sql.Config{
-			Host:     config.Host,
-			Port:     config.Port,
-			Username: config.Username,
-			Password: config.Password,
-			Name:     config.Name,
-			Options:  config.Options,
+			DSN: config.DSN,
 		})
-	} else if config.Driver.Driver == sql.DriverMysql {
+	} else if config.Driver == DriverMysql {
 		db, err = sql.ConfigureMysql(sql.Config{
-			Host:     config.Host,
-			Port:     config.Port,
-			Username: config.Username,
-			Password: config.Password,
-			Name:     config.Name,
-			Options:  config.Options,
+			DSN: config.DSN,
 		})
-	} else if config.Driver.Driver == sql.DriverSqlite {
-		db, err = sql.ConfigureSqlite()
+	} else if config.Driver == DriverSqlite {
+		db, err = sql.ConfigureSqlite(sql.Config{
+			DSN: config.DSN,
+		})
+	} else {
+		err = errors.New("unknown database driver")
 	}
 
 	if err != nil {
-		return err
+		return Database{}, err
 	}
 
-	d.Connections[name] = db
-	return nil
+	return Database{
+		DB: db,
+	}, nil
 }

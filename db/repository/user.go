@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/db/table"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/database"
 	"github.com/hadihammurabi/go-ioc/ioc"
 
 	"gorm.io/gorm"
@@ -27,9 +27,10 @@ type userRepository struct {
 
 // NewUserRepository func
 func NewUserRepository() UserRepository {
-	database := ioc.Get(config.Config{}).DB.GetConnection()
+	db := ioc.Get(database.Database{}).DB
+
 	repo := &userRepository{
-		db: database,
+		db: db,
 	}
 	return repo
 }

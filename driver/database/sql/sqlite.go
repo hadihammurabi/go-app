@@ -1,15 +1,13 @@
 package sql
 
 import (
-	"os"
-
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
 // ConfigureSqlite func
-func ConfigureSqlite() (*gorm.DB, error) {
-	location := os.Getenv("DB_LOCATION")
+func ConfigureSqlite(config Config) (*gorm.DB, error) {
+	location := config.DSN
 	if location == "" {
 		location = "db.sqlite3"
 	}

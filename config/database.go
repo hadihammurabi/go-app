@@ -1,81 +1,28 @@
 package config
 
 import (
-	"fmt"
-	"log"
-
-	"encoding/json"
-
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/database"
+	"github.com/hadihammurabi/go-ioc/ioc"
 	"github.com/spf13/viper"
 )
 
-type dbconfig struct {
-	ID       string
-	Driver   string
-	Host     string
-	Port     int
-	Username string
-	Password string
-	Name     string
-	Options  string
-}
-
-func (d dbconfig) ToDBConfig() (database.Config, bool) {
-	driver, ok := database.MapDriver(d.Driver)
-	if !ok {
-		return database.Config{}, false
-	}
-
-	return database.Config{
-		Driver:   driver,
-		Host:     d.Host,
-		Port:     d.Port,
-		Username: d.Username,
-		Password: d.Password,
-		Name:     d.Name,
-		Options:  d.Options,
-	}, true
-}
-
-func dbconfigFromMap(id string, in map[string]any) dbconfig {
-	in["id"] = id
-	inJSON, _ := json.Marshal(in)
-
-	config := &dbconfig{}
-	json.Unmarshal(inJSON, config)
-
-	return *config
-}
-
 // ConfigureDatabase func
-func ConfigureDatabase() *database.Database {
-	dbconfigsFromConfig := viper.Get("databases").(map[string]any)
+func ConfigureDatabase() database.Database {
+	dbconfigsFromConfig := viper.Get("database").(map[string]any)
+	driver, _ := dbconfigsFromConfig["driver"].(string)
+	dsn, _ := dbconfigsFromConfig["dsn"].(string)
 
-	if dbconfigsFromConfig[dbconfigsFromConfig["active"].(string)] == nil {
-		panic(fmt.Sprintf("database %s not configured", dbconfigsFromConfig["active"]))
+	dbconf := database.Config{
+		Driver: database.Driver(driver),
+		DSN:    dsn,
 	}
 
-	dbconfigs := []dbconfig{}
-	for id, configs := range dbconfigsFromConfig {
-		if id != "active" {
-			dbconfigs = append(dbconfigs, dbconfigFromMap(id, configs.(map[string]any)))
-		}
+	db, err := database.NewDatabase(dbconf)
+	if err != nil {
+		panic(err)
 	}
 
-	db := database.NewDatabase()
-	for _, config := range dbconfigs {
-		dbconfig, ok := config.ToDBConfig()
-		if !ok {
-			log.Println("database configuration failed")
-		}
-
-		err := db.AddConnection(config.ID, dbconfig)
-		if err != nil {
-			log.Println(err)
-		}
-	}
-	db.DB = db.GetConnection(dbconfigsFromConfig["active"].(string))
+	ioc.Set(func() database.Database { return db })
 
 	return db
 }
