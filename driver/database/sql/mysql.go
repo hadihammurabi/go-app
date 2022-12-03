@@ -1,4 +1,4 @@
-package mysql
+package sql
 
 import (
 	"fmt"
@@ -6,16 +6,6 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
-
-type Config struct {
-	Driver   string
-	Host     string
-	Port     int
-	Username string
-	Password string
-	Name     string
-	Options  string
-}
 
 // ConfigureMysql func
 func ConfigureMysql(config Config) (*gorm.DB, error) {

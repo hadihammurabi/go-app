@@ -1,18 +1,13 @@
 package database
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/driver/database/mysql"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver/database/postgresql"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver/database/sqlite"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/database/sql"
 	"gorm.io/gorm"
 )
 
 const (
-	SQL              = "sql"
-	NoSQL            = "nosql"
-	DriverPostgresql = "postgresql"
-	DriverSqlite     = "sqlite"
-	DriverMysql      = "mysql"
+	SQL   = "sql"
+	NoSQL = "nosql"
 )
 
 type Config struct {
@@ -57,8 +52,8 @@ func (d Database) GetConnection(names ...string) *gorm.DB {
 func (d *Database) AddConnection(name string, config Config) error {
 	var db *gorm.DB
 	var err error
-	if config.Driver == DriverPostgresql {
-		db, err = postgresql.ConfigurePostgresql(postgresql.Config{
+	if config.Driver == sql.DriverPostgresql {
+		db, err = sql.ConfigurePostgresql(sql.Config{
 			Host:     config.Host,
 			Port:     config.Port,
 			Username: config.Username,
@@ -66,8 +61,8 @@ func (d *Database) AddConnection(name string, config Config) error {
 			Name:     config.Name,
 			Options:  config.Options,
 		})
-	} else if config.Driver == DriverMysql {
-		db, err = mysql.ConfigureMysql(mysql.Config{
+	} else if config.Driver == sql.DriverMysql {
+		db, err = sql.ConfigureMysql(sql.Config{
 			Host:     config.Host,
 			Port:     config.Port,
 			Username: config.Username,
@@ -75,8 +70,8 @@ func (d *Database) AddConnection(name string, config Config) error {
 			Name:     config.Name,
 			Options:  config.Options,
 		})
-	} else if config.Driver == DriverSqlite {
-		db, err = sqlite.ConfigureSqlite()
+	} else if config.Driver == sql.DriverSqlite {
+		db, err = sql.ConfigureSqlite()
 	}
 
 	if err != nil {
