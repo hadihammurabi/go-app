@@ -1,13 +1,7 @@
-databases:
-  active: pg
-
-  pg:
-    driver: postgresql
-    host: localhost
-    port: 5432
-    username: postgres
-    password: myStrongesPassword
-    name: appdb
+database:
+  driver: postgresql
+  dsn: 'host=localhost user= password=zfwjfiqDJR6XivS5 database=postgres port=5432 sslmode=disable'
+  # how to writing DSN, see here: https://gorm.io/docs/connecting_to_the_database.html
 
 messaging:
   driver: rabbitmq
