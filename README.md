@@ -1,6 +1,8 @@
 # Belajar Go REST API
 Belajar REST API dengan bahasa pemrograman Go.
 
+<img width="1005" alt="image" src="https://user-images.githubusercontent.com/16364286/205443523-557129d2-fbaa-4391-8f58-1c1a2757ee9a.png">
+
 # Daftar Isi
 * [Fitur](#fitur)
 * [Konsep Arsitektural](#konsep-arsitektural)
