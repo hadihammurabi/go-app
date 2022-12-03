@@ -5,13 +5,8 @@ import (
 	"gorm.io/gorm"
 )
 
-const (
-	SQL   = "sql"
-	NoSQL = "nosql"
-)
-
 type Config struct {
-	Driver   string
+	Driver   DatabaseDriver
 	Host     string
 	Port     int
 	Username string
@@ -52,7 +47,7 @@ func (d Database) GetConnection(names ...string) *gorm.DB {
 func (d *Database) AddConnection(name string, config Config) error {
 	var db *gorm.DB
 	var err error
-	if config.Driver == sql.DriverPostgresql {
+	if config.Driver.Driver == sql.DriverPostgresql {
 		db, err = sql.ConfigurePostgresql(sql.Config{
 			Host:     config.Host,
 			Port:     config.Port,
@@ -61,7 +56,7 @@ func (d *Database) AddConnection(name string, config Config) error {
 			Name:     config.Name,
 			Options:  config.Options,
 		})
-	} else if config.Driver == sql.DriverMysql {
+	} else if config.Driver.Driver == sql.DriverMysql {
 		db, err = sql.ConfigureMysql(sql.Config{
 			Host:     config.Host,
 			Port:     config.Port,
@@ -70,7 +65,7 @@ func (d *Database) AddConnection(name string, config Config) error {
 			Name:     config.Name,
 			Options:  config.Options,
 		})
-	} else if config.Driver == sql.DriverSqlite {
+	} else if config.Driver.Driver == sql.DriverSqlite {
 		db, err = sql.ConfigureSqlite()
 	}
 

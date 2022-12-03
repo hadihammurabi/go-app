@@ -21,16 +21,21 @@ type dbconfig struct {
 	Options  string
 }
 
-func (d dbconfig) ToDBConfig() database.Config {
+func (d dbconfig) ToDBConfig() (database.Config, bool) {
+	driver, ok := database.MapDriver(d.Driver)
+	if !ok {
+		return database.Config{}, false
+	}
+
 	return database.Config{
-		Driver:   d.Driver,
+		Driver:   driver,
 		Host:     d.Host,
 		Port:     d.Port,
 		Username: d.Username,
 		Password: d.Password,
 		Name:     d.Name,
 		Options:  d.Options,
-	}
+	}, true
 }
 
 func dbconfigFromMap(id string, in map[string]any) dbconfig {
@@ -60,7 +65,12 @@ func ConfigureDatabase() *database.Database {
 
 	db := database.NewDatabase()
 	for _, config := range dbconfigs {
-		err := db.AddConnection(config.ID, config.ToDBConfig())
+		dbconfig, ok := config.ToDBConfig()
+		if !ok {
+			log.Println("database configuration failed")
+		}
+
+		err := db.AddConnection(config.ID, dbconfig)
 		if err != nil {
 			log.Println(err)
 		}
