@@ -3,7 +3,9 @@ package database
 import (
 	"errors"
 
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/database/sql"
+	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
@@ -25,24 +27,7 @@ type Database struct {
 }
 
 func NewDatabase(config Config) (Database, error) {
-	var db *gorm.DB
-	var err error
-	if config.Driver == DriverPostgresql {
-		db, err = sql.ConfigurePostgresql(sql.Config{
-			DSN: config.DSN,
-		})
-	} else if config.Driver == DriverMysql {
-		db, err = sql.ConfigureMysql(sql.Config{
-			DSN: config.DSN,
-		})
-	} else if config.Driver == DriverSqlite {
-		db, err = sql.ConfigureSqlite(sql.Config{
-			DSN: config.DSN,
-		})
-	} else {
-		err = errors.New("unknown database driver")
-	}
-
+	db, err := config.configure()
 	if err != nil {
 		return Database{}, err
 	}
@@ -50,4 +35,25 @@ func NewDatabase(config Config) (Database, error) {
 	return Database{
 		DB: db,
 	}, nil
+}
+
+func (c Config) configure() (*gorm.DB, error) {
+	var db *gorm.DB
+	var err error
+	if c.Driver == DriverPostgresql {
+		db, err = gorm.Open(postgres.Open(c.DSN), &gorm.Config{})
+	} else if c.Driver == DriverMysql {
+		db, err = gorm.Open(mysql.Open(c.DSN), &gorm.Config{})
+	} else if c.Driver == DriverSqlite {
+		location := c.DSN
+		if location == "" {
+			location = "db.sqlite3"
+		}
+
+		db, err = gorm.Open(sqlite.Open(location), &gorm.Config{})
+	} else {
+		err = errors.New("unknown database driver")
+	}
+
+	return db, err
 }
