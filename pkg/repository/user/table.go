@@ -2,6 +2,7 @@ package user
 
 import (
 	"github.com/google/uuid"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/repository/base"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
@@ -33,4 +34,21 @@ func (u *Table) BeforeSave(tx *gorm.DB) (err error) {
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(u.Password), 10)
 	u.Password = string(hashedPassword)
 	return
+}
+
+// ToEntity func
+func (t Table) ToEntity() *entity.User {
+	return &entity.User{
+		ID:       t.ID,
+		Email:    t.Email,
+		Password: t.Password,
+	}
+}
+
+// FromEntity func
+func FromEntity(e *entity.User) *Table {
+	return &Table{
+		Email:    e.Email,
+		Password: e.Password,
+	}
 }

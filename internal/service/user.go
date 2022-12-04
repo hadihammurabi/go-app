@@ -39,7 +39,7 @@ func (u userService) All(c context.Context) (users []*entity.User, err error) {
 	}
 
 	for _, uft := range usersFromTable {
-		users = append(users, entity.UserFromTable(uft))
+		users = append(users, uft)
 	}
 
 	return users, nil
@@ -47,12 +47,12 @@ func (u userService) All(c context.Context) (users []*entity.User, err error) {
 
 // Create func
 func (u userService) Create(c context.Context, user *entity.User) (*entity.User, error) {
-	userFromTable, err := u.repo.User.Create(c, user.ToTable())
+	userFromTable, err := u.repo.User.Create(c, user)
 	if err != nil {
 		return nil, err
 	}
 
-	return entity.UserFromTable(userFromTable), nil
+	return userFromTable, nil
 }
 
 // FindByEmail func
@@ -62,7 +62,7 @@ func (u userService) FindByEmail(c context.Context, email string) (*entity.User,
 		return nil, err
 	}
 
-	return entity.UserFromTable(userFromTable), nil
+	return userFromTable, nil
 }
 
 // FindByID func
@@ -72,7 +72,7 @@ func (u userService) FindByID(c context.Context, id uuid.UUID) (*entity.User, er
 		return nil, err
 	}
 
-	return entity.UserFromTable(userFromTable), nil
+	return userFromTable, nil
 }
 
 // ChangePassword func
@@ -82,5 +82,5 @@ func (u userService) ChangePassword(c context.Context, id uuid.UUID, password st
 		return nil, err
 	}
 
-	return entity.UserFromTable(userFromTable), nil
+	return userFromTable, nil
 }

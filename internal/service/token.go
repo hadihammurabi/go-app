@@ -29,12 +29,12 @@ func NewTokenService() TokenService {
 
 // Create func
 func (u tokenService) Create(token *entity.Token) (*entity.Token, error) {
-	tokenFromTable, err := u.repo.Token.Create(token.ToTable())
+	tokenFromTable, err := u.repo.Token.Create(token)
 	if err != nil {
 		return nil, err
 	}
 
-	return entity.TokenFromTable(tokenFromTable), nil
+	return tokenFromTable, nil
 }
 
 // FindByUserID func
@@ -44,7 +44,7 @@ func (u tokenService) FindByUserID(id uuid.UUID) (*entity.Token, error) {
 		return nil, err
 	}
 
-	return entity.TokenFromTable(tokenFromTable), nil
+	return tokenFromTable, nil
 }
 
 // FindByToken func
@@ -54,5 +54,5 @@ func (u tokenService) FindByToken(token string) (*entity.Token, error) {
 		return nil, err
 	}
 
-	return entity.TokenFromTable(tokenFromTable), nil
+	return tokenFromTable, nil
 }

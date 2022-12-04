@@ -4,17 +4,18 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/database"
 	"github.com/hadihammurabi/go-ioc/ioc"
 )
 
 // UserRepository interface
 type UserRepository interface {
-	All(context.Context) ([]*Table, error)
-	Create(context.Context, *Table) (*Table, error)
-	FindByID(context.Context, uuid.UUID) (*Table, error)
-	FindByEmail(context.Context, string) (*Table, error)
-	ChangePassword(context.Context, uuid.UUID, string) (*Table, error)
+	All(context.Context) ([]*entity.User, error)
+	Create(context.Context, *entity.User) (*entity.User, error)
+	FindByID(context.Context, uuid.UUID) (*entity.User, error)
+	FindByEmail(context.Context, string) (*entity.User, error)
+	ChangePassword(context.Context, uuid.UUID, string) (*entity.User, error)
 }
 
 // New func
