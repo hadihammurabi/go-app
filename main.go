@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 
+	"github.com/hadihammurabi/belajar-go-rest-api/api/grpc"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/messaging"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest"
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
@@ -50,6 +51,11 @@ func main() {
 		return *apiMessaging
 	})
 
+	apiGrpc := grpc.NewAPIGrpc()
+	ioc.Set(func() grpc.APIGrpc {
+		return *apiGrpc
+	})
+
 	forever := make(chan bool)
 	var gracefulStop = make(chan os.Signal)
 	runner.GracefulStop(gracefulStop, func() {
@@ -63,5 +69,6 @@ func main() {
 	go http.ListenAndServe("localhost:6060", nil)
 	go apiRest.Run()
 	go apiMessaging.Run()
+	go apiGrpc.Run()
 	<-forever
 }

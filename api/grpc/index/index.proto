@@ -1,0 +1,17 @@
+syntax = "proto3";
+option go_package = "github.com/hadihammurabi/api/grpc/index";
+
+package index;
+
+service Index {
+  
+  rpc Index(None) returns (IndexIndexResp);
+
+}
+
+message None {
+}
+
+message IndexIndexResp {
+  string message = 1;
+}
