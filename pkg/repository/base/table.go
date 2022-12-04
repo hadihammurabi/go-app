@@ -1,4 +1,4 @@
-package table
+package base
 
 import (
 	"time"
@@ -6,8 +6,8 @@ import (
 	"github.com/google/uuid"
 )
 
-// Base model
-type Base struct {
+// Table model
+type Table struct {
 	ID        uuid.UUID  `gorm:"type:uuid;primary_key;" json:"id"`
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`

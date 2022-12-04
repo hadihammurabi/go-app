@@ -2,8 +2,8 @@ package service
 
 import (
 	"github.com/google/uuid"
-	"github.com/hadihammurabi/belajar-go-rest-api/db/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/repository"
 	"github.com/hadihammurabi/go-ioc/ioc"
 )
 

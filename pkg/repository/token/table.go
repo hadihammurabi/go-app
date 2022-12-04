@@ -1,22 +1,28 @@
-package table
+package token
 
 import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/repository/base"
 	"gorm.io/gorm"
 )
 
-// Token model
-type Token struct {
-	Base
+// Table model
+type Table struct {
+	base.Table
 	UserID    uuid.UUID  `json:"user_id,omitempty"`
 	Token     string     `json:"token,omitempty"`
 	ExpiredAt *time.Time `json:"expired_at,omitempty"`
 }
 
+// TableName func
+func (u *Table) TableName(tx *gorm.DB) string {
+	return "tokens"
+}
+
 // BeforeCreate func
-func (u *Token) BeforeCreate(tx *gorm.DB) (err error) {
+func (u *Table) BeforeCreate(tx *gorm.DB) (err error) {
 	id, err := uuid.NewRandom()
 	u.ID = id
 	return

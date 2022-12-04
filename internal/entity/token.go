@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/hadihammurabi/belajar-go-rest-api/db/table"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/repository/token"
 )
 
 // Token entity
@@ -15,8 +15,8 @@ type Token struct {
 }
 
 // ToTable func
-func (u Token) ToTable() *table.Token {
-	return &table.Token{
+func (u Token) ToTable() *token.Table {
+	return &token.Table{
 		UserID:    u.UserID,
 		Token:     u.Token,
 		ExpiredAt: u.ExpiredAt,
@@ -24,7 +24,7 @@ func (u Token) ToTable() *table.Token {
 }
 
 // TokenFromTable func
-func TokenFromTable(fromTable *table.Token) *Token {
+func TokenFromTable(fromTable *token.Table) *Token {
 	return &Token{
 		UserID:    fromTable.UserID,
 		Token:     fromTable.Token,

@@ -4,7 +4,7 @@ import (
 	"errors"
 
 	"github.com/google/uuid"
-	"github.com/hadihammurabi/belajar-go-rest-api/db/table"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/repository/user"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -26,15 +26,15 @@ func (u User) IsPasswordValid(password string) error {
 }
 
 // ToTable func
-func (u User) ToTable() *table.User {
-	return &table.User{
+func (u User) ToTable() *user.Table {
+	return &user.Table{
 		Email:    u.Email,
 		Password: u.Password,
 	}
 }
 
 // UserFromTable func
-func UserFromTable(fromTable *table.User) *User {
+func UserFromTable(fromTable *user.Table) *User {
 	return &User{
 		ID:       fromTable.ID,
 		Email:    fromTable.Email,
