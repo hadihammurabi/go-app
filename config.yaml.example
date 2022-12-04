@@ -1,12 +1,21 @@
+app:
+  rest:
+    enabled: true
+    host: :8080
+  grpc:
+    enabled: true
+    host: :8081
+  messaging:
+    enabled: true
+
 database:
   driver: postgresql
-  dsn: 'host=localhost user= password=zfwjfiqDJR6XivS5 database=postgres port=5432 sslmode=disable'
-  # how to writing DSN, see here: https://gorm.io/docs/connecting_to_the_database.html
+  dsn: 'host=localhost user=postgres password= database=postgres port=5432 sslmode=disable'
 
 messaging:
   driver: rabbitmq
-  url: amqp://guest:guest@localhost:5672/
+  dsn: amqp://guest:guest@localhost:5672/
 
 cache:
   driver: redis
-  url: 
+  dsn: 

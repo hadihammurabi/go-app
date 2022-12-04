@@ -4,8 +4,8 @@ import (
 	"log"
 	"net"
 
+	"github.com/gowok/gowok"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/grpc/index"
-	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
 	"github.com/hadihammurabi/go-ioc/ioc"
@@ -14,14 +14,14 @@ import (
 
 // APIGrpc struct
 type APIGrpc struct {
-	Config  *config.Config
+	Config  *gowok.Config
 	Service *service.Service
 
 	Grpc *grpc.Server
 }
 
 func NewAPIGrpc() *APIGrpc {
-	conf := ioc.Get(config.Config{})
+	conf := ioc.Get(gowok.Config{})
 	internalApp := ioc.Get(internal.App{})
 	service := internalApp.Service
 
@@ -41,6 +41,7 @@ func (d *APIGrpc) Run() {
 		panic(err)
 	}
 
+	log.Println("API GRPC started")
 	err = d.Grpc.Serve(listen)
 	if err != nil {
 		panic(err)

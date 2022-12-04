@@ -10,7 +10,7 @@ require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/gofiber/fiber/v2 v2.39.0
 	github.com/google/uuid v1.3.0
-	github.com/gowok/gowok v0.1.1
+	github.com/gowok/gowok v0.1.2
 	github.com/hadihammurabi/go-ioc v0.0.0-20221112133849-01658fd3ec1d
 	github.com/hadihammurabi/go-rabbitmq v0.0.0-20220906174441-bf7ae8da96be
 	github.com/spf13/viper v1.14.0
@@ -22,7 +22,7 @@ require (
 	gorm.io/driver/mysql v1.4.4
 	gorm.io/driver/postgres v1.4.5
 	gorm.io/driver/sqlite v1.4.3
-	gorm.io/gorm v1.24.1
+	gorm.io/gorm v1.24.2
 )
 
 require (

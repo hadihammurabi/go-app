@@ -1,9 +1,9 @@
 package rest
 
 import (
-	"fmt"
 	"log"
 
+	"github.com/gowok/gowok"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/middleware"
 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal"
@@ -19,7 +19,7 @@ import (
 // ConfigureRoute func
 func (api *APIRest) ConfigureRoute() {
 	Index(api)
-	Auth(api)
+	// Auth(api)
 }
 
 // APIRest struct
@@ -28,11 +28,13 @@ type APIRest struct {
 	Middlewares middleware.Middlewares
 	Service     *service.Service
 	Validator   *config.Validator
-	Config      *config.Config
+	Config      *gowok.Config
 }
 
 func NewAPIRest() *APIRest {
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		DisableStartupMessage: true,
+	})
 	app.Use(logger.New(logger.Config{
 		Format: "${time} | ${method} | ${path} | ${status} | ${ip} | ${latency}\n",
 	}))
@@ -41,7 +43,7 @@ func NewAPIRest() *APIRest {
 
 	internalApp := ioc.Get(internal.App{})
 	service := internalApp.Service
-	conf := ioc.Get(config.Config{})
+	conf := ioc.Get(gowok.Config{})
 
 	middlewares := middleware.NewMiddleware()
 	api := &APIRest{
@@ -56,8 +58,8 @@ func NewAPIRest() *APIRest {
 }
 
 func (d *APIRest) Run() {
-	connURL := fmt.Sprintf(":%s", d.Config.APP.Port)
-	if err := d.HTTP.Listen(connURL); err != nil {
+	log.Println("API REST started")
+	if err := d.HTTP.Listen(d.Config.App.Rest.Host); err != nil {
 		log.Printf("Server is not running! Reason: %v", err)
 	}
 }

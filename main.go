@@ -27,10 +27,6 @@ func main() {
 		panic(err)
 	}
 
-	ioc.Set(func() config.Config {
-		return conf
-	})
-
 	repo := repository.NewRepository()
 	ioc.Set(func() repository.Repository {
 		return repo
@@ -67,8 +63,15 @@ func main() {
 	})
 
 	go http.ListenAndServe("localhost:6060", nil)
-	go apiRest.Run()
+
+	if conf.App.Rest.Enabled {
+		go apiRest.Run()
+	}
+
+	if conf.App.Grpc.Enabled {
+		go apiGrpc.Run()
+	}
+
 	go apiMessaging.Run()
-	go apiGrpc.Run()
 	<-forever
 }

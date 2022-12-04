@@ -2,19 +2,19 @@ package service
 
 // Service struct
 type Service struct {
-	Auth  AuthService
+	// Auth  AuthService
 	User  UserService
 	Token TokenService
-	JWT   JWTService
+	// JWT   JWTService
 }
 
 // NewService func
 func NewService() (service *Service) {
 	service = &Service{
-		Auth:  NewAuthService(),
+		// Auth:  NewAuthService(),
 		User:  NewUserService(),
 		Token: NewTokenService(),
-		JWT:   NewJWTService(),
+		// JWT:   NewJWTService(),
 	}
 	return
 }

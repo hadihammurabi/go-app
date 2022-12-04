@@ -3,7 +3,7 @@ package messaging
 import (
 	"log"
 
-	"github.com/hadihammurabi/belajar-go-rest-api/config"
+	"github.com/gowok/gowok"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
 	"github.com/hadihammurabi/go-ioc/ioc"
@@ -11,12 +11,12 @@ import (
 
 // APIMessaging struct
 type APIMessaging struct {
-	Config  *config.Config
+	Config  *gowok.Config
 	Service *service.Service
 }
 
 func NewAPIMessaging() *APIMessaging {
-	conf := ioc.Get(config.Config{})
+	conf := ioc.Get(gowok.Config{})
 	internalApp := ioc.Get(internal.App{})
 	service := internalApp.Service
 
@@ -28,6 +28,7 @@ func NewAPIMessaging() *APIMessaging {
 }
 
 func (d *APIMessaging) Run() {
+	log.Println("API messaging started")
 	// d.Hello()
 }
 
