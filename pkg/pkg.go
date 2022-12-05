@@ -2,12 +2,12 @@ package pkg
 
 import (
 	"github.com/gowok/gowok"
+	"github.com/gowok/ioc"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/database"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/runner"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/validator"
-	"github.com/hadihammurabi/go-ioc/ioc"
 )
 
 func PrepareAll() {

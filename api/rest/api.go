@@ -4,10 +4,10 @@ import (
 	"log"
 
 	"github.com/gowok/gowok"
+	"github.com/gowok/ioc"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/middleware"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
-	"github.com/hadihammurabi/go-ioc/ioc"
 
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"

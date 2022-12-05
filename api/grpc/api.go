@@ -5,10 +5,10 @@ import (
 	"net"
 
 	"github.com/gowok/gowok"
+	"github.com/gowok/ioc"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/grpc/index"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
-	"github.com/hadihammurabi/go-ioc/ioc"
 	"google.golang.org/grpc"
 )
 

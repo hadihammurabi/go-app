@@ -4,13 +4,13 @@ import (
 	"fmt"
 
 	"github.com/gowok/gowok"
+	"github.com/gowok/ioc"
 	"github.com/hadihammurabi/belajar-go-rest-api/api"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/grpc"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/messaging"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg"
-	"github.com/hadihammurabi/go-ioc/ioc"
 
 	"net/http"
 	_ "net/http/pprof"

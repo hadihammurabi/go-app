@@ -1,10 +1,10 @@
 package api
 
 import (
+	"github.com/gowok/ioc"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/grpc"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/messaging"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest"
-	"github.com/hadihammurabi/go-ioc/ioc"
 )
 
 func PrepareAll() {

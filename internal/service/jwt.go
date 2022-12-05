@@ -9,7 +9,7 @@ package service
 // 	"github.com/hadihammurabi/belajar-go-rest-api/config"
 // 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
 // 	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/jwt"
-// 	"github.com/hadihammurabi/go-ioc/ioc"
+// 	"github.com/gowok/ioc"
 // )
 
 // // JWTService interface

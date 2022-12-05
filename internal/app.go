@@ -1,8 +1,8 @@
 package internal
 
 import (
+	"github.com/gowok/ioc"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
-	"github.com/hadihammurabi/go-ioc/ioc"
 )
 
 type App struct {
