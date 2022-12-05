@@ -15,12 +15,13 @@ Belajar REST API dengan bahasa pemrograman Go.
 
 # Fitur
 Projek ini sudah siap dijalankan dan dapat dimodifikasi sesuai kebutuhan masing-masing. Adapun kemampuan projek ini:
-1. Dapat menjadi backend dari REST API.
-2. Dapat menjadi service dalam rangkaian microservices.
-3. Dapat menyediakan dokumentasi API melalui Swagger.
-4. Support berbagai koneksi database, seperti MySQL, PostgreSQL, SQLite, dan SQL Server.
-5. Support migrasi database dalam bentuk file SQL.
-6. Support [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection).
+1. Dapat menjadi backend dari REST API dan GRPC.
+2. Dapat mengoperasikan message broker, seperti mengirim dan menerima message.
+3. Dapat menjadi service dalam rangkaian microservices.
+4. Dapat menyediakan dokumentasi API melalui Swagger.
+5. Support berbagai koneksi database, seperti MySQL, PostgreSQL, SQLite, dan SQL Server.
+6. Support migrasi database dalam bentuk file SQL.
+7. Support [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection).
 
 # Konsep Arsitektural
 Struktur proyek ini mengikuti konsep-konsep arsitektural seperti:
@@ -33,6 +34,8 @@ Nama | Kegunaan
 -|-
 [Go](https://golang.org) | Bahasa Pemrograman
 [Fiber](https://docs.gofiber.io) | Web Framework
+[GRPC](https://grpc.io) | Transport RPC
+[RabbitMQ](https://www.rabbitmq.com) | Message Broker
 [PostgreSQL](https://www.postgresql.org), [MySQL](https://www.mysql.com/), [MariaDB](https://mariadb.org/), [SQLite](https://www.sqlite.org/index.html) | Database Management System
 [Gorm](https://gorm.io/index.html) | Object-Relational Mapper
 [Jwt](https://jwt.io) | Token untuk Otentikasi
