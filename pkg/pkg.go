@@ -6,6 +6,7 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/database"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/runner"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg/validator"
 	"github.com/hadihammurabi/go-ioc/ioc"
 )
 
@@ -18,6 +19,10 @@ func PrepareAll() {
 	}
 	ioc.Set(func() gowok.Config {
 		return conf
+	})
+
+	ioc.Set(func() gowok.Validator {
+		return validator.Configure()
 	})
 
 	db, err := database.NewDatabase(database.Config{

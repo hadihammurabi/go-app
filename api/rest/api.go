@@ -5,7 +5,6 @@ import (
 
 	"github.com/gowok/gowok"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/middleware"
-	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
 	"github.com/hadihammurabi/go-ioc/ioc"
@@ -27,7 +26,7 @@ type APIRest struct {
 	HTTP        *fiber.App
 	Middlewares middleware.Middlewares
 	Service     *service.Service
-	Validator   *config.Validator
+	Validator   *gowok.Validator
 	Config      *gowok.Config
 }
 
@@ -44,6 +43,7 @@ func NewAPIRest() *APIRest {
 	internalApp := ioc.Get(internal.App{})
 	service := internalApp.Service
 	conf := ioc.Get(gowok.Config{})
+	validator := ioc.Get(gowok.Validator{})
 
 	middlewares := middleware.NewMiddleware()
 	api := &APIRest{
@@ -51,7 +51,7 @@ func NewAPIRest() *APIRest {
 		Middlewares: middlewares,
 		Service:     service,
 		Config:      conf,
-		Validator:   config.NewValidator(),
+		Validator:   validator,
 	}
 	api.ConfigureRoute()
 	return api
