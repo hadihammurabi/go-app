@@ -34,9 +34,13 @@ func NewAPIGrpc() *APIGrpc {
 }
 
 func (d *APIGrpc) Run() {
+	if !d.Config.App.Grpc.Enabled {
+		return
+	}
+
 	index.RegisterIndexServer(d.Grpc, index.New())
 
-	listen, err := net.Listen("tcp", ":1200")
+	listen, err := net.Listen("tcp", d.Config.App.Grpc.Host)
 	if err != nil {
 		panic(err)
 	}
