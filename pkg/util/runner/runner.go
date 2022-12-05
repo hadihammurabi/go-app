@@ -5,8 +5,6 @@ import (
 	"os/signal"
 	"runtime"
 	"syscall"
-
-	"github.com/spf13/viper"
 )
 
 func PrepareRuntime() {
@@ -17,20 +15,6 @@ func PrepareRuntime() {
 	}
 	rLimit.Cur = rLimit.Max
 	if err := syscall.Setrlimit(syscall.RLIMIT_NOFILE, &rLimit); err != nil {
-		panic(err)
-	}
-}
-
-func PrepareConfig() {
-	configLocation := os.Getenv("APP_CONFIG")
-
-	if configLocation == "" {
-		configLocation = "config.yaml"
-	}
-
-	viper.SetConfigType("yaml")
-	viper.SetConfigFile(configLocation)
-	if err := viper.ReadInConfig(); err != nil {
 		panic(err)
 	}
 }

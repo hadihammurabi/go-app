@@ -3,12 +3,13 @@ package main
 import (
 	"os"
 
+	"github.com/gowok/gowok"
+	"github.com/hadihammurabi/belajar-go-rest-api/api"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/grpc"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/messaging"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest"
-	"github.com/hadihammurabi/belajar-go-rest-api/config"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/repository"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/runner"
 	"github.com/hadihammurabi/go-ioc/ioc"
 
@@ -17,40 +18,16 @@ import (
 )
 
 func init() {
-	runner.PrepareRuntime()
-	runner.PrepareConfig()
+	pkg.PrepareAll()
+	internal.PrepareAll()
+	api.PrepareAll()
 }
 
 func main() {
-	conf, err := config.New()
-	if err != nil {
-		panic(err)
-	}
-
-	repo := repository.NewRepository()
-	ioc.Set(func() repository.Repository {
-		return repo
-	})
-
-	app := internal.NewApp()
-	ioc.Set(func() internal.App {
-		return *app
-	})
-
-	apiRest := rest.NewAPIRest()
-	ioc.Set(func() rest.APIRest {
-		return *apiRest
-	})
-
-	apiMessaging := messaging.NewAPIMessaging()
-	ioc.Set(func() messaging.APIMessaging {
-		return *apiMessaging
-	})
-
-	apiGrpc := grpc.NewAPIGrpc()
-	ioc.Set(func() grpc.APIGrpc {
-		return *apiGrpc
-	})
+	conf := ioc.Get(gowok.Config{})
+	apiRest := ioc.Get(rest.APIRest{})
+	apiGrpc := ioc.Get(grpc.APIGrpc{})
+	apiMessaging := ioc.Get(messaging.APIMessaging{})
 
 	forever := make(chan bool)
 	var gracefulStop = make(chan os.Signal)
