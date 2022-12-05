@@ -11,9 +11,6 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg"
-
-	"net/http"
-	_ "net/http/pprof"
 )
 
 func init() {
@@ -23,7 +20,7 @@ func init() {
 }
 
 func main() {
-	go http.ListenAndServe("localhost:6060", nil)
+	go (new(rest.PProf)).Run()
 	go (ioc.Get(rest.APIRest{})).Run()
 	go (ioc.Get(grpc.APIGrpc{})).Run()
 	go (ioc.Get(messaging.APIMessaging{})).Run()
