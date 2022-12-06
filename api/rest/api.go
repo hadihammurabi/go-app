@@ -9,9 +9,6 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/internal"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
 
-	"net/http"
-	_ "net/http/pprof"
-
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 
@@ -74,14 +71,4 @@ func (d *APIRest) Run() {
 func (d *APIRest) Stop() {
 	d.HTTP.Shutdown()
 	log.Println("Server was stopped")
-}
-
-// PProf struct
-type PProf struct {
-}
-
-func (d *PProf) Run() {
-	if err := http.ListenAndServe(":6060", nil); err != nil {
-		log.Printf("PProf is not running! Reason: %v", err)
-	}
 }

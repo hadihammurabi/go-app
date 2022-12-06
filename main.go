@@ -16,6 +16,8 @@ func init() {
 }
 
 func main() {
+	go gowok.StartPProf()
+
 	api.Run()
 
 	gowok.GracefulStop(func() {
