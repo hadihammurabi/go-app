@@ -49,8 +49,8 @@ github.com/google/go-cmp v0.5.9/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeN
 github.com/google/renameio v0.1.0/go.mod h1:KWCgfxg9yswjAJkECMjeO8J8rahYeXnNhOm40UhjYkI=
 github.com/google/uuid v1.3.0 h1:t6JiXgmwXMjEs8VusXIJk2BXHsn+wx8BZdTaoZ5fu7I=
 github.com/google/uuid v1.3.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/gowok/gowok v0.1.4 h1:0d0HsNX5svbx+N5sx2/uOCSZEmC37/mTSeQi31NncNM=
-github.com/gowok/gowok v0.1.4/go.mod h1:0sNj9y+rsfYAJwJO2tiNSpuhLEemFLn1LVBqPsh7A+0=
+github.com/gowok/gowok v0.1.5 h1:cUjosGVY+4PHWYmW+9pjphUy7LbUptGMxy5i1OTI3Nc=
+github.com/gowok/gowok v0.1.5/go.mod h1:0sNj9y+rsfYAJwJO2tiNSpuhLEemFLn1LVBqPsh7A+0=
 github.com/gowok/ioc v0.1.5 h1:FuGukrg7nS4ZFVzsU3IXfAm0viYxy90W0o9NiTJccjw=
 github.com/gowok/ioc v0.1.5/go.mod h1:pVKut6DmVFlhQODJ1aWsU34/bFJq2+n1iCgon4VbXVE=
 github.com/hadihammurabi/go-rabbitmq v0.0.0-20220906174441-bf7ae8da96be h1:PA/TLcxce6ASrjCqzrxxwHhi7vMxsDTh/3CLTWFfSss=
