@@ -65,7 +65,7 @@ func (d *APIRest) Run() {
 		return
 	}
 
-	log.Println("API REST started")
+	log.Println("API REST started at", d.Config.App.Rest.Host)
 	if err := d.HTTP.Listen(d.Config.App.Rest.Host); err != nil {
 		log.Printf("Server is not running! Reason: %v", err)
 	}

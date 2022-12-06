@@ -23,3 +23,10 @@ func PrepareAll() {
 		return *apiGrpc
 	})
 }
+
+func Run() {
+	go (new(rest.PProf)).Run()
+	go (ioc.Get(rest.APIRest{})).Run()
+	go (ioc.Get(grpc.APIGrpc{})).Run()
+	go (ioc.Get(messaging.APIMessaging{})).Run()
+}

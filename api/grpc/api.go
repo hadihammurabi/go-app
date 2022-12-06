@@ -45,7 +45,7 @@ func (d *APIGrpc) Run() {
 		panic(err)
 	}
 
-	log.Println("API GRPC started")
+	log.Println("API GRPC started at", d.Config.App.Grpc.Host)
 	err = d.Grpc.Serve(listen)
 	if err != nil {
 		panic(err)
