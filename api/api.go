@@ -7,7 +7,7 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest"
 )
 
-func PrepareAll() {
+func prepareAll() {
 	apiRest := rest.NewAPIRest()
 	ioc.Set(func() rest.APIRest {
 		return *apiRest
@@ -25,6 +25,8 @@ func PrepareAll() {
 }
 
 func Run() {
+	prepareAll()
+
 	go (ioc.Get(rest.APIRest{})).Run()
 	go (ioc.Get(grpc.APIGrpc{})).Run()
 	go (ioc.Get(messaging.APIMessaging{})).Run()

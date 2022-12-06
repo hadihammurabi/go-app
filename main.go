@@ -12,14 +12,12 @@ import (
 func init() {
 	pkg.PrepareAll()
 	internal.PrepareAll()
-	api.PrepareAll()
 }
 
 func main() {
-	go gowok.StartPProf()
-
 	api.Run()
 
+	go gowok.StartPProf()
 	gowok.GracefulStop(func() {
 		fmt.Println()
 		fmt.Println("Stopping...")
