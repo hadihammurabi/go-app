@@ -21,18 +21,11 @@ func PrepareAll() {
 		return conf
 	})
 
+	database.Configure(conf.Databases)
+
 	ioc.Set(func() gowok.Validator {
 		return validator.Configure()
 	})
-
-	db, err := database.NewDatabase(database.Config{
-		Driver: database.Driver(conf.Database.Driver),
-		DSN:    conf.Database.DSN,
-	})
-	if err != nil {
-		panic(err)
-	}
-	ioc.Set(func() database.Database { return db })
 
 	repo := repository.NewRepository()
 	ioc.Set(func() repository.Repository {

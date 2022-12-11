@@ -8,9 +8,12 @@ app:
   messaging:
     enabled: true
 
-database:
-  driver: postgresql
-  dsn: 'host=localhost user=postgres password= database=postgres port=5432 sslmode=disable'
+databases:
+  - driver: postgresql
+    dsn: 'host=db.ozhsyirpprnnuybograw.supabase.co user=postgres password=zfwjfiqDJR6XivS5 database=postgres port=5432 sslmode=disable'
+  - driver: mongo
+    dsn: mongodb://root:root@localhost
+  - driver: redis
 
 messaging:
   driver: rabbitmq

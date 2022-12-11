@@ -7,8 +7,9 @@ import (
 type DBType string
 
 const (
-	SQL   DBType = "sql"
-	NoSQL DBType = "nosql"
+	SQL      DBType = "sql"
+	NoSQL    DBType = "nosql"
+	KeyValue DBType = "keyvalue"
 )
 
 type DatabaseDriver struct {
@@ -17,7 +18,8 @@ type DatabaseDriver struct {
 }
 
 var sqlDrivers = []string{"mysql", "mariadb", "postgresql", "sqlite"}
-var mongoDrivers = []string{"mongodb"}
+var mongoDrivers = []string{"mongo"}
+var keyValueDrivers = []string{"redis"}
 
 func MapDriver(name string) (DatabaseDriver, bool) {
 	driver := DatabaseDriver{Driver: name}
@@ -30,7 +32,13 @@ func MapDriver(name string) (DatabaseDriver, bool) {
 
 	isMongo := slices.Contains(mongoDrivers, driver.Driver)
 	if isMongo {
-		driver.Type = SQL
+		driver.Type = NoSQL
+		return driver, true
+	}
+
+	isKeyValue := slices.Contains(keyValueDrivers, driver.Driver)
+	if isKeyValue {
+		driver.Type = KeyValue
 		return driver, true
 	}
 

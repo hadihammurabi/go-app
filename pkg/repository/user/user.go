@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"github.com/gowok/gowok/driver/database"
 	"github.com/gowok/ioc"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/database"
 )
 
 // UserRepository interface
@@ -20,7 +20,7 @@ type UserRepository interface {
 
 // New func
 func New() UserRepository {
-	db := ioc.Get(database.Database{}).DB
+	db := ioc.Get(database.PostgreSQL{}).DB
 
 	return newSQL(db)
 }

@@ -1,59 +1,38 @@
 package database
 
 import (
-	"errors"
+	"fmt"
 
-	"gorm.io/driver/mysql"
-	"gorm.io/driver/postgres"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
+	"github.com/gowok/gowok/config"
 )
 
-type Driver string
+func Configure(conf []config.Database) {
 
-const (
-	DriverPostgresql Driver = "postgresql"
-	DriverSqlite     Driver = "sqlite"
-	DriverMysql      Driver = "mysql"
-)
-
-type Config struct {
-	Driver Driver
-	DSN    string
-}
-
-type Database struct {
-	*gorm.DB
-}
-
-func NewDatabase(config Config) (Database, error) {
-	db, err := config.configure()
-	if err != nil {
-		return Database{}, err
-	}
-
-	return Database{
-		DB: db,
-	}, nil
-}
-
-func (c Config) configure() (*gorm.DB, error) {
-	var db *gorm.DB
-	var err error
-	if c.Driver == DriverPostgresql {
-		db, err = gorm.Open(postgres.Open(c.DSN), &gorm.Config{})
-	} else if c.Driver == DriverMysql {
-		db, err = gorm.Open(mysql.Open(c.DSN), &gorm.Config{})
-	} else if c.Driver == DriverSqlite {
-		location := c.DSN
-		if location == "" {
-			location = "db.sqlite3"
+	for _, dbConf := range conf {
+		driver, ok := MapDriver(dbConf.Driver)
+		if !ok {
+			panic(fmt.Sprintf("unknown database driver %s", dbConf.Driver))
 		}
 
-		db, err = gorm.Open(sqlite.Open(location), &gorm.Config{})
-	} else {
-		err = errors.New("unknown database driver")
-	}
+		if driver.Type == SQL {
+			err := configureSql(dbConf)
+			if err != nil {
+				panic(err)
+			}
+		}
 
-	return db, err
+		if dbConf.Driver == "mongo" {
+			err := configureMongo(dbConf)
+			if err != nil {
+				panic(err)
+			}
+		}
+
+		if dbConf.Driver == "redis" {
+			err := configureRedis(dbConf)
+			if err != nil {
+				panic(err)
+			}
+		}
+	}
 }
