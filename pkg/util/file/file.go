@@ -6,6 +6,8 @@ import (
 	"io"
 	"os"
 	"strings"
+
+	"github.com/gowok/gowok/file"
 )
 
 // GetFileTypeFromBase64String func to get file type from base64 data url
@@ -17,7 +19,7 @@ func GetFileTypeFromBase64String(encodedBase64 string) string {
 
 // GetMimeTypeFromBase64String func to get mime type from base64 data url
 func GetMimeTypeFromBase64String(encodedBase64 string) string {
-	return MimeTypes[fmt.Sprintf(".%s", GetFileTypeFromBase64String(encodedBase64))]
+	return file.MimeTypes[fmt.Sprintf(".%s", GetFileTypeFromBase64String(encodedBase64))]
 }
 
 // SaveBase64StringToFile func to save base64 data to file
@@ -46,49 +48,4 @@ func SaveBase64StringToFile(path string, fileNameWithoutType string, encodedBase
 	}
 
 	return picturePath, nil
-}
-
-var MimeTypes = map[string]string{
-	".au":     "audio/basic",
-	".avi":    "video/msvideo, video/avi, video/x-msvideo",
-	".bmp":    "image/bmp",
-	".bz2":    "application/x-bzip2",
-	".css":    "text/css",
-	".dtd":    "application/xml-dtd",
-	".doc":    "application/msword",
-	".exe":    "application/octet-stream",
-	".gz":     "application/x-gzip",
-	".gif":    "image/gif",
-	".hqx":    "application/mac-binhex40",
-	".html":   "text/html",
-	".jar":    "application/java-archive",
-	".jpg":    "image/jpeg",
-	".js":     "application/x-javascript",
-	".midi":   "audio/x-midi",
-	".mp3":    "audio/mpeg",
-	".mpeg":   "video/mpeg",
-	".ogg":    "audio/vorbis, application/ogg",
-	".pdf":    "application/pdf",
-	".pl":     "application/x-perl",
-	".png":    "image/png",
-	".ppt":    "application/vnd.ms-powerpoint",
-	".ps":     "application/postscript",
-	".qt":     "video/quicktime",
-	".ra":     "audio/x-pn-realaudio, audio/vnd.rn-realaudio",
-	".ram":    "audio/x-pn-realaudio, audio/vnd.rn-realaudio",
-	".rdf":    "application/rdf, application/rdf+xml",
-	".rtf":    "application/rtf",
-	".sgml":   "text/sgml",
-	".sit":    "application/x-stuffit",
-	".svg":    "image/svg+xml",
-	".swf":    "application/x-shockwave-flash",
-	".tar.gz": "application/x-tar",
-	".tgz":    "application/x-tar",
-	".tiff":   "image/tiff",
-	".tsv":    "text/tab-separated-values",
-	".txt":    "text/plain",
-	".wav":    "audio/wav, audio/x-wav",
-	".xls":    "application/vnd.ms-excel",
-	".xml":    "application/xml",
-	".zip":    "application/zip, application/x-compressed-zip",
 }
