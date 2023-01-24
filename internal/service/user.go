@@ -4,6 +4,8 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"github.com/gowok/gowok"
+	"github.com/gowok/gowok/hash"
 	"github.com/gowok/ioc"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg/repository"
@@ -20,14 +22,17 @@ type UserService interface {
 
 // userService struct
 type userService struct {
-	repo *repository.Repository
+	repo   *repository.Repository
+	config *gowok.Config
 }
 
 // NewUserService func
 func NewUserService() UserService {
 	repo := ioc.Get(repository.Repository{})
+	config := ioc.Get(gowok.Config{})
 	return userService{
 		repo,
+		config,
 	}
 }
 
@@ -77,7 +82,8 @@ func (u userService) FindByID(c context.Context, id uuid.UUID) (*entity.User, er
 
 // ChangePassword func
 func (u userService) ChangePassword(c context.Context, id uuid.UUID, password string) (*entity.User, error) {
-	userFromTable, err := u.repo.User.ChangePassword(c, id, password)
+	pass := hash.PasswordHash(password, u.config.App.Key)
+	userFromTable, err := u.repo.User.ChangePassword(c, id, pass.Hashed)
 	if err != nil {
 		return nil, err
 	}
