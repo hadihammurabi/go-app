@@ -36,8 +36,8 @@ github.com/google/go-cmp v0.5.5/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/
 github.com/google/go-cmp v0.5.9 h1:O2Tfq5qg4qc4AmwVlvv0oLiVAGB7enBSJ2x2DqQFi38=
 github.com/google/uuid v1.3.0 h1:t6JiXgmwXMjEs8VusXIJk2BXHsn+wx8BZdTaoZ5fu7I=
 github.com/google/uuid v1.3.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/gowok/gowok v0.1.10 h1:0tNqA4BlJrDWi6rS77x414Jvi2nHcN4KO/aWN+Y/kUk=
-github.com/gowok/gowok v0.1.10/go.mod h1:O3txwEF4YgIeMuzXneuK+LRIgVWAwyHL3Vb5/jh19bQ=
+github.com/gowok/gowok v0.1.13 h1:79iHIQzPmH5H0/t5Pkf6kc395iWEzM7QWNcilTdTs7U=
+github.com/gowok/gowok v0.1.13/go.mod h1:oOlaBwfJFwF6C0+FUgcGf3nRVFmCxuTdFLQKEqHrZfc=
 github.com/gowok/ioc v0.1.5 h1:FuGukrg7nS4ZFVzsU3IXfAm0viYxy90W0o9NiTJccjw=
 github.com/gowok/ioc v0.1.5/go.mod h1:pVKut6DmVFlhQODJ1aWsU34/bFJq2+n1iCgon4VbXVE=
 github.com/hadihammurabi/go-rabbitmq v0.0.0-20220906174441-bf7ae8da96be h1:PA/TLcxce6ASrjCqzrxxwHhi7vMxsDTh/3CLTWFfSss=

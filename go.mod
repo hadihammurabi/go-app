@@ -4,21 +4,16 @@ go 1.19
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
-	github.com/go-redis/redis/v8 v8.11.5
 	github.com/gofiber/fiber/v2 v2.41.0
 	github.com/google/uuid v1.3.0
-	github.com/gowok/gowok v0.1.10
+	github.com/gowok/gowok v0.1.13
 	github.com/gowok/ioc v0.1.5
 	github.com/hadihammurabi/go-rabbitmq v0.0.0-20220906174441-bf7ae8da96be
 	github.com/streadway/amqp v1.0.0
-	go.mongodb.org/mongo-driver v1.11.1
 	golang.org/x/crypto v0.5.0
 	golang.org/x/exp v0.0.0-20230113213754-f9f960f08ad4
 	google.golang.org/grpc v1.52.0
 	google.golang.org/protobuf v1.28.1
-	gorm.io/driver/mysql v1.4.5
-	gorm.io/driver/postgres v1.4.6
-	gorm.io/driver/sqlite v1.4.4
 	gorm.io/gorm v1.24.3
 )
 
@@ -29,6 +24,7 @@ require (
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.1 // indirect
+	github.com/go-redis/redis/v8 v8.11.5 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
@@ -53,10 +49,14 @@ require (
 	github.com/xdg-go/scram v1.1.1 // indirect
 	github.com/xdg-go/stringprep v1.0.3 // indirect
 	github.com/youmark/pkcs8 v0.0.0-20181117223130-1be2e3e5546d // indirect
+	go.mongodb.org/mongo-driver v1.11.1 // indirect
 	golang.org/x/net v0.5.0 // indirect
 	golang.org/x/sync v0.0.0-20220923202941-7f9b1623fab7 // indirect
 	golang.org/x/sys v0.4.0 // indirect
 	golang.org/x/text v0.6.0 // indirect
 	google.golang.org/genproto v0.0.0-20221118155620-16455021b5e6 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
+	gorm.io/driver/mysql v1.4.5 // indirect
+	gorm.io/driver/postgres v1.4.6 // indirect
+	gorm.io/driver/sqlite v1.4.4 // indirect
 )
