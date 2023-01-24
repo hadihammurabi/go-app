@@ -4,6 +4,8 @@ import (
 	"fmt"
 
 	"github.com/gowok/gowok/config"
+	"github.com/gowok/gowok/driver/database"
+	"github.com/gowok/ioc"
 )
 
 func Configure(conf []config.Database) {
@@ -22,17 +24,21 @@ func Configure(conf []config.Database) {
 		}
 
 		if dbConf.Driver == "mongo" {
-			err := configureMongo(dbConf)
+			mg, err := database.NewMongo(dbConf)
 			if err != nil {
 				panic(err)
 			}
+
+			ioc.Set(func() *database.Mongo { return mg })
 		}
 
 		if dbConf.Driver == "redis" {
-			err := configureRedis(dbConf)
+			rdb, err := database.NewRedis(dbConf)
 			if err != nil {
 				panic(err)
 			}
+
+			ioc.Set(func() *database.Redis { return rdb })
 		}
 	}
 }
