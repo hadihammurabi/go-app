@@ -7,7 +7,7 @@ require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/gofiber/fiber/v2 v2.41.0
 	github.com/google/uuid v1.3.0
-	github.com/gowok/gowok v0.1.7
+	github.com/gowok/gowok v0.1.9
 	github.com/gowok/ioc v0.1.5
 	github.com/hadihammurabi/go-rabbitmq v0.0.0-20220906174441-bf7ae8da96be
 	github.com/streadway/amqp v1.0.0
