@@ -5,6 +5,8 @@ import (
 	"github.com/gowok/gowok/driver/database"
 	"github.com/gowok/ioc"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 // TokenRepository interface
@@ -17,6 +19,9 @@ type TokenRepository interface {
 // New func
 func New() TokenRepository {
 	db := ioc.Get(database.PostgreSQL{}).DB
+	gormDB, _ := gorm.Open(postgres.New(postgres.Config{
+		Conn: db,
+	}), &gorm.Config{})
 
-	return newSQL(db)
+	return newSQL(gormDB)
 }

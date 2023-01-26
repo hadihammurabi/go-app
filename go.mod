@@ -6,7 +6,7 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gofiber/fiber/v2 v2.41.0
 	github.com/google/uuid v1.3.0
-	github.com/gowok/gowok v0.1.13
+	github.com/gowok/gowok v0.1.14
 	github.com/gowok/ioc v0.1.5
 	github.com/hadihammurabi/go-rabbitmq v0.0.0-20220906174441-bf7ae8da96be
 	github.com/streadway/amqp v1.0.0
@@ -14,6 +14,7 @@ require (
 	golang.org/x/exp v0.0.0-20230113213754-f9f960f08ad4
 	google.golang.org/grpc v1.52.0
 	google.golang.org/protobuf v1.28.1
+	gorm.io/driver/postgres v1.4.6
 	gorm.io/gorm v1.24.3
 )
 
@@ -35,6 +36,7 @@ require (
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/klauspost/compress v1.15.9 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
+	github.com/lib/pq v1.10.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.17 // indirect
 	github.com/mattn/go-runewidth v0.0.14 // indirect
@@ -56,7 +58,4 @@ require (
 	golang.org/x/text v0.6.0 // indirect
 	google.golang.org/genproto v0.0.0-20221118155620-16455021b5e6 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	gorm.io/driver/mysql v1.4.5 // indirect
-	gorm.io/driver/postgres v1.4.6 // indirect
-	gorm.io/driver/sqlite v1.4.4 // indirect
 )
