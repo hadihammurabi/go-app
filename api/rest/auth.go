@@ -3,7 +3,7 @@ package rest
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/dto"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/response"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 
 	"github.com/gofiber/fiber/v2"
 )

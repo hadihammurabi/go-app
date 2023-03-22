@@ -7,7 +7,7 @@ import (
 	"github.com/gowok/gowok"
 	"github.com/gowok/gowok/hash"
 	"github.com/gowok/ioc"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 )
 
 // AuthService interface

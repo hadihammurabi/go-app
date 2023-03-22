@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/gowok/gowok/driver/database"
 	"github.com/gowok/ioc"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

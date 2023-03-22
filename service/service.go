@@ -1,5 +1,7 @@
 package service
 
+import "github.com/gowok/ioc"
+
 // Service struct
 type Service struct {
 	Auth  AuthService
@@ -9,12 +11,17 @@ type Service struct {
 }
 
 // NewService func
-func NewService() (service *Service) {
-	service = &Service{
+func NewService() Service {
+	service := Service{
 		Auth:  NewAuthService(),
 		User:  NewUserService(),
 		Token: NewTokenService(),
 		// JWT:   NewJWTService(),
 	}
-	return
+
+	return service
+}
+
+func PrepareAll() {
+	ioc.Set(func() Service { return NewService() })
 }

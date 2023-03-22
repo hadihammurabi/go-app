@@ -5,10 +5,10 @@ import (
 	"strings"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 )
 
-func CreateJWTWithClaims(secret string, claims *entity.JWTClaims) (string, error) {
+func CreateJWTWithClaims(secret string, claims jwt.Claims) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(secret))
 }

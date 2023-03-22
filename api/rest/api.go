@@ -6,8 +6,7 @@ import (
 	"github.com/gowok/gowok"
 	"github.com/gowok/ioc"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/middleware"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal"
-	"github.com/hadihammurabi/belajar-go-rest-api/internal/service"
+	"github.com/hadihammurabi/belajar-go-rest-api/service"
 
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -40,8 +39,7 @@ func NewAPIRest() *APIRest {
 	// app.Use(recover.New())
 	app.Use(cors.New())
 
-	internalApp := ioc.Get(internal.App{})
-	service := internalApp.Service
+	service := ioc.Get(service.Service{})
 	conf := ioc.Get(gowok.Config{})
 	validator := ioc.Get(gowok.Validator{})
 
