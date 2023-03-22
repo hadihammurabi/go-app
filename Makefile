@@ -1,8 +1,8 @@
 all:
-	make build
+	@make build
 
 build:
-	go build *.go
+	@go build .
 
 build-compose:
 	export CONTAINER_NAME=go_rest_api \
@@ -13,4 +13,4 @@ build-compose:
 	&& docker build -t $$IMAGE_TAG .
 
 dev:
-	./bin/dev.sh
+	@gow run main.go
