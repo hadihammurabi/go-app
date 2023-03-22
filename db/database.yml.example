@@ -1,9 +1,0 @@
----
-development:
-  url: "postgres://postgres:postgres@127.0.0.1:5432/belajar_go_rest_api_dev?sslmode=disable"
-
-test:
-  url: "postgres://postgres:postgres@127.0.0.1:5432/belajar_go_rest_api_test?sslmode=disable"
-
-production:
-  url: "postgres://postgres:postgres@127.0.0.1:5432/belajar_go_rest_api_production?sslmode=disable"
