@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/repository/token"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/repository/user"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository/token"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository/user"
 )
 
 // Repository struct

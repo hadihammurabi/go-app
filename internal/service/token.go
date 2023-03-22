@@ -3,8 +3,8 @@ package service
 import (
 	"github.com/google/uuid"
 	"github.com/gowok/ioc"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/repository"
 )
 
 // TokenService interface

@@ -3,7 +3,7 @@ package middleware
 import (
 	"net/http"
 
-	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/jwt"
+	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/driver/util/jwt"
 
 	"github.com/gofiber/fiber/v2"
 )

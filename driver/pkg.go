@@ -1,13 +1,13 @@
-package pkg
+package driver
 
 import (
 	"github.com/gowok/gowok"
 	"github.com/gowok/ioc"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/config"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/database"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/repository"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/util/runner"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/validator"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/config"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/database"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/util/runner"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/validator"
 )
 
 func PrepareAll() {

@@ -2,8 +2,8 @@ package user
 
 import (
 	"github.com/google/uuid"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository/base"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/repository/base"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )

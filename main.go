@@ -5,12 +5,12 @@ import (
 
 	"github.com/gowok/gowok"
 	"github.com/hadihammurabi/belajar-go-rest-api/api"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg"
 )
 
 func init() {
-	pkg.PrepareAll()
+	driver.PrepareAll()
 	internal.PrepareAll()
 }
 

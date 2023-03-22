@@ -8,8 +8,8 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gowok/gowok"
 	"github.com/gowok/ioc"
+	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/driver/util/jwt"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
-	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/pkg/util/jwt"
 )
 
 // JWTService interface

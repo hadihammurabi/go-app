@@ -4,8 +4,8 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository/base"
 	"github.com/hadihammurabi/belajar-go-rest-api/internal/entity"
-	"github.com/hadihammurabi/belajar-go-rest-api/pkg/repository/base"
 	"gorm.io/gorm"
 )
 
