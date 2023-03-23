@@ -44,22 +44,14 @@ Nama | Kegunaan
 Nama | Kegunaan
 -|-
 [Validator](https://github.com/go-playground/validator) | Validasi data
-[Soda CLI](https://gobuffalo.io/en/docs/db/toolbox#from-a-release-archive) | Migrasi database
-[Swag](https://github.com/swaggo/swag) | Otomatis generate dokumentasi REST API (swagger)
 [GNU/Make](https://www.gnu.org/software/make/) | Build tool
 
 # Menjalankan Projek
-## Persiapan
-Agar projek dapat dijalankan, diperlukan beberapa hal untuk dipersiapkan, antara lain:
-1. Menjalankan migration dengan menyesuaikan akses database.
-```bash
-./bin/soda m -c db/database.yml -p db/migrations
-```
 
 ## Mode Development
 1. Clone projek ke komputer lokal, dengan perintah:
   ```bash
-  git clone https://github.com/hadihammurabi/belajar-go-rest-api
+  git clone https://github.com/hadihammurabi/go-app
   ```
 2. Menjalankan projek dengan mode development (pengembangan) dengan perintah:
   ```bash
@@ -69,7 +61,7 @@ Agar projek dapat dijalankan, diperlukan beberapa hal untuk dipersiapkan, antara
 ## Mode Production
 1. Clone projek ke komputer lokal, dengan perintah:
   ```bash
-  git clone https://github.com/hadihammurabi/belajar-go-rest-api
+  git clone https://github.com/hadihammurabi/go-app
   ```
 2. Menjalankan projek siap guna dengan perintah:
   ```bash
