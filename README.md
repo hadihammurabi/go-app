@@ -27,7 +27,6 @@ Projek ini sudah siap dijalankan dan dapat dimodifikasi sesuai kebutuhan masing-
 Struktur proyek ini mengikuti konsep-konsep arsitektural seperti:
 - DRY (Don't Repeat Yourself)
 - SOLID Principle
-- Clean Architecture
 
 # Stack Teknologi
 Nama | Kegunaan
