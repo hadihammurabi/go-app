@@ -16,8 +16,8 @@ import (
 
 // ConfigureRoute func
 func (api *APIRest) ConfigureRoute() {
-	Index(api)
-	// Auth(api)
+	api.HTTP.Mount("", Index(api).router)
+	// api.HTTP.Mount("/auth", Auth(api).router)
 }
 
 // APIRest struct

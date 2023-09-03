@@ -10,17 +10,20 @@ import (
 
 type auth struct {
 	*APIRest
+	router *fiber.App
 }
 
 // Auth func
-func Auth(api *APIRest) {
-	router := api.HTTP.Group("/auth")
-	router.Post("/login", api.Login)
-	router.Get("/me", api.Middlewares.AuthBearer, api.Me)
+func Auth(r *APIRest) auth {
+	api := auth{r, fiber.New()}
+	api.router.Post("/login", api.Login)
+	api.router.Get("/me", api.Middlewares.AuthBearer, api.Me)
+
+	return api
 }
 
 // Login func
-func (api APIRest) Login(c *fiber.Ctx) error {
+func (api auth) Login(c *fiber.Ctx) error {
 	input := &dto.UserLoginRequest{}
 	if err := c.BodyParser(input); err != nil {
 		return response.Fail(c, err)
@@ -43,7 +46,7 @@ func (api APIRest) Login(c *fiber.Ctx) error {
 }
 
 // Me func
-func (api APIRest) Me(c *fiber.Ctx) error {
+func (api auth) Me(c *fiber.Ctx) error {
 	fromLocals := c.Locals("user").(*entity.User)
 	return response.Ok(c, fromLocals)
 }
