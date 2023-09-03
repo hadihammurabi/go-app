@@ -2,7 +2,6 @@ package service
 
 import (
 	"github.com/google/uuid"
-	"github.com/gowok/ioc"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 )
@@ -20,8 +19,7 @@ type tokenService struct {
 }
 
 // NewTokenService func
-func NewTokenService() TokenService {
-	repo := ioc.Get(repository.Repository{})
+func NewTokenService(repo *repository.Repository) TokenService {
 	return tokenService{
 		repo,
 	}

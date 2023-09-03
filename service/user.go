@@ -6,7 +6,6 @@ import (
 	"github.com/google/uuid"
 	"github.com/gowok/gowok"
 	"github.com/gowok/gowok/hash"
-	"github.com/gowok/ioc"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 )
@@ -27,9 +26,7 @@ type userService struct {
 }
 
 // NewUserService func
-func NewUserService() UserService {
-	repo := ioc.Get(repository.Repository{})
-	config := ioc.Get(gowok.Config{})
+func NewUserService(config *gowok.Config, repo *repository.Repository) UserService {
 	return userService{
 		repo,
 		config,

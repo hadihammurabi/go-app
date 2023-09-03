@@ -7,7 +7,7 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gowok/gowok"
-	"github.com/gowok/ioc"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository"
 	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/driver/util/jwt"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 )
@@ -27,13 +27,11 @@ type jwtService struct {
 }
 
 // NewJWTService func
-func NewJWTService() JWTService {
-	config := ioc.Get(gowok.Config{})
-
+func NewJWTService(config *gowok.Config, repo *repository.Repository) JWTService {
 	return jwtService{
 		Config:       config,
-		UserService:  NewUserService(),
-		TokenService: NewTokenService(),
+		UserService:  NewUserService(config, repo),
+		TokenService: NewTokenService(repo),
 		// Cache:        config.Redis,
 	}
 }

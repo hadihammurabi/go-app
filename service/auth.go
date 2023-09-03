@@ -6,7 +6,7 @@ import (
 
 	"github.com/gowok/gowok"
 	"github.com/gowok/gowok/hash"
-	"github.com/gowok/ioc"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 )
 
@@ -24,12 +24,11 @@ type authService struct {
 }
 
 // NewAuthService func
-func NewAuthService() AuthService {
-	config := ioc.Get(gowok.Config{})
+func NewAuthService(config *gowok.Config, repo *repository.Repository) AuthService {
 	return authService{
-		userService:  NewUserService(),
-		tokenService: NewTokenService(),
-		jwtService:   NewJWTService(),
+		userService:  NewUserService(config, repo),
+		tokenService: NewTokenService(repo),
+		jwtService:   NewJWTService(config, repo),
 		config:       config,
 	}
 }
