@@ -23,7 +23,7 @@ func NewService() *Service {
 	service := &Service{
 		Auth:  NewAuthService(config, sql, repo),
 		User:  NewUserService(config, sql, repo),
-		Token: NewTokenService(repo),
+		Token: NewTokenService(sql, repo),
 		// JWT:   NewJWTService(),
 	}
 

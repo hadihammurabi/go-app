@@ -6,8 +6,8 @@ import (
 
 	"github.com/gowok/gowok"
 	"github.com/gowok/gowok/hash"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/repository"
 	"gorm.io/gorm"
 )
 
@@ -22,7 +22,7 @@ type AuthService struct {
 func NewAuthService(config *gowok.Config, db *gorm.DB, repo *repository.Repository) AuthService {
 	return AuthService{
 		userService:  NewUserService(config, db, repo),
-		tokenService: NewTokenService(repo),
+		tokenService: NewTokenService(db, repo),
 		jwtService:   NewJWTService(config, db, repo),
 		config:       config,
 	}

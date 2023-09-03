@@ -7,8 +7,8 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/gowok/gowok"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/repository"
 	"gorm.io/gorm"
 )
 
@@ -24,7 +24,7 @@ func NewJWTService(config *gowok.Config, db *gorm.DB, repo *repository.Repositor
 	return JwtService{
 		config:       config,
 		userService:  NewUserService(config, db, repo),
-		tokenService: NewTokenService(repo),
+		tokenService: NewTokenService(db, repo),
 		// Cache:        config.Redis,
 	}
 }
