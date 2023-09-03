@@ -1,12 +1,12 @@
 package entity
 
 import (
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 )
 
 // JWTClaims model
 type JWTClaims struct {
-	*jwt.StandardClaims
+	*jwt.RegisteredClaims
 	UserID uuid.UUID `json:"user_id,omitempty"`
 }

@@ -5,10 +5,9 @@ import (
 	"errors"
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/gowok/gowok"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository"
-	jwtUtil "github.com/hadihammurabi/belajar-go-rest-api/driver/util/jwt"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 )
 
@@ -40,11 +39,13 @@ func NewJWTService(config *gowok.Config, repo *repository.Repository) JWTService
 func (s jwtService) Create(userData *entity.User) (*entity.Token, error) {
 	claims := &entity.JWTClaims{
 		UserID: userData.ID,
-		StandardClaims: &jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Hour * 3).Unix(),
+		RegisteredClaims: &jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24)),
 		},
 	}
-	t, err := jwtUtil.CreateJWTWithClaims(s.Config.Security.Secret, claims)
+
+	jwk := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	t, err := jwk.SignedString([]byte(s.Config.Security.Secret))
 	if err != nil {
 		return nil, errors.New("token generation fail")
 	}
