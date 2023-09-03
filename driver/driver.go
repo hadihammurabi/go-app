@@ -13,12 +13,9 @@ import (
 func PrepareAll() {
 	runner.PrepareRuntime()
 
-	conf, err := config.Configure()
-	if err != nil {
-		panic(err)
-	}
+	conf := config.Configure()
 	ioc.Set(func() gowok.Config {
-		return conf
+		return *conf
 	})
 
 	database.Configure(conf.Databases)
