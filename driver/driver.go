@@ -5,8 +5,8 @@ import (
 
 	"github.com/gowok/gowok"
 	"github.com/gowok/gowok/exception"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/util/runner"
+	"github.com/hadihammurabi/belajar-go-rest-api/repository"
 )
 
 type Driver struct {
