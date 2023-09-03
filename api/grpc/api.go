@@ -5,7 +5,6 @@ import (
 	"net"
 
 	"github.com/gowok/gowok"
-	"github.com/gowok/ioc"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/grpc/index"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver"
 	"github.com/hadihammurabi/belajar-go-rest-api/service"
@@ -20,16 +19,27 @@ type APIGrpc struct {
 	Grpc *grpc.Server
 }
 
+var a *APIGrpc
+
 func NewAPIGrpc() *APIGrpc {
 	conf := driver.Get().Config
-	service := ioc.Get(service.Service{})
+	sv := service.Get()
 
 	api := &APIGrpc{
 		Config:  conf,
-		Service: service,
+		Service: sv,
 		Grpc:    grpc.NewServer(),
 	}
 	return api
+}
+
+func Get() *APIGrpc {
+	if a != nil {
+		return a
+	}
+
+	a = NewAPIGrpc()
+	return a
 }
 
 func (d *APIGrpc) Run() {

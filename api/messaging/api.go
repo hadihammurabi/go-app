@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/gowok/gowok"
-	"github.com/gowok/ioc"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver"
 	"github.com/hadihammurabi/belajar-go-rest-api/service"
 )
 
@@ -14,15 +14,26 @@ type APIMessaging struct {
 	Service *service.Service
 }
 
+var a *APIMessaging
+
 func NewAPIMessaging() *APIMessaging {
-	conf := ioc.Get(gowok.Config{})
-	service := ioc.Get(service.Service{})
+	conf := driver.Get().Config
+	sv := service.Get()
 
 	api := &APIMessaging{
 		Config:  conf,
-		Service: service,
+		Service: sv,
 	}
 	return api
+}
+
+func Get() *APIMessaging {
+	if a != nil {
+		return a
+	}
+
+	a = NewAPIMessaging()
+	return a
 }
 
 func (d *APIMessaging) Run() {

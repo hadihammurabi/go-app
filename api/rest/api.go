@@ -4,7 +4,6 @@ import (
 	"log"
 
 	"github.com/gowok/gowok"
-	"github.com/gowok/ioc"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/middleware"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver"
 	"github.com/hadihammurabi/belajar-go-rest-api/service"
@@ -30,6 +29,8 @@ type APIRest struct {
 	Config      *gowok.Config
 }
 
+var a *APIRest
+
 func NewAPIRest() *APIRest {
 	app := fiber.New(fiber.Config{
 		DisableStartupMessage: true,
@@ -40,15 +41,16 @@ func NewAPIRest() *APIRest {
 	// app.Use(recover.New())
 	app.Use(cors.New())
 
-	service := ioc.Get(service.Service{})
-	conf := driver.Get().Config
-	validator := ioc.Get(gowok.Validator{})
+	dr := driver.Get()
+	conf := dr.Config
+	validator := dr.Validator
+	sv := service.Get()
 
 	middlewares := middleware.NewMiddleware()
 	api := &APIRest{
 		HTTP:        app,
 		Middlewares: middlewares,
-		Service:     service,
+		Service:     sv,
 		Config:      conf,
 		Validator:   validator,
 	}
@@ -56,6 +58,14 @@ func NewAPIRest() *APIRest {
 	return api
 }
 
+func Get() *APIRest {
+	if a != nil {
+		return a
+	}
+
+	a = NewAPIRest()
+	return a
+}
 func (d *APIRest) Run() {
 	if !d.Config.App.Rest.Enabled {
 		return
