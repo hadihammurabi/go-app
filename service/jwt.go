@@ -9,34 +9,28 @@ import (
 	"github.com/gowok/gowok"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
+	"gorm.io/gorm"
 )
 
-// JWTService interface
-type JWTService interface {
-	Create(*entity.User) (*entity.Token, error)
-	GetUser(context.Context, string) (*entity.User, error)
-}
-
-// jwtService struct
-type jwtService struct {
-	Config       *gowok.Config
-	UserService  UserService
-	TokenService TokenService
+type JwtService struct {
+	config       *gowok.Config
+	userService  UserService
+	tokenService TokenService
 	// Cache        *cache.Redis
 }
 
 // NewJWTService func
-func NewJWTService(config *gowok.Config, repo *repository.Repository) JWTService {
-	return jwtService{
-		Config:       config,
-		UserService:  NewUserService(config, repo),
-		TokenService: NewTokenService(repo),
+func NewJWTService(config *gowok.Config, db *gorm.DB, repo *repository.Repository) JwtService {
+	return JwtService{
+		config:       config,
+		userService:  NewUserService(config, db, repo),
+		tokenService: NewTokenService(repo),
 		// Cache:        config.Redis,
 	}
 }
 
 // Create func
-func (s jwtService) Create(userData *entity.User) (*entity.Token, error) {
+func (s JwtService) Create(userData *entity.User) (*entity.Token, error) {
 	claims := &entity.JWTClaims{
 		UserID: userData.ID,
 		RegisteredClaims: &jwt.RegisteredClaims{
@@ -45,7 +39,7 @@ func (s jwtService) Create(userData *entity.User) (*entity.Token, error) {
 	}
 
 	jwk := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	t, err := jwk.SignedString([]byte(s.Config.Security.Secret))
+	t, err := jwk.SignedString([]byte(s.config.Security.Secret))
 	if err != nil {
 		return nil, errors.New("token generation fail")
 	}
@@ -61,13 +55,13 @@ func (s jwtService) Create(userData *entity.User) (*entity.Token, error) {
 }
 
 // GetUser func
-func (s jwtService) GetUser(c context.Context, token string) (*entity.User, error) {
-	tokenData, err := s.TokenService.FindByToken(token)
+func (s JwtService) GetUser(c context.Context, token string) (*entity.User, error) {
+	tokenData, err := s.tokenService.FindByToken(token)
 	if err != nil {
 		return nil, err
 	}
 
-	user, err := s.UserService.FindByID(c, tokenData.UserID)
+	user, err := s.userService.FindByID(c, tokenData.UserID)
 	if err != nil {
 		return nil, err
 	}

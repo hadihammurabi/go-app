@@ -8,33 +8,28 @@ import (
 	"github.com/gowok/gowok/hash"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
+	"gorm.io/gorm"
 )
 
-// AuthService interface
-type AuthService interface {
-	Login(context.Context, *entity.User) (string, error)
-}
-
-// authService struct
-type authService struct {
+type AuthService struct {
 	userService  UserService
 	tokenService TokenService
-	jwtService   JWTService
+	jwtService   JwtService
 	config       *gowok.Config
 }
 
 // NewAuthService func
-func NewAuthService(config *gowok.Config, repo *repository.Repository) AuthService {
-	return authService{
-		userService:  NewUserService(config, repo),
+func NewAuthService(config *gowok.Config, db *gorm.DB, repo *repository.Repository) AuthService {
+	return AuthService{
+		userService:  NewUserService(config, db, repo),
 		tokenService: NewTokenService(repo),
-		jwtService:   NewJWTService(config, repo),
+		jwtService:   NewJWTService(config, db, repo),
 		config:       config,
 	}
 }
 
 // Login func
-func (a authService) Login(c context.Context, userInput *entity.User) (string, error) {
+func (a AuthService) Login(c context.Context, userInput *entity.User) (string, error) {
 	user, err := a.userService.FindByEmail(c, userInput.Email)
 	if err != nil {
 		return "", errors.New("email or password invalid")

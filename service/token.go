@@ -6,27 +6,19 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 )
 
-// TokenService interface
-type TokenService interface {
-	Create(*entity.Token) (*entity.Token, error)
-	FindByUserID(uuid.UUID) (*entity.Token, error)
-	FindByToken(string) (*entity.Token, error)
-}
-
-// tokenService struct
-type tokenService struct {
+type TokenService struct {
 	repo *repository.Repository
 }
 
 // NewTokenService func
 func NewTokenService(repo *repository.Repository) TokenService {
-	return tokenService{
+	return TokenService{
 		repo,
 	}
 }
 
 // Create func
-func (u tokenService) Create(token *entity.Token) (*entity.Token, error) {
+func (u TokenService) Create(token *entity.Token) (*entity.Token, error) {
 	tokenFromTable, err := u.repo.Token.Create(token)
 	if err != nil {
 		return nil, err
@@ -36,7 +28,7 @@ func (u tokenService) Create(token *entity.Token) (*entity.Token, error) {
 }
 
 // FindByUserID func
-func (u tokenService) FindByUserID(id uuid.UUID) (*entity.Token, error) {
+func (u TokenService) FindByUserID(id uuid.UUID) (*entity.Token, error) {
 	tokenFromTable, err := u.repo.Token.FindByUserID(id)
 	if err != nil {
 		return nil, err
@@ -46,7 +38,7 @@ func (u tokenService) FindByUserID(id uuid.UUID) (*entity.Token, error) {
 }
 
 // FindByToken func
-func (u tokenService) FindByToken(token string) (*entity.Token, error) {
+func (u TokenService) FindByToken(token string) (*entity.Token, error) {
 	tokenFromTable, err := u.repo.Token.FindByToken(token)
 	if err != nil {
 		return nil, err

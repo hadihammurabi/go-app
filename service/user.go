@@ -8,33 +8,26 @@ import (
 	"github.com/gowok/gowok/hash"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
+	"gorm.io/gorm"
 )
 
-// UserService interface
-type UserService interface {
-	All(context.Context) ([]*entity.User, error)
-	Create(context.Context, *entity.User) (*entity.User, error)
-	FindByID(context.Context, uuid.UUID) (*entity.User, error)
-	FindByEmail(context.Context, string) (*entity.User, error)
-	ChangePassword(context.Context, uuid.UUID, string) (*entity.User, error)
-}
-
-// userService struct
-type userService struct {
-	repo   *repository.Repository
+type UserService struct {
 	config *gowok.Config
+	db     *gorm.DB
+	repo   *repository.Repository
 }
 
 // NewUserService func
-func NewUserService(config *gowok.Config, repo *repository.Repository) UserService {
-	return userService{
-		repo,
+func NewUserService(config *gowok.Config, db *gorm.DB, repo *repository.Repository) UserService {
+	return UserService{
 		config,
+		db,
+		repo,
 	}
 }
 
 // All func
-func (u userService) All(c context.Context) (users []*entity.User, err error) {
+func (u UserService) All(c context.Context) (users []*entity.User, err error) {
 	usersFromTable, err := u.repo.User.All(c)
 	if err != nil {
 		return nil, err
@@ -48,7 +41,7 @@ func (u userService) All(c context.Context) (users []*entity.User, err error) {
 }
 
 // Create func
-func (u userService) Create(c context.Context, user *entity.User) (*entity.User, error) {
+func (u UserService) Create(c context.Context, user *entity.User) (*entity.User, error) {
 	userFromTable, err := u.repo.User.Create(c, user)
 	if err != nil {
 		return nil, err
@@ -58,7 +51,7 @@ func (u userService) Create(c context.Context, user *entity.User) (*entity.User,
 }
 
 // FindByEmail func
-func (u userService) FindByEmail(c context.Context, email string) (*entity.User, error) {
+func (u UserService) FindByEmail(c context.Context, email string) (*entity.User, error) {
 	userFromTable, err := u.repo.User.FindByEmail(c, email)
 	if err != nil {
 		return nil, err
@@ -68,7 +61,7 @@ func (u userService) FindByEmail(c context.Context, email string) (*entity.User,
 }
 
 // FindByID func
-func (u userService) FindByID(c context.Context, id uuid.UUID) (*entity.User, error) {
+func (u UserService) FindByID(c context.Context, id uuid.UUID) (*entity.User, error) {
 	userFromTable, err := u.repo.User.FindByID(c, id)
 	if err != nil {
 		return nil, err
@@ -78,7 +71,7 @@ func (u userService) FindByID(c context.Context, id uuid.UUID) (*entity.User, er
 }
 
 // ChangePassword func
-func (u userService) ChangePassword(c context.Context, id uuid.UUID, password string) (*entity.User, error) {
+func (u UserService) ChangePassword(c context.Context, id uuid.UUID, password string) (*entity.User, error) {
 	pass := hash.PasswordHash(password, u.config.App.Key)
 	userFromTable, err := u.repo.User.ChangePassword(c, id, pass.Hashed)
 	if err != nil {

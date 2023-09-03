@@ -33,8 +33,9 @@ func Get() *Driver {
 	)
 	val := gowok.NewValidator()
 
-	dbDefault := sqlDB.Get().OrPanic(exception.ErrNoDatabaseFound)
-	repo := repository.NewRepository(&dbDefault)
+	repo := repository.NewRepository(
+		sqlDB.Get().OrPanic(exception.ErrNoDatabaseFound),
+	)
 
 	d = &Driver{
 		Config:     conf,
