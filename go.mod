@@ -1,12 +1,14 @@
 module github.com/hadihammurabi/belajar-go-rest-api
 
-go 1.19
+go 1.21
+
+toolchain go1.21.0
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gofiber/fiber/v2 v2.42.0
 	github.com/google/uuid v1.3.0
-	github.com/gowok/gowok v0.2.36
+	github.com/gowok/gowok v0.2.37
 	github.com/gowok/ioc v0.1.5
 	github.com/hadihammurabi/go-rabbitmq v0.0.0-20220906174441-bf7ae8da96be
 	github.com/streadway/amqp v1.0.0
@@ -14,7 +16,6 @@ require (
 	golang.org/x/exp v0.0.0-20230817173708-d852ddb80c63
 	google.golang.org/grpc v1.54.0
 	google.golang.org/protobuf v1.30.0
-	gorm.io/driver/postgres v1.5.2
 	gorm.io/gorm v1.25.4
 )
 
@@ -50,4 +51,5 @@ require (
 	golang.org/x/text v0.9.0 // indirect
 	google.golang.org/genproto v0.0.0-20230110181048-76db0878b65f // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
+	gorm.io/driver/postgres v1.5.2 // indirect
 )
