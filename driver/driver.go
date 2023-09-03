@@ -5,7 +5,7 @@ import (
 
 	"github.com/gowok/gowok"
 	"github.com/gowok/gowok/exception"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver/util/runner"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/util"
 	"github.com/hadihammurabi/belajar-go-rest-api/repository"
 )
 
@@ -23,7 +23,7 @@ func Get() *Driver {
 		return d
 	}
 
-	runner.PrepareRuntime()
+	util.PrepareRuntime()
 
 	conf := gowok.Must(
 		gowok.NewConfig(os.OpenFile("config.yaml", os.O_RDONLY, 600)),
