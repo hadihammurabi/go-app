@@ -7,6 +7,7 @@ import (
 	"github.com/gowok/gowok"
 	"github.com/gowok/ioc"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/grpc/index"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver"
 	"github.com/hadihammurabi/belajar-go-rest-api/service"
 	"google.golang.org/grpc"
 )
@@ -20,7 +21,7 @@ type APIGrpc struct {
 }
 
 func NewAPIGrpc() *APIGrpc {
-	conf := ioc.Get(gowok.Config{})
+	conf := driver.Get().Config
 	service := ioc.Get(service.Service{})
 
 	api := &APIGrpc{

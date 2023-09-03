@@ -4,10 +4,7 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/gowok/gowok/driver/database"
-	"github.com/gowok/ioc"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
-	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -21,11 +18,6 @@ type UserRepository interface {
 }
 
 // New func
-func New() UserRepository {
-	db := ioc.Get(database.PostgreSQL{}).DB
-	gormDB, _ := gorm.Open(postgres.New(postgres.Config{
-		Conn: db,
-	}), &gorm.Config{})
-
-	return newSQL(gormDB)
+func New(db *gorm.DB) UserRepository {
+	return newSQL(db)
 }

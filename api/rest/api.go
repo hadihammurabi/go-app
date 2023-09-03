@@ -6,6 +6,7 @@ import (
 	"github.com/gowok/gowok"
 	"github.com/gowok/ioc"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/middleware"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver"
 	"github.com/hadihammurabi/belajar-go-rest-api/service"
 
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -40,7 +41,7 @@ func NewAPIRest() *APIRest {
 	app.Use(cors.New())
 
 	service := ioc.Get(service.Service{})
-	conf := ioc.Get(gowok.Config{})
+	conf := driver.Get().Config
 	validator := ioc.Get(gowok.Validator{})
 
 	middlewares := middleware.NewMiddleware()

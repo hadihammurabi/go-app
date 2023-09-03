@@ -3,6 +3,7 @@ package repository
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository/token"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/repository/user"
+	"gorm.io/gorm"
 )
 
 // Repository struct
@@ -12,9 +13,9 @@ type Repository struct {
 }
 
 // NewRepository func
-func NewRepository() Repository {
+func NewRepository(db *gorm.DB) Repository {
 	return Repository{
-		User:  user.New(),
-		Token: token.New(),
+		User:  user.New(db),
+		Token: token.New(db),
 	}
 }

@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	driver.PrepareAll()
+	driver.Get()
 }
 
 func main() {
