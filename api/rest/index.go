@@ -2,18 +2,19 @@ package rest
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/api"
 )
 
 type index struct {
-	*APIRest
+	*api.Rest
 	router *fiber.App
 }
 
-func Index(r *APIRest) index {
+func Index(r *api.Rest) *fiber.App {
 	api := index{r, fiber.New()}
 	api.router.Get("", api.Index)
 
-	return api
+	return api.router
 }
 
 func (api index) Index(c *fiber.Ctx) error {

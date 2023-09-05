@@ -3,18 +3,19 @@ package rest
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/dto"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/response"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/api"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 type auth struct {
-	*APIRest
+	*api.Rest
 	router *fiber.App
 }
 
 // Auth func
-func Auth(r *APIRest) auth {
+func Auth(r *api.Rest) auth {
 	api := auth{r, fiber.New()}
 	api.router.Post("/login", api.Login)
 	api.router.Get("/me", api.Middlewares.AuthBearer, api.Me)
