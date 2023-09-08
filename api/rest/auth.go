@@ -5,6 +5,7 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/response"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/api"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
+	"github.com/hadihammurabi/belajar-go-rest-api/service"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -12,11 +13,13 @@ import (
 type auth struct {
 	*api.Rest
 	router *fiber.App
+
+	service *service.Service
 }
 
 // Auth func
 func Auth(r *api.Rest) auth {
-	api := auth{r, fiber.New()}
+	api := auth{r, fiber.New(), service.Get()}
 	api.router.Post("/login", api.Login)
 	api.router.Get("/me", api.Middlewares.AuthBearer, api.Me)
 
@@ -35,7 +38,7 @@ func (api auth) Login(c *fiber.Ctx) error {
 		Password: input.Password,
 	}
 
-	token, err := api.Service.Auth.Login(c.Context(), user)
+	token, err := api.service.Auth.Login(c.Context(), user)
 	if err != nil {
 		return response.Fail(c, "invalid credentials")
 	}

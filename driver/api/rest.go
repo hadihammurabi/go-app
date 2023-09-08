@@ -7,45 +7,32 @@ import (
 	"github.com/gowok/gowok"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/middleware"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver"
-	"github.com/hadihammurabi/belajar-go-rest-api/service"
 )
 
 // Rest struct
 type Rest struct {
 	HTTP        *fiber.App
 	Middlewares middleware.Middlewares
-	Service     *service.Service
-	Validator   *gowok.Validator
-	Config      *gowok.Config
 }
 
 func NewAPIRest() *Rest {
-	dr := driver.Get()
-	conf := dr.Config
+	app := gowok.NewHTTP(&driver.Get().Config.App.Rest)
 
-	app := gowok.NewHTTP(&conf.App.Rest)
-
-	validator := dr.Validator
-	sv := service.Get()
-
-	middlewares := middleware.NewMiddleware()
 	api := &Rest{
 		HTTP:        app,
-		Middlewares: middlewares,
-		Service:     sv,
-		Config:      conf,
-		Validator:   validator,
+		Middlewares: middleware.NewMiddleware(),
 	}
 	return api
 }
 
 func (d *Rest) Run() {
-	if !d.Config.App.Rest.Enabled {
+	restConf := driver.Get().Config.App.Rest
+	if !restConf.Enabled {
 		return
 	}
 
-	log.Println("API REST started at", d.Config.App.Rest.Host)
-	if err := d.HTTP.Listen(d.Config.App.Rest.Host); err != nil {
+	log.Println("API REST started at", restConf.Host)
+	if err := d.HTTP.Listen(restConf.Host); err != nil {
 		log.Printf("Server is not running! Reason: %v", err)
 	}
 }
