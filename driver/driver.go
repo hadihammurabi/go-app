@@ -4,7 +4,7 @@ import (
 	"os"
 
 	"github.com/gowok/gowok"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver/util"
+	"github.com/hadihammurabi/belajar-go-rest-api/pkg"
 )
 
 type Driver struct {
@@ -21,7 +21,7 @@ func Get() *Driver {
 		return d
 	}
 
-	util.PrepareRuntime()
+	pkg.PrepareRuntime()
 
 	conf := gowok.Must(
 		gowok.NewConfig(os.OpenFile("config.yaml", os.O_RDONLY, 600)),
