@@ -2,7 +2,6 @@ package rest
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/dto"
-	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/response"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/api"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 	"github.com/hadihammurabi/belajar-go-rest-api/service"
@@ -30,7 +29,7 @@ func Auth(r *api.Rest) auth {
 func (api auth) Login(c *fiber.Ctx) error {
 	input := &dto.UserLoginRequest{}
 	if err := c.BodyParser(input); err != nil {
-		return response.Fail(c, err)
+		return dto.Fail(c, err)
 	}
 
 	user := &entity.User{
@@ -40,10 +39,10 @@ func (api auth) Login(c *fiber.Ctx) error {
 
 	token, err := api.service.Auth.Login(c.Context(), user)
 	if err != nil {
-		return response.Fail(c, "invalid credentials")
+		return dto.Fail(c, "invalid credentials")
 	}
 
-	return response.Ok(c, &dto.UserLoginResponse{
+	return dto.Ok(c, &dto.UserLoginResponse{
 		Token: token,
 		Type:  "Bearer",
 	})
@@ -52,5 +51,5 @@ func (api auth) Login(c *fiber.Ctx) error {
 // Me func
 func (api auth) Me(c *fiber.Ctx) error {
 	fromLocals := c.Locals("user").(*entity.User)
-	return response.Ok(c, fromLocals)
+	return dto.Ok(c, fromLocals)
 }

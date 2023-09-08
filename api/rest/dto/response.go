@@ -1,4 +1,4 @@
-package response
+package dto
 
 import (
 	"net/http"
