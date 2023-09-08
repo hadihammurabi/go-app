@@ -4,8 +4,6 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gowok/gowok"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/middleware"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver"
@@ -22,17 +20,11 @@ type Rest struct {
 }
 
 func NewAPIRest() *Rest {
-	app := fiber.New(fiber.Config{
-		DisableStartupMessage: true,
-	})
-	app.Use(logger.New(logger.Config{
-		Format: "${time} | ${method} | ${path} | ${status} | ${ip} | ${latency}\n",
-	}))
-	// app.Use(recover.New())
-	app.Use(cors.New())
-
 	dr := driver.Get()
 	conf := dr.Config
+
+	app := gowok.NewHTTP(&conf.App.Rest)
+
 	validator := dr.Validator
 	sv := service.Get()
 
