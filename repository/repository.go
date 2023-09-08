@@ -7,12 +7,14 @@ import (
 
 // Repository struct
 type Repository struct {
+	sql     *gowok.SQL
+	mongodb *gowok.MongoDB
 }
 
 var r *Repository
 
 // NewRepository func
-func NewRepository(db *gowok.SQL) *Repository {
+func NewRepository(sql *gowok.SQL, mongodb *gowok.MongoDB) *Repository {
 	return &Repository{}
 }
 
@@ -22,6 +24,6 @@ func Get() *Repository {
 	}
 
 	dr := driver.Get()
-	r = NewRepository(dr.SQL)
+	r = NewRepository(dr.SQL, dr.MongoDB)
 	return r
 }
