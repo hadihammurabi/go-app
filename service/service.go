@@ -3,6 +3,7 @@ package service
 import (
 	"github.com/gowok/gowok/exception"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver"
+	"github.com/hadihammurabi/belajar-go-rest-api/repository"
 )
 
 // Service struct
@@ -18,7 +19,7 @@ func NewService() *Service {
 	dr := driver.Get()
 	config := dr.Config
 	sql := dr.SQL.Get().OrPanic(exception.ErrNoDatabaseFound)
-	repo := dr.Repository
+	repo := repository.Get()
 
 	service := &Service{
 		Auth:  NewAuthService(config, sql, repo),

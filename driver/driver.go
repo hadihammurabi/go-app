@@ -4,16 +4,13 @@ import (
 	"os"
 
 	"github.com/gowok/gowok"
-	"github.com/gowok/gowok/exception"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/util"
-	"github.com/hadihammurabi/belajar-go-rest-api/repository"
 )
 
 type Driver struct {
-	Config     *gowok.Config
-	SQL        *gowok.SQL
-	Validator  *gowok.Validator
-	Repository *repository.Repository
+	Config    *gowok.Config
+	SQL       *gowok.SQL
+	Validator *gowok.Validator
 }
 
 var d *Driver
@@ -33,15 +30,10 @@ func Get() *Driver {
 	)
 	val := gowok.NewValidator()
 
-	repo := repository.NewRepository(
-		sqlDB.Get().OrPanic(exception.ErrNoDatabaseFound),
-	)
-
 	d = &Driver{
-		Config:     conf,
-		SQL:        &sqlDB,
-		Validator:  val,
-		Repository: &repo,
+		Config:    conf,
+		SQL:       &sqlDB,
+		Validator: val,
 	}
 	return d
 }
