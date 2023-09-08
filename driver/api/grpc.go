@@ -4,27 +4,24 @@ import (
 	"log"
 	"net"
 
-	"github.com/hadihammurabi/belajar-go-rest-api/api/grpc/index"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver"
 	"google.golang.org/grpc"
 )
 
-// APIGrpc struct
-type APIGrpc struct {
+// Grpc struct
+type Grpc struct {
 	Grpc *grpc.Server
 }
 
-func NewAPIGrpc() *APIGrpc {
-	api := &APIGrpc{
+func NewAPIGrpc() *Grpc {
+	api := &Grpc{
 		Grpc: grpc.NewServer(),
 	}
-
-	index.RegisterIndexServer(api.Grpc, index.New())
 
 	return api
 }
 
-func (d *APIGrpc) Run() {
+func (d *Grpc) Run() {
 	grpcConf := driver.Get().Config.App.Grpc
 	if !grpcConf.Enabled {
 		return
@@ -42,7 +39,7 @@ func (d *APIGrpc) Run() {
 	}
 }
 
-func (d *APIGrpc) Stop() {
+func (d *Grpc) Stop() {
 	d.Grpc.GracefulStop()
 	log.Println("GRPC was stopped")
 }
