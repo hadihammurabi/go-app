@@ -10,7 +10,7 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg"
 )
 
-func TestGet(t *testing.T) {
+func TestDriverGet(t *testing.T) {
 	defer func() {
 		err := recover()
 		must.Nil(t, err)
