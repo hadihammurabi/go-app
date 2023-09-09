@@ -15,7 +15,6 @@ func init() {
 func main() {
 	api.Run()
 
-	go gowok.StartPProf()
 	gowok.GracefulStop(func() {
 		fmt.Println()
 		fmt.Println("Stopping...")
