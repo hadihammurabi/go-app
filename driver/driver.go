@@ -1,6 +1,7 @@
 package driver
 
 import (
+	"flag"
 	"os"
 
 	"github.com/gowok/gowok"
@@ -23,9 +24,11 @@ func Get() *Driver {
 	}
 
 	pkg.PrepareRuntime()
+	configPath := flag.String("config", "config.yaml", "")
+	flag.Parse()
 
 	conf := gowok.Must(
-		gowok.NewConfig(os.OpenFile("config.yaml", os.O_RDONLY, 600)),
+		gowok.NewConfig(os.OpenFile(*configPath, os.O_RDONLY, 600)),
 	)
 	sqlDB := gowok.Must(
 		gowok.NewSQL(conf.Databases),
