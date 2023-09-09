@@ -16,7 +16,7 @@ func Hello() {
 }
 
 func (d *hello) Hello() error {
-	conf := d.Config.MessageBrokers[""]
+	conf := d.Config.MessageBrokers["default"]
 	rmq, err := messaging.ConfigureRabbitMQ(&conf)
 	if err != nil {
 		return err
