@@ -8,7 +8,7 @@ require (
 	github.com/gofiber/fiber/v2 v2.49.1
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/google/uuid v1.3.1
-	github.com/gowok/gowok v0.2.41
+	github.com/gowok/gowok v0.2.42
 	github.com/hadihammurabi/go-rabbitmq v0.0.0-20220906174441-bf7ae8da96be
 	github.com/streadway/amqp v1.0.0
 	golang.org/x/crypto v0.8.0
