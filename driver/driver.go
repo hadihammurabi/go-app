@@ -11,6 +11,7 @@ type Driver struct {
 	Config    *gowok.Config
 	SQL       *gowok.SQL
 	MongoDB   *gowok.MongoDB
+	Redis     *gowok.Redis
 	Validator *gowok.Validator
 }
 
@@ -32,12 +33,16 @@ func Get() *Driver {
 	mongoDB := gowok.Must(
 		gowok.NewMongoDB(conf.Databases),
 	)
+	redisDB := gowok.Must(
+		gowok.NewRedis(conf.Databases),
+	)
 	val := gowok.NewValidator()
 
 	d = &Driver{
 		Config:    conf,
 		SQL:       &sqlDB,
 		MongoDB:   &mongoDB,
+		Redis:     &redisDB,
 		Validator: val,
 	}
 	return d
