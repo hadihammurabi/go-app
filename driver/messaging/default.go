@@ -3,6 +3,7 @@ package messaging
 import (
 	"errors"
 
+	"github.com/gowok/gowok/config"
 	"github.com/gowok/gowok/driver"
 	"github.com/gowok/gowok/driver/messaging"
 )
@@ -10,7 +11,7 @@ import (
 type def struct {
 }
 
-func ConfigureDefault(config Config) (driver.Messaging, error) {
+func ConfigureDefault(config *config.MessageBroker) (driver.Messaging, error) {
 	return def{}, nil
 }
 

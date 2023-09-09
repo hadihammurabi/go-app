@@ -3,6 +3,7 @@ package messaging
 import (
 	"errors"
 
+	"github.com/gowok/gowok/config"
 	"github.com/gowok/gowok/driver"
 	"github.com/gowok/gowok/driver/messaging"
 	gorabbitmq "github.com/hadihammurabi/go-rabbitmq"
@@ -14,8 +15,8 @@ type rabbitmq struct {
 	mq *gorabbitmq.MQ
 }
 
-func ConfigureRabbitMQ(config Config) (driver.Messaging, error) {
-	mq, err := gorabbitmq.New(config.URL)
+func ConfigureRabbitMQ(config *config.MessageBroker) (driver.Messaging, error) {
+	mq, err := gorabbitmq.New(config.DSN)
 	if err != nil {
 		return nil, err
 	}
