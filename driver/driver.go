@@ -4,15 +4,21 @@ import (
 	"flag"
 	"os"
 
+	"github.com/go-redis/redis/v8"
 	"github.com/gowok/gowok"
+	"github.com/gowok/gowok/optional"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg"
+	"go.mongodb.org/mongo-driver/mongo"
+	"gorm.io/gorm"
 )
+
+type getterByName[T any] func(name ...string) optional.Optional[T]
 
 type Driver struct {
 	Config    *gowok.Config
-	SQL       *gowok.SQL
-	MongoDB   *gowok.MongoDB
-	Redis     *gowok.Redis
+	SQL       getterByName[*gorm.DB]
+	MongoDB   getterByName[*mongo.Client]
+	Redis     getterByName[*redis.Client]
 	Validator *gowok.Validator
 }
 
@@ -43,9 +49,9 @@ func Get() *Driver {
 
 	d = &Driver{
 		Config:    conf,
-		SQL:       &sqlDB,
-		MongoDB:   &mongoDB,
-		Redis:     &redisDB,
+		SQL:       sqlDB.Get,
+		MongoDB:   mongoDB.Get,
+		Redis:     redisDB.Get,
 		Validator: val,
 	}
 	return d

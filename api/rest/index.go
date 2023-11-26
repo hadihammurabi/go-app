@@ -18,7 +18,7 @@ type index struct {
 }
 
 func Index(r *api.Rest) *fiber.App {
-	rdb := driver.Get().Redis.Get("cache").OrPanic(exception.ErrNoDatabaseFound)
+	rdb := driver.Get().Redis("cache").OrPanic(exception.ErrNoDatabaseFound)
 	api := index{r, fiber.New(), rdb}
 	api.router.Get("", api.Index)
 

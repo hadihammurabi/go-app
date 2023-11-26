@@ -16,9 +16,8 @@ type Service struct {
 
 // NewService func
 func NewService() *Service {
-	dr := driver.Get()
-	config := dr.Config
-	sql := dr.SQL.Get().OrPanic(exception.ErrNoDatabaseFound)
+	config := driver.Get().Config
+	sql := driver.Get().SQL().OrPanic(exception.ErrNoDatabaseFound)
 	repo := repository.Get()
 
 	service := &Service{

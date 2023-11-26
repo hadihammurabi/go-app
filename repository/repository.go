@@ -1,20 +1,13 @@
 package repository
 
-import (
-	"github.com/gowok/gowok"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver"
-)
-
 // Repository struct
 type Repository struct {
-	sql     *gowok.SQL
-	mongodb *gowok.MongoDB
 }
 
 var r *Repository
 
 // NewRepository func
-func NewRepository(sql *gowok.SQL, mongodb *gowok.MongoDB) *Repository {
+func NewRepository() *Repository {
 	return &Repository{}
 }
 
@@ -23,7 +16,6 @@ func Get() *Repository {
 		return r
 	}
 
-	dr := driver.Get()
-	r = NewRepository(dr.SQL, dr.MongoDB)
+	r = NewRepository()
 	return r
 }
