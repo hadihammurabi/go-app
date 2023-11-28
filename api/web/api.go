@@ -1,10 +1,11 @@
 package web
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/driver/api"
+	"github.com/gowok/gowok"
 )
 
-func ConfigureRoute(api *api.Rest) {
-	api.HTTP.Mount("", Index(api))
+func ConfigureRoute() {
+	api := gowok.Get().Web
+	api.Mount("", Index())
 	// api.HTTP.Mount("/auth", Auth(api).router)
 }

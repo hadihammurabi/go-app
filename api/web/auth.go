@@ -2,7 +2,7 @@ package web
 
 import (
 	"github.com/hadihammurabi/belajar-go-rest-api/api/web/dto"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver/api"
+	"github.com/hadihammurabi/belajar-go-rest-api/api/web/middleware"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 	"github.com/hadihammurabi/belajar-go-rest-api/service"
 
@@ -10,19 +10,17 @@ import (
 )
 
 type auth struct {
-	*api.Rest
-	router *fiber.App
-
+	router  *fiber.App
 	service *service.Service
 }
 
 // Auth func
-func Auth(r *api.Rest) auth {
-	api := auth{r, fiber.New(), service.Get()}
+func Auth() *fiber.App {
+	api := auth{fiber.New(), service.Get()}
 	api.router.Post("/login", api.Login)
-	api.router.Get("/me", api.Middlewares.AuthBearer, api.Me)
+	api.router.Get("/me", middleware.Get().AuthBearer, api.Me)
 
-	return api
+	return api.router
 }
 
 // Login func

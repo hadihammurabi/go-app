@@ -8,18 +8,16 @@ import (
 	"github.com/gowok/gowok"
 	"github.com/gowok/gowok/exception"
 	"github.com/hadihammurabi/belajar-go-rest-api/api/web/dto"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver/api"
 )
 
 type index struct {
-	*api.Rest
 	router *fiber.App
 	redis  *redis.Client
 }
 
-func Index(r *api.Rest) *fiber.App {
+func Index() *fiber.App {
 	rdb := gowok.Get().Redis("cache").OrPanic(exception.ErrNoDatabaseFound)
-	api := index{r, fiber.New(), rdb}
+	api := index{fiber.New(), rdb}
 	api.router.Get("", api.Index)
 
 	return api.router
