@@ -35,7 +35,7 @@ Nama | Kegunaan
 [Fiber](https://docs.gofiber.io) | Web Framework
 [GRPC](https://grpc.io) | Transport RPC
 [RabbitMQ](https://www.rabbitmq.com) | Message Broker
-[PostgreSQL](https://www.postgresql.org), [MySQL](https://www.mysql.com/), [MariaDB](https://mariadb.org/), [SQLite](https://www.sqlite.org/index.html) | Database Management System
+[PostgreSQL](https://www.postgresql.org), [MySQL](https://www.mysql.com/), [MariaDB](https://mariadb.org/), [SQLite](https://www.sqlite.org/index.html), [MongoDB](https://www.mongodb.com/), [Redis](https://redis.io/) | Database Management System
 [Gorm](https://gorm.io/index.html) | Object-Relational Mapper
 [Jwt](https://jwt.io) | Token untuk Otentikasi
 
