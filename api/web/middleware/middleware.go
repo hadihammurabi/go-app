@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"github.com/gowok/gowok"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver"
 	"github.com/hadihammurabi/belajar-go-rest-api/service"
 )
 
@@ -13,7 +12,7 @@ type Middlewares struct {
 }
 
 func NewMiddleware() Middlewares {
-	config := driver.Get().Config
+	config := gowok.Get().Config
 	sv := service.Get()
 
 	return Middlewares{

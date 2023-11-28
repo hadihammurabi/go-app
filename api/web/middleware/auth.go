@@ -6,7 +6,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver"
+	"github.com/gowok/gowok"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 )
 
@@ -23,7 +23,7 @@ func (m Middlewares) AuthBearer(c *fiber.Ctx) error {
 		return c.Status(http.StatusUnauthorized).SendString("invalid token")
 	}
 
-	conf := driver.Get().Config
+	conf := gowok.Get().Config
 	parsed, err := jwt.ParseWithClaims(token, &entity.JWTClaims{}, func(t *jwt.Token) (any, error) {
 		return []byte(conf.Security.Secret), nil
 	})

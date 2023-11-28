@@ -1,22 +1,13 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/gowok/gowok"
-	"github.com/hadihammurabi/belajar-go-rest-api/api"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver"
+	"github.com/hadihammurabi/belajar-go-rest-api/api/web"
+	"github.com/hadihammurabi/belajar-go-rest-api/driver/api"
 )
 
-func init() {
-	driver.Get()
-}
-
 func main() {
-	api.Run()
-
-	gowok.GracefulStop(func() {
-		fmt.Println()
-		fmt.Println("Stopping...")
-	})
+	project := gowok.Get()
+	web.ConfigureRoute(api.NewAPIRest())
+	project.Runner.Run()
 }

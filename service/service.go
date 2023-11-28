@@ -1,8 +1,8 @@
 package service
 
 import (
+	"github.com/gowok/gowok"
 	"github.com/gowok/gowok/exception"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver"
 	"github.com/hadihammurabi/belajar-go-rest-api/repository"
 )
 
@@ -16,8 +16,8 @@ type Service struct {
 
 // NewService func
 func NewService() *Service {
-	config := driver.Get().Config
-	sql := driver.Get().SQL().OrPanic(exception.ErrNoDatabaseFound)
+	config := gowok.Get().Config
+	sql := gowok.Get().SQL().OrPanic(exception.ErrNoDatabaseFound)
 	repo := repository.Get()
 
 	service := &Service{

@@ -1,13 +1,13 @@
-package rest
+package web
 
 import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gowok/gowok"
 	"github.com/gowok/gowok/exception"
-	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/dto"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver"
+	"github.com/hadihammurabi/belajar-go-rest-api/api/web/dto"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/api"
 )
 
@@ -18,7 +18,7 @@ type index struct {
 }
 
 func Index(r *api.Rest) *fiber.App {
-	rdb := driver.Get().Redis("cache").OrPanic(exception.ErrNoDatabaseFound)
+	rdb := gowok.Get().Redis("cache").OrPanic(exception.ErrNoDatabaseFound)
 	api := index{r, fiber.New(), rdb}
 	api.router.Get("", api.Index)
 

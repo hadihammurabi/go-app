@@ -1,7 +1,7 @@
-package rest
+package web
 
 import (
-	"github.com/hadihammurabi/belajar-go-rest-api/api/rest/dto"
+	"github.com/hadihammurabi/belajar-go-rest-api/api/web/dto"
 	"github.com/hadihammurabi/belajar-go-rest-api/driver/api"
 	"github.com/hadihammurabi/belajar-go-rest-api/entity"
 	"github.com/hadihammurabi/belajar-go-rest-api/service"
