@@ -11,12 +11,23 @@ type Middlewares struct {
 	service *service.Service
 }
 
-func NewMiddleware() Middlewares {
+func NewMiddleware() *Middlewares {
 	config := gowok.Get().Config
 	sv := service.Get()
 
-	return Middlewares{
+	return &Middlewares{
 		config:  config,
 		service: sv,
 	}
+}
+
+var m *Middlewares
+
+func Get() *Middlewares {
+	if m != nil {
+		return m
+	}
+
+	m = NewMiddleware()
+	return m
 }
