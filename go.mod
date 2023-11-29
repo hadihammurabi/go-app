@@ -10,7 +10,7 @@ require (
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/golang-must/must v1.0.0
 	github.com/google/uuid v1.3.1
-	github.com/gowok/gowok v0.2.6
+	github.com/gowok/gowok v0.2.61
 	github.com/hadihammurabi/go-rabbitmq v0.0.0-20220906174441-bf7ae8da96be
 	github.com/streadway/amqp v1.0.0
 	go.mongodb.org/mongo-driver v1.12.1
