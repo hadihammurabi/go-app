@@ -18,6 +18,7 @@ func Hello() error {
 	for result := range msgs {
 		fmt.Println("headers:", result.Headers)
 		fmt.Println("message:", string(result.Message))
+		rmq.Ack(result)
 	}
 
 	forever := make(chan bool)
