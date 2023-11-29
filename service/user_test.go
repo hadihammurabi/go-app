@@ -8,8 +8,8 @@ import (
 
 	"github.com/golang-must/must"
 	"github.com/google/uuid"
+	"github.com/gowok/gowok"
 	"github.com/gowok/gowok/exception"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver"
 	"github.com/hadihammurabi/belajar-go-rest-api/pkg"
 	"github.com/hadihammurabi/belajar-go-rest-api/repository"
 	"gorm.io/gorm"
@@ -21,9 +21,9 @@ func TestServiceUser(t *testing.T) {
 	must.Nil(t, err)
 
 	os.Args = []string{"", "-config", confPath}
-	dr := driver.Get()
+	dr := gowok.Get()
 	repo := repository.Get()
-	sqldb := dr.SQL.Get().OrPanic(exception.ErrNoDatabaseFound)
+	sqldb := dr.SQL().OrPanic(exception.ErrNoDatabaseFound)
 	sqldb.Logger = logger.Default.LogMode(logger.Silent)
 	sv := NewUserService(dr.Config, sqldb, repo)
 
