@@ -5,7 +5,8 @@ import (
 	"github.com/hadihammurabi/belajar-go-rest-api/api/grpc/index"
 )
 
-func ConfigureServices() {
-	GRPC := gowok.Get().GRPC
-	index.RegisterIndexServer(GRPC, index.New())
+func Configure(project *gowok.Project) {
+	g := project.GRPC
+
+	index.RegisterIndexServer(g, index.New())
 }

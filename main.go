@@ -9,10 +9,10 @@ import (
 
 func main() {
 	project := gowok.Get()
-	project.Runner.AddRunFunc(func() {
-		web.ConfigureRoute()
-		grpc.ConfigureServices()
-		messaging.ConfigureMessage()
-	})
-	project.Runner.Run()
+	project.Configures(
+		web.Configure,
+		grpc.Configure,
+		messaging.Configure,
+	)
+	project.Run()
 }
