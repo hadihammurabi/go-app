@@ -1,5 +1,5 @@
 app:
-  rest:
+  web:
     enabled: true
     host: :8080
   grpc:
@@ -9,11 +9,14 @@ app:
     enabled: true
 
 databases:
-  - driver: postgresql
+  default:
+    driver: postgresql
     dsn: 'host=localhost user=postgres password= database=postgres port=5432 sslmode=disable'
-  - driver: mongo
+  secondary:
+    driver: mongo
     dsn: mongodb://root:root@localhost
-  - driver: redis
+  cache:
+    driver: redis
 
 messaging:
   driver: rabbitmq
