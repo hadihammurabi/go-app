@@ -5,12 +5,13 @@ import (
 
 	"github.com/gowok/gowok/config"
 	"github.com/gowok/gowok/driver/messaging"
+	"github.com/gowok/gowok/optional"
 	gorabbitmq "github.com/hadihammurabi/go-rabbitmq"
 	"github.com/streadway/amqp"
 )
 
 type rabbitmq struct {
-	MQ *gorabbitmq.MQ
+	MQ optional.Optional[gorabbitmq.MQ]
 }
 
 func NewRabbitMQ(config *config.MessageBroker) (*rabbitmq, error) {
@@ -19,15 +20,16 @@ func NewRabbitMQ(config *config.MessageBroker) (*rabbitmq, error) {
 		return nil, err
 	}
 
-	return &rabbitmq{mq}, nil
+	return &rabbitmq{optional.New(mq)}, nil
 }
 
 func (m rabbitmq) Publish(topic string, channel string, message messaging.Message) error {
-	if !m.IsAvailable() {
+	mq, err := m.MQ.Get()
+	if err != nil {
 		return errors.New("messaging is not available")
 	}
 
-	return m.MQ.Publish(&gorabbitmq.MQConfigPublish{
+	return mq.Publish(&gorabbitmq.MQConfigPublish{
 		Exchange:   topic,
 		RoutingKey: channel,
 		Message: amqp.Publishing{
@@ -38,11 +40,12 @@ func (m rabbitmq) Publish(topic string, channel string, message messaging.Messag
 }
 
 func (m rabbitmq) Consume(channel string) (<-chan messaging.Message, error) {
-	if !m.IsAvailable() {
+	mq, err := m.MQ.Get()
+	if err != nil {
 		return nil, errors.New("messaging is not available")
 	}
 
-	q, err := m.MQ.Queue().WithName(channel).Declare()
+	q, err := mq.Queue().WithName(channel).Declare()
 	if err != nil {
 		return nil, err
 	}
@@ -67,13 +70,10 @@ func (m rabbitmq) Consume(channel string) (<-chan messaging.Message, error) {
 }
 
 func (m rabbitmq) Ack(message messaging.Message) error {
-	if !m.IsAvailable() {
+	mq, err := m.MQ.Get()
+	if err != nil {
 		return errors.New("messaging is not available")
 	}
 
-	return m.MQ.Channel().Ack(message.Tag, false)
-}
-
-func (m rabbitmq) IsAvailable() bool {
-	return m.MQ != nil
+	return mq.Channel().Ack(message.Tag, false)
 }

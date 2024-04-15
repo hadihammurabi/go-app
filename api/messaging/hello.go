@@ -1,6 +1,7 @@
 package messaging
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/gowok/gowok"
@@ -12,7 +13,12 @@ import (
 func Hello() error {
 	conf := gowok.Get().Config.MessageBrokers["default"]
 	rmq := gowok.Must(messaging.NewRabbitMQ(&conf))
-	prepareHello(rmq.MQ)
+
+	mq, err := rmq.MQ.Get()
+	if err != nil {
+		return errors.New("RabbitMQ not available")
+	}
+	prepareHello(&mq)
 
 	msgs := gowok.Must(rmq.Consume("hello"))
 	for result := range msgs {
