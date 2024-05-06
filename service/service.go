@@ -15,12 +15,12 @@ type Service struct {
 }
 
 // NewService func
-func NewService() *Service {
+func NewService() Service {
 	config := gowok.Get().Config
 	sql := gowok.Get().SQL().OrPanic(exception.ErrNoDatabaseFound)
 	repo := repository.Get()
 
-	service := &Service{
+	service := Service{
 		Auth:  NewAuthService(config, sql, repo),
 		User:  NewUserService(config, sql, repo),
 		Token: NewTokenService(sql, repo),
@@ -30,13 +30,4 @@ func NewService() *Service {
 	return service
 }
 
-var s *Service
-
-func Get() *Service {
-	if s != nil {
-		return s
-	}
-
-	s = NewService()
-	return s
-}
+var Get = gowok.Singleton(NewService)
