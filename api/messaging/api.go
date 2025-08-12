@@ -1,8 +1,12 @@
 package messaging
 
-import "github.com/gowok/gowok"
+import (
+	"log/slog"
+
+	"github.com/gowok/gowok"
+)
 
 func Configure(project *gowok.Project) {
-	println("project: starting messaging")
-	// go Hello()
+	slog.Info("starting messaging")
+	go Hello()
 }

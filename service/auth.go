@@ -35,7 +35,7 @@ func (a AuthService) Login(c context.Context, userInput *entity.User) (string, e
 		return "", errors.New("email or password invalid")
 	}
 
-	isPasswordValid := hash.PasswordVerify(userInput.Password, user.Password, a.config.App.Key)
+	isPasswordValid := hash.PasswordVerify(userInput.Password, user.Password, a.config.Key)
 	if isPasswordValid {
 		return "", errors.New("email or password invalid")
 	}

@@ -1,0 +1,15 @@
+web:
+  enabled: true
+  host: :8080
+grpc:
+  enabled: true
+  host: :8081
+
+gorm:
+  default:
+    driver: postgres
+    dsn: 'host=localhost user=postgres password= database=postgres port=5432 sslmode=disable'
+
+amqp:
+  driver: rabbitmq
+  dsn: amqp://guest:guest@localhost:5672/

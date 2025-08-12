@@ -1,6 +1,8 @@
 package repository
 
-import "github.com/gowok/gowok"
+import (
+	"github.com/gowok/gowok/singleton"
+)
 
 // Repository struct
 type Repository struct {
@@ -11,4 +13,4 @@ func NewRepository() Repository {
 	return Repository{}
 }
 
-var Get = gowok.Singleton(NewRepository)
+var Get = singleton.New(NewRepository)

@@ -4,36 +4,26 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/gowok/gowok"
-	"github.com/hadihammurabi/belajar-go-rest-api/driver/messaging"
+	"github.com/gowok/gowok/must"
+	"github.com/gowok/plugins/amqp"
 	gorabbitmq "github.com/hadihammurabi/go-rabbitmq"
 	"github.com/hadihammurabi/go-rabbitmq/exchange"
 )
 
 func Hello() error {
-	conf := gowok.Get().Config.MessageBrokers["default"]
-	rmq := gowok.Must(messaging.NewRabbitMQ(&conf))
-
-	mq, err := rmq.MQ.Get()
-	if err != nil {
+	con, ok := amqp.Connection().Get()
+	if !ok {
 		return errors.New("RabbitMQ not available")
 	}
-	prepareHello(&mq)
 
-	msgs := gowok.Must(rmq.Consume("hello"))
-	for result := range msgs {
-		fmt.Println("headers:", result.Headers)
-		fmt.Println("message:", string(result.Message))
-		rmq.Ack(result)
+	mq, err := gorabbitmq.New(
+		gorabbitmq.WithAMQP(con),
+	)
+	if err != nil {
+		return err
 	}
 
-	forever := make(chan bool)
-	<-forever
-	return nil
-}
-
-func prepareHello(mq *gorabbitmq.MQ) {
-	gowok.Must(
+	must.Must(
 		true,
 		mq.Exchange().
 			WithName("hello").
@@ -42,11 +32,22 @@ func prepareHello(mq *gorabbitmq.MQ) {
 			Declare(),
 	)
 
-	q := gowok.Must(mq.Queue().WithName("hello").Declare())
-	gowok.Must(
+	q := must.Must(mq.Queue().WithName("hello").Declare())
+	must.Must(
 		true,
 		q.Binding().
 			WithExchange("hello").
 			Bind(),
 	)
+
+	msgs := must.Must(q.Consumer().Consume())
+	for result := range msgs {
+		fmt.Println("headers:", result.Headers)
+		fmt.Println("message:", string(result.Body))
+		result.Ack(false)
+	}
+
+	forever := make(chan bool)
+	<-forever
+	return nil
 }

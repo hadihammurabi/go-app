@@ -3,6 +3,8 @@ package service
 import (
 	"github.com/gowok/gowok"
 	"github.com/gowok/gowok/exception"
+	"github.com/gowok/gowok/singleton"
+	"github.com/gowok/plugins/gorm"
 	"github.com/hadihammurabi/belajar-go-rest-api/repository"
 )
 
@@ -17,7 +19,7 @@ type Service struct {
 // NewService func
 func NewService() Service {
 	config := gowok.Get().Config
-	sql := gowok.Get().SQL().OrPanic(exception.ErrNoDatabaseFound)
+	sql := gorm.DB().OrPanic(exception.ErrNoDatabaseFound)
 	repo := repository.Get()
 
 	service := Service{
@@ -30,4 +32,4 @@ func NewService() Service {
 	return service
 }
 
-var Get = gowok.Singleton(NewService)
+var Get = singleton.New(NewService)

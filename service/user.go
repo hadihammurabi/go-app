@@ -83,7 +83,7 @@ func (u UserService) ChangePassword(c context.Context, id uuid.UUID, password st
 	if err != nil {
 		return nil, err
 	}
-	pass := hash.PasswordHash(password, u.config.App.Key)
+	pass := hash.PasswordHash(password, u.config.Key)
 	user.Password = pass.Hashed
 	err = u.db.Save(&user).Error
 	if err != nil {
